@@ -19,4 +19,4 @@ To see the project diary please visit the [wiki](https://github.com/dor132133/SS
 This project is developed as part of the requirements for a final project at the software engineering department - Azrieli College of Engineering, Jerusalem, Israel.
 
 [Dor Ben Yehuda](https://github.com/dor132133)
->>>>>>> be7132431c591ee180a3a86ebfe4ab7f3d25294c
+
