@@ -7,15 +7,12 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var url = 'mongodb://localhost:27017/db';
 var express = require('express');
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
 var app = express();
-//instantiate
-var app = express();
-//build our restful service
-app.get('/get', function (req, res){
-   res.end('Hello World');
-});
 
-//to fix the issue of : No 'Access-Control-Allow-Origi'
+
+//to fix the issue of : No 'Access-Control-Allow-Origin'
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -23,21 +20,26 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
     next();
 });
-var server = require('http').createServer(app);
-var io = require('\node_modules\\socket.io')(server);
+
+
 io = io.listen(server, {log:false, origins:'*:*'});
 
-// //start server
-// var server = app.listen(8081, function () {
-//   console.log("Server is listening at http://127.0.0.1:8081/")
-// });  
+//start server
+var server = app.listen(8081, function () {
+   console.log("Server is listening at http://127.0.0.1:8081/")
+});  
 
 //implement a rest services
 //RESTFUL methods  
+//build our restful service
+  app.get('/', function (req, res){
+    res.end('Hello World');
+  });
+
  app.get('/getWarriors', function (req, res) {   
     MongoClient.connect(url, function(err, db) {
      assert.equal(null, err);
-     findWarriors(db, function(data){ db.close(); res.end(JSON.stringify(data)); });
+     findWarriors(db, function(data){ db.close(); res.end(JSON.stringify(data));});
    }); 
   
  });   
@@ -48,8 +50,8 @@ io = io.listen(server, {log:false, origins:'*:*'});
      //get parameter from url request
      var obj = req.query.obj;
       insertWarrior(db, JSON.parse(obj), function(){
-      db.close();
-      res.end("true");
+        db.close();
+        res.end("true");
      }); 
    }); 
  });
