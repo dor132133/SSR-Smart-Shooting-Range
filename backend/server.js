@@ -4,13 +4,15 @@
 //import required module
 var mongodb = require('mongodb');
 var MongoClient = require('mongodb').MongoClient;
-var assert = require('assert');
 var url = 'mongodb://localhost:27017/db';
-var express = require('express');
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
-var app = express();
 
+var assert = require('assert');
+
+var express = require('express');
+var app = express();
+var server = require('http').createServer(app);
+
+var io = require('socket.io')(server);
 
 //to fix the issue of : No 'Access-Control-Allow-Origin'
 app.use(function(req, res, next) {
@@ -39,7 +41,10 @@ var server = app.listen(8081, function () {
  app.get('/getWarriors', function (req, res) {   
     MongoClient.connect(url, function(err, db) {
      assert.equal(null, err);
-     findWarriors(db, function(data){ db.close(); res.end(JSON.stringify(data));});
+     findWarriors(db, function(data){ 
+       db.close(); 
+       res.end(JSON.stringify(data));
+      });
    }); 
   
  });   
