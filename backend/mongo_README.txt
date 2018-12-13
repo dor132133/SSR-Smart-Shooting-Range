@@ -10,10 +10,29 @@ https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
 
 
 
-Mongo on Docker:
-https://hostpresto.com/community/tutorials/communitycreate-a-mongo-db-docker-container-with-attached-storage-volume/
-After image creation, create & run the container:
-docker run --name mongo-dev -d -v /opt/mongodb:/data/db -p 27017:27017 mongodb
+Mongo on docker:
+1. pull mongo image from Docker-Hub
+2. create docker container:
+    sudo docker run -p 27017:27017 --name mongo-cont -d mongo
+    -mongo-cont: container-name
+    -mongo: image-name
+    - -p: expose container's ip to local network 
 
-get into the running mongo docker:
-sudo docker exec -it <container_id> mongo
+-----SOME USEFULE DOCKER CMDS-----
+#Show docker running containers:
+    docker ps 
+    docker ps --all
+#watching container metadata:
+     docker inspect
+#get into the running docker machine:
+    sudo docker exec -it <container_id> bash
+#get into the running docker mongodb:
+    sudo docker exec -it <container_id> mongo
+
+-----SOME USEFULE MONGO CMDS-----
+#list of databases
+    show dbs
+#switch database
+    use <db-name>
+#list of collections
+    show collections

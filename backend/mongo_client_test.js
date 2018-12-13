@@ -5,7 +5,7 @@
 
 var assert = require('assert');
 var MongoClient = require('mongodb').MongoClient;
-var url = 'mongodb://localhost:27017/db';
+var url = 'mongodb://172.17.0.2:27017/db';
 warriorsCollectionFields = { 
     capped: true,
     size: 5242880, //maximum size of 5 megabytes
