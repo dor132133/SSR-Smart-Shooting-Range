@@ -26,4 +26,10 @@ app.get('/', function (req, res){
     res.end('Hello, I\'m SSR-Cluster' + '\n' + 'try again with specific api');
   });
 
+var HARouter = require('./routes/Hybrid-App');
+var MCRouter = require('./routes/Micro-Controller');
+app.use('/HA', HARouter);
+app.use('/MC', MCRouter);
+
+  
 module.exports = app;
