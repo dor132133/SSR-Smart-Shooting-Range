@@ -9,8 +9,7 @@ https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
 //Begin using MongoDB: $mongo
 
 
-
-Mongo on docker:
+Mongo on Docker:
 1. pull mongo image from Docker-Hub
     docker pull mongo
 2. create docker container:

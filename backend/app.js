@@ -24,7 +24,7 @@ var server = app.listen(8081, function () {
 });  
 app.get('/', function (req, res){
     res.end('Hello, I\'m SSR-Cluster' + '\n' + 'try again with specific api');
-  });
+  }); 
 
 var HARouter = require('./routers/Hybrid-App/HA_router');
 var MCRouter = require('./routers/Micro-Controller/MC_router');

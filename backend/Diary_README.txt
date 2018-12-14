@@ -11,6 +11,19 @@
 
 9. Expose local app to the world:
  list of all tcp availble ports in linux: ss -lntu 
-    a.
+    a.ssh -R 80:localhost:8081 ssh.localhost.run
     enable my own "DNS" for ssh tunnel: add the ip/hostname in the local computer /etc/hosts file
 
+10. docker-compose: create 2 docker containers:
+     1.rest-app container: using dockerfile (node:latest image)
+     2.mongo-cont container: pull mongo image (from Docker-Hub)
+     usage:
+          1. docker-compose build
+          2. docker-compose up
+          3. docker compose ps
+          4. docker-compose stop
+          5. docker-compose down
+          6. docker-compose restart
+          7. docker-compose logs -follow --timestamps
+          8. docker-compose config
+     give up mongo Docker

@@ -1,29 +1,24 @@
 version: '3.7'
 services:
   app:
-      container_name: rest-api
-      restart: always
       build: .
-      links: 
-        - postgres
+      container_name: ssr-app
+      restart: always
       ports:
-        - 4000:4000
+        - 8081:8081
       volumes:
         - .:/app
+      links: 
+        - mongodb
       networks: 
         - backend
-  postgres:
+
+  mongodb:
       restart: always
-      image: postgres:10
-      container_name: postgres
-      environment:
-        - POSTGRES_USER=dor
-        - POSTGRES_PASSWORD=123
-        - POSTGRES_DB=pgdb
-      volumes:
-        - ./postgres-data/postgres:/var/lib/postgresql/data
+      image: mongo
+      container_name: mongo-cont
       ports:
-        - "5432"
+        - "27017:27017"
       networks: 
         - backend
 networks:
