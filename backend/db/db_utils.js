@@ -1,23 +1,22 @@
 
+var assert = require('assert');
+var MongoClient = require('mongodb').MongoClient;
+var url = 'mongodb://172.17.0.2:27017/db';
+var SSR_DB = "SSR-DB"
 
-
- //add person to db
- function addPerson(req,res,next){
-    db.none('insert into persons(name,age) values(${name},${age})',req.body)
-    .then(()=>{
-        res.status(201)
-        .json({
-            status : 'success',
-            message:'retrieved add a person'
-        });
-    })
-    .catch((err)=>{
-        console.log(err);
-        return next(err);
-    });
+ function getCollection(req,res){
+    var coll = req.params.coll;
+    MongoClient.connect(url,{useNewUrlParser:true},function(err, mongo) {
+        assert.equal(null, err);
+        var db = mongo.db(SSR_DB);
+        db.collection(coll).find().toArray(function(err,data){
+          mongo.close(); 
+          res.end(JSON.stringify(data));
+         });
+      }); 
 }
 
 module.exports = {
-    getPersonsByAge : getPersonsByAge,
-    addPerson : addPerson,
+    getCollection : getCollection,
+    
 };

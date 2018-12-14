@@ -26,10 +26,17 @@ app.get('/', function (req, res){
     res.end('Hello, I\'m SSR-Cluster' + '\n' + 'try again with specific api');
   });
 
-var HARouter = require('./routes/Hybrid-App');
-var MCRouter = require('./routes/Micro-Controller');
+var HARouter = require('./routers/Hybrid-App/HA_router');
+var MCRouter = require('./routers/Micro-Controller/MC_router');
 app.use('/HA', HARouter);
 app.use('/MC', MCRouter);
 
-  
+process.stdin.resume();//so the program will not close instantly
+
+function exitHandler(options, exitCode) {
+    if (options.cleanup) console.log('clean');
+    if (exitCode || exitCode === 0) console.log(exitCode);
+    if (options.exit) process.exit();
+}
+
 module.exports = app;

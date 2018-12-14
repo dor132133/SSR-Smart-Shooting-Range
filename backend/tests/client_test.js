@@ -9,7 +9,7 @@ var Warrior = require('../classes/Warrior');
 var w1 = new Warrior('Dor','BY', 26, 'UDI');
 
 var options = {
-    url : 'http://127.0.0.1:8081/',
+    url : 'http://127.0.0.1:8081/MC/DB/collection/warriors',
     port : '8081',
     method : 'GET'
 }
@@ -21,5 +21,4 @@ request(options, function (err, res, body){
     }
     console.log(res.statusCode)
     console.log(body)
-    
 })
