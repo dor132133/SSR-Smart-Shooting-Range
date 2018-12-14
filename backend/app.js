@@ -26,8 +26,10 @@ var server = app.listen(8081, function () {
 
 var HARouter = require('./routers/HA_router');
 var ESPRouter = require('./routers/ESP_router');
+var DBRouter = require('./routers/DB_router');
 app.use('/HA', HARouter);
 app.use('/ESP', ESPRouter);
+app.use('/DB', DBRouter);
 
 app.get('/', function (req, res){
     res.end('Hello, I\'m SSR-Cluster' + '\n' + 'try again with specific api');

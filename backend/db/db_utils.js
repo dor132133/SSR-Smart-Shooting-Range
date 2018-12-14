@@ -1,9 +1,20 @@
 
 var assert = require('assert');
-var config = require('../config');
 var MongoClient = require('mongodb').MongoClient;
-var url = config.MONGO_URL;
-var SSR_DB = config.MONGO_URL;
+var url = require('../mongo_init').MONGO_URL;
+var SSR_DB = require('../mongo_init').MONGO_DB_NAME;
+
+function getCollections(req,res){
+    MongoClient.connect(url,{useNewUrlParser:true},function(err, mongo) {
+        assert.equal(null, err);
+        //var db = mongo.db(SSR_DB);
+        //db.runCommand( { listCollections: 1.0, authorizedCollections: true, nameOnly: true } ).find().toArray(function(err,data){
+            mongo.close(); 
+            //res.end(JSON.stringify(data));
+            res.end('Deprecated method');
+        //});
+      }); 
+}
 
  function getCollection(req,res){
     //var coll = req.params.coll;
@@ -21,6 +32,7 @@ var SSR_DB = config.MONGO_URL;
 
 module.exports = {
     getCollection : getCollection,
+    getCollections : getCollections,
     
 };
 
