@@ -9,6 +9,7 @@ var SSR_DB = "SSR-DB"
     MongoClient.connect(url,{useNewUrlParser:true},function(err, mongo) {
         assert.equal(null, err);
         var db = mongo.db(SSR_DB);
+        //context:
         db.collection(coll).find().toArray(function(err,data){
           mongo.close(); 
           res.end(JSON.stringify(data));

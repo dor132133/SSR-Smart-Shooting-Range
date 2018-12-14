@@ -7,3 +7,10 @@
 6. create mongodb-init.js: initial database, collections using mongoClient
 7. create routing
 8. install automatic app restart with npm install -g nodemon
+
+
+9. Expose local app to the world:
+ list of all tcp availble ports in linux: ss -lntu 
+    a.
+    enable my own "DNS" for ssh tunnel: add the ip/hostname in the local computer /etc/hosts file
+

@@ -1,0 +1,32 @@
+version: '3.7'
+services:
+  app:
+      container_name: rest-api
+      restart: always
+      build: .
+      links: 
+        - postgres
+      ports:
+        - 4000:4000
+      volumes:
+        - .:/app
+      networks: 
+        - backend
+  postgres:
+      restart: always
+      image: postgres:10
+      container_name: postgres
+      environment:
+        - POSTGRES_USER=dor
+        - POSTGRES_PASSWORD=123
+        - POSTGRES_DB=pgdb
+      volumes:
+        - ./postgres-data/postgres:/var/lib/postgresql/data
+      ports:
+        - "5432"
+      networks: 
+        - backend
+networks:
+  backend:
+    driver: "bridge"
+
