@@ -26,8 +26,8 @@ app.get('/', function (req, res){
     res.end('Hello, I\'m SSR-Cluster' + '\n' + 'try again with specific api');
   }); 
 
-var HARouter = require('./routers/Hybrid-App/HA_router');
-var ESPRouter = require('./routers/ESP/ESP_router');
+var HARouter = require('./routers/HA_router');
+var ESPRouter = require('./routers/ESP_router');
 app.use('/HA', HARouter);
 app.use('/ESP', ESPRouter);
 

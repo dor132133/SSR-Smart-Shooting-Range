@@ -5,7 +5,7 @@
 
 var assert = require('assert');
 var MongoClient = require('mongodb').MongoClient;
-var url = 'mongodb://172.17.0.2:27017/db';
+var url = 'mongodb://172.17.0.1:27017/data/db';
 warriorsCollectionOptions = { 
     capped: true,
     size: 5242880, //maximum size of 5 megabytes
@@ -62,15 +62,15 @@ warriorsCollectionOptions = {
 MongoClient.connect(url,{ useNewUrlParser: true }, function(err, _db) {
   assert.equal(null, err);
   console.log('Successfully connected');
-  var db = _db.db("SSR-DB");
-  db.createCollection('warriors', warriorsCollectionOptions,function(err, res) {
-    if (err) throw err;
-    console.log("Warriors collection created!");
-    });
-  db.createCollection('warriors', warriorsCollectionOptions,function(err, res) {
-    if (err) throw err;
-    console.log("Warriors collection created!");
-    });
+  // var db = _db.db("SSR-DB");
+  // db.createCollection('warriors', warriorsCollectionOptions,function(err, res) {
+  //   if (err) throw err;
+  //   console.log("Warriors collection created!");
+  //   });
+  // db.createCollection('warriors', warriorsCollectionOptions,function(err, res) {
+  //   if (err) throw err;
+  //   console.log("Warriors collection created!");
+  //   });
 
     _db.close();
 });

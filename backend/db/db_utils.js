@@ -1,11 +1,11 @@
 
 var assert = require('assert');
 var MongoClient = require('mongodb').MongoClient;
-var url = 'mongodb://172.17.0.2:27017/db';
+var url = 'mongodb://172.17.0.1:27017/data/db';
 var SSR_DB = "SSR-DB"
 
  function getCollection(req,res){
-    var coll = req.params.coll;
+    //var coll = req.params.coll;
     MongoClient.connect(url,{useNewUrlParser:true},function(err, mongo) {
         assert.equal(null, err);
         // var db = mongo.db(SSR_DB);
@@ -14,7 +14,7 @@ var SSR_DB = "SSR-DB"
         //   mongo.close(); 
         //   res.end(JSON.stringify(data));
         //  });
-        res.end('200')
+        res.end('200' + '\n');
       }); 
 }
 
