@@ -27,9 +27,9 @@ app.get('/', function (req, res){
   }); 
 
 var HARouter = require('./routers/Hybrid-App/HA_router');
-var MCRouter = require('./routers/Micro-Controller/MC_router');
+var ESPRouter = require('./routers/ESP/ESP_router');
 app.use('/HA', HARouter);
-app.use('/MC', MCRouter);
+app.use('/ESP', ESPRouter);
 
 process.stdin.resume();//so the program will not close instantly
 

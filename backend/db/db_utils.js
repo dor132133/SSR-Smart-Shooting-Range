@@ -8,12 +8,13 @@ var SSR_DB = "SSR-DB"
     var coll = req.params.coll;
     MongoClient.connect(url,{useNewUrlParser:true},function(err, mongo) {
         assert.equal(null, err);
-        var db = mongo.db(SSR_DB);
-        //context:
-        db.collection(coll).find().toArray(function(err,data){
-          mongo.close(); 
-          res.end(JSON.stringify(data));
-         });
+        // var db = mongo.db(SSR_DB);
+        // //context:
+        // db.collection(coll).find().toArray(function(err,data){
+        //   mongo.close(); 
+        //   res.end(JSON.stringify(data));
+        //  });
+        res.end('200')
       }); 
 }
 
@@ -21,3 +22,10 @@ module.exports = {
     getCollection : getCollection,
     
 };
+
+// function createCollection(coll,options){
+//     db.createCollection(coll, options,function(err, res) {
+//       if (err) throw err;
+//       console.log("Warriors collection created!");
+//       });
+// }

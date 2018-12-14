@@ -26,4 +26,3 @@
           6. docker-compose restart
           7. docker-compose logs -follow --timestamps
           8. docker-compose config
-     give up mongo Docker
