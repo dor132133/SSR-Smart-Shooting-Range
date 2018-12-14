@@ -3,8 +3,9 @@
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
-
 var io = require('socket.io')(server);
+
+var mymongo = require('./mongo_init');
 
 //to fix the issue of : No 'Access-Control-Allow-Origin'
 app.use(function(req, res, next) {
@@ -22,14 +23,17 @@ io = io.listen(server, {log:false, origins:'*:*'});
 var server = app.listen(8081, function () {
    console.log("Server is listening at http://127.0.0.1:8081/")
 });  
-app.get('/', function (req, res){
-    res.end('Hello, I\'m SSR-Cluster' + '\n' + 'try again with specific api');
-  }); 
 
 var HARouter = require('./routers/HA_router');
 var ESPRouter = require('./routers/ESP_router');
 app.use('/HA', HARouter);
 app.use('/ESP', ESPRouter);
+
+app.get('/', function (req, res){
+    res.end('Hello, I\'m SSR-Cluster' + '\n' + 'try again with specific api');
+  }); 
+
+mymongo.dbHealthCheck();
 
 process.stdin.resume();//so the program will not close instantly
 

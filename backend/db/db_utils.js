@@ -24,9 +24,4 @@ module.exports = {
     
 };
 
-// function createCollection(coll,options){
-//     db.createCollection(coll, options,function(err, res) {
-//       if (err) throw err;
-//       console.log("Warriors collection created!");
-//       });
-// }
+
