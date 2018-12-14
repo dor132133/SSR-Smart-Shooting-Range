@@ -1,8 +1,9 @@
 
 var assert = require('assert');
+var config = require('../config');
 var MongoClient = require('mongodb').MongoClient;
-var url = 'mongodb://172.17.0.1:27017/data/db';
-var SSR_DB = "SSR-DB"
+var url = config.MONGO_URL;
+var SSR_DB = config.MONGO_URL;
 
  function getCollection(req,res){
     //var coll = req.params.coll;
