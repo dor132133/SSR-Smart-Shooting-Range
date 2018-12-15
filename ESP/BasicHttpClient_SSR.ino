@@ -1,17 +1,13 @@
+
+
 /**
    BasicHTTPClient.ino
-
-    Created on: 24.05.2015
-
 */
 
 #include <Arduino.h>
-
 #include <ESP8266WiFi.h>
 #include <ESP8266WiFiMulti.h>
-
 #include <ESP8266HTTPClient.h>
-
 #include <WiFiClient.h>
 
 ESP8266WiFiMulti WiFiMulti;
