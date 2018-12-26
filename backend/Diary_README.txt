@@ -26,3 +26,14 @@
           6. docker-compose restart
           7. docker-compose logs -follow --timestamps
           8. docker-compose config
+
+
+curl cmds:
+     post json data:
+          curl -H "Content-Type: application/json" \
+          --request POST \
+          --data '{"id":"","firstname":"Uzi", "lastname":"Cohen", "age": "45"}' \
+          http://localhost:8081/DB/document
+
+          curl -H "Content-Type: application/json" --data @document.json \
+          http://localhost:8081/DB/document

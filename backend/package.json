@@ -29,6 +29,7 @@
   "author": "will be added, with the ability to process and save data, calculation of speeds and times,",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "localtunnel": "^1.9.1",
     "mongodb": "^3.1.10",

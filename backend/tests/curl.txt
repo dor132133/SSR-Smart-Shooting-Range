@@ -1,0 +1,19 @@
+
+
+get document by name:
+    curl http://localhost:8081/DB/document/warriors/Uzi | jq '.'
+
+get collection's documents:
+    curl http://localhost:8081/DB/collection/warriors | jq '.'
+
+post document from json file(add document):
+    curl -H "Content-Type: application/json" --data @document.json http://localhost:8081/DB/document
+post collection from json file(add collection):
+    curl -H "Content-Type: application/json" --data @document.json http://localhost:8081/DB/document
+    curl -H "Content-Type: application/json" -X POST -d '{"collection" : "teams"}' http://localhost:8081/DB/collection
+        
+put delete document:
+    curl -X PUT -d collection=warriors -d query='{"firstname" : "Uzi"}' localhost:8081/DB/delete/document
+
+put delete collection:
+    curl -X PUT -d collection=team localhost:8081/DB/delete/collection

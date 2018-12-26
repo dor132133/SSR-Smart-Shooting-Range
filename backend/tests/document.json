@@ -1,0 +1,10 @@
+
+{
+  "collection" : "warriors",
+  "data" : {
+    "firstname": "Uzi",
+    "lastname": "Cohen",
+    "age": "45",
+    "team" : "UDI"
+  }
+}

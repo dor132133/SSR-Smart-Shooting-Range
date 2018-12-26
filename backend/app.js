@@ -4,8 +4,14 @@ var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
-
+var bodyParser = require('body-parser')
 var mymongo = require('./mongo_init');
+
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())//parsing posted json files.
 
 //to fix the issue of : No 'Access-Control-Allow-Origin'
 app.use(function(req, res, next) {
