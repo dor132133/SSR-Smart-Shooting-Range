@@ -3,12 +3,20 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PageButtonComponent } from './page-button/page-button.component';
+import { HomeComponent } from './home/home.component';
+import { SessionsComponent } from './sessions/sessions.component';
+import { CollectionsComponent } from './collections/collections.component';
+import { ReportsComponent } from './reports/reports.component';
+import { WarriorsComponent } from './warriors/warriors.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PageButtonComponent
+    HomeComponent,
+    SessionsComponent,
+    CollectionsComponent,
+    ReportsComponent,
+    WarriorsComponent
   ],
   imports: [
     BrowserModule,
