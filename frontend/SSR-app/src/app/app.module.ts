@@ -8,6 +8,7 @@ import { SessionsComponent } from './sessions/sessions.component';
 import { CollectionsComponent } from './collections/collections.component';
 import { ReportsComponent } from './reports/reports.component';
 import { WarriorsComponent } from './warriors/warriors.component';
+import { NavComponent } from './nav/nav.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { WarriorsComponent } from './warriors/warriors.component';
     SessionsComponent,
     CollectionsComponent,
     ReportsComponent,
-    WarriorsComponent
+    WarriorsComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,

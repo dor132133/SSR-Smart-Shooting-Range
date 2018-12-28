@@ -7,7 +7,7 @@ import { CollectionsComponent } from "./collections/collections.component";
 import { SessionsComponent } from "./sessions/sessions.component";
 import { WarriorsComponent } from "./warriors/warriors.component";
 
-const appRoutes: Routes = [
+const routes : Routes = [
 { path: "home", component: HomeComponent },
 { path: "reports", component: ReportsComponent },
 { path: "collections", component: CollectionsComponent },
@@ -16,7 +16,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes,{
+  imports: [RouterModule.forRoot(routes,{
     scrollPositionRestoration: 'enabled',
     anchorScrolling: 'enabled',
     enableTracing: true})//dubuggin only
