@@ -1,6 +1,6 @@
 
 {
-  "collection" : "warriors",
+  "collection" : "users",
   "data" : {
     "firstname": "Uzi",
     "lastname": "Cohen",

@@ -1,4 +1,12 @@
 
 <h1>Home</h1>
 
-<button (click)="firstClick()">Click me</button>
+<button (click)="addCollectionButton('users')">Add Users Collection</button>
+<button (click)="deleteCollectionButton('users')">Delete Users Collection</button>
+<button (click)="showCollectionButton('users')">Show Users Collection</button>
+<button (click)="DeleteDocumentButton()">Delete User</button>
+
+<div>
+    <h4>Users</h4>
+    {{usersNames}}
+</div>

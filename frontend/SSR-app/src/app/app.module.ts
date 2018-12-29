@@ -9,7 +9,9 @@ import { CollectionsComponent } from './collections/collections.component';
 import { ReportsComponent } from './reports/reports.component';
 import { WarriorsComponent } from './warriors/warriors.component';
 import { NavComponent } from './nav/nav.component';
-
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +24,9 @@ import { NavComponent } from './nav/nav.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]
