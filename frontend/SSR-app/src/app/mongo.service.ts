@@ -37,16 +37,12 @@ export class MongoService {
   }
 
   deleteDocument(document: JSON){//query format: {collection:value, data:{doc query}}
-    return this.http.put(environment.mongoDB_URL + 'delete/document', name)
+    return this.http.put(environment.mongoDB_URL + 'delete/document', document)
   }
 
-  deleteCollection(collection: string){
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
-    return this.http.put(environment.mongoDB_URL + 'delete/collection', collection,httpOptions)
+  deleteCollection(name: string){
+    let json = {collection: name}
+    return this.http.put(environment.mongoDB_URL + 'delete/collection', json)
   }
 
 

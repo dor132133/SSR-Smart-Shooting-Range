@@ -134,53 +134,52 @@ function addCollection(req,res){
 
 function deleteDocument(req,res){
     var coll = req.body.collection;
-    console.log(res.body)
-    //var query = JSON.parse(req.body.data);
+    var query = req.body.data;
+    console.log(req.body)
+    MongoClient.connect(url,{useNewUrlParser:true},function(err, mongo) {
+        if(err){
+            res.jsonp(500, {'error': JSON.stringify(err) });
+            return;
+        }
+        var db = mongo.db(SSR_DB);
+        db.collection(coll).deleteOne(query, function(err, obj) {
+            if(err){
+                res.jsonp(404, {'error': JSON.stringify(err) });
+                return;
+            } 
+          console.log("1 document deleted");
+          mongo.close();
+           res.end('Document deleted successfully');
+        });
+    });
     
-    // MongoClient.connect(url,{useNewUrlParser:true},function(err, mongo) {
-    //     if(err){
-    //         res.jsonp(500, {'error': JSON.stringify(err) });
-    //         return;
-    //     }
-    //     var db = mongo.db(SSR_DB);
-    //     db.collection(coll).deleteOne(query, function(err, obj) {
-    //         if(err){
-    //             res.jsonp(404, {'error': JSON.stringify(err) });
-    //             return;
-    //         } 
-    //       console.log("1 document deleted");
-    //       mongo.close();
-    //        res.end('Document deleted successfully');
-    //     });
-    // });
-    res.end('testing')
 }
 
 function deleteCollection(req,res){
-    var coll = req.body;
+    var coll = req.body.collection;
     console.log(coll)
     if(typeof(coll) != 'string'){
         res.end('Error: 400 Bad Request');
         console.log('Error: 400 Bad Request');
         return;
     }
-    // MongoClient.connect(url,{useNewUrlParser:true},function(err, mongo) {
-    //     if(err){
-    //         res.jsonp(500, {'error': JSON.stringify(err) });
-    //         return;
-    //     }
-    //     var db = mongo.db(SSR_DB);
-    //     db.collection(coll).drop(function(err, delOK) {
-    //         if(err){
-    //             res.jsonp(404, {'error': JSON.stringify(err) });
-    //             return;
-    //         } 
-    //         if (delOK) console.log("Collection deleted");
-    //         mongo.close();
-    //         res.end('Collection deleted successfully');
-    //     });
-    // });
-    res.end('Bye')
+    MongoClient.connect(url,{useNewUrlParser:true},function(err, mongo) {
+        if(err){
+            res.jsonp(500, {'error': JSON.stringify(err) });
+            return;
+        }
+        var db = mongo.db(SSR_DB);
+        db.collection(coll).drop(function(err, delOK) {
+            if(err){
+                res.jsonp(404, {'error': JSON.stringify(err) });
+                return;
+            } 
+            if (delOK) console.log("Collection deleted");
+            mongo.close();
+            res.end('Collection deleted successfully');
+        });
+    });
+    
 }
 
 function updateDocument(req,res){}

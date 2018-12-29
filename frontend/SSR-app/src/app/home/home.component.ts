@@ -23,6 +23,21 @@ export class HomeComponent implements OnInit {
   //  })
   }
 
+  
+  addDocumentButton(){
+    var query = JSON.stringify({ collection : "users",
+                                data: {
+                                  firstname: "Uzi",
+                                  lastname: "Cohen",
+                                  age: 45,
+                                  team: "UDI"
+                                }
+                                })
+    this.mondoDB.addDocument(JSON.parse(query)).subscribe(res =>{
+      console.log(res)
+    })
+  }
+
   addCollectionButton(name: string){
      var schema = JSON.parse('{}');
      this.mondoDB.addCollection(name, schema).subscribe(res =>{
