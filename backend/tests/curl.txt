@@ -1,4 +1,8 @@
 
+get collections (names):
+    curl http://localhost:8081/DB/collections | jq '.'
+
+
 get document by query:
     curl -XPOST -d @document-query.json -H "Content-Type: application/json"  http://localhost:8081/DB/document | jq '.'
 

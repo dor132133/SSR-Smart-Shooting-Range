@@ -2,9 +2,9 @@
 {
   "collection" : "users",
   "data" : {
-    "firstname": "Uzi",
-    "lastname": "Cohen",
-    "age": "45",
+    "firstname": "Dor",
+    "lastname": "BY",
+    "age": "26",
     "team" : "UDI"
   }
 }

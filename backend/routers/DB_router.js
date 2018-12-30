@@ -12,8 +12,8 @@ router.post('/add/document',db.addDocument);
 router.post('/add/collection',db.addCollection);
 router.put('/delete/document',db.deleteDocument);
 router.put('/delete/collection',db.deleteCollection);
-router.put('/update/document',db.updateDocument);
-router.put('/update/collection',db.updateCollection);
+router.put('/update/document',db.updateDocument);//not writen yet
+router.put('/update/collection',db.updateCollection);//not writen yet
 
  
 module.exports = router;

@@ -5,32 +5,50 @@ var url = require('../mongo_init').MONGO_URL;
 var SSR_DB = require('../mongo_init').MONGO_DB_NAME;
 const bodyParser = require('body-parser')
 
+ /*
+ *return: db collection's names in JSON array formate
+ *params: none
+ */
  function getCollections(req,res){
-//     MongoClient.connect(url,{useNewUrlParser:true},function(err, mongo) {
-//         if(err){
-//             res.jsonp(500, {'error': JSON.stringify(err) });
-//             return;
-//         }
-//         //var db = mongo.db(SSR_DB);
-//         //db.runCommand( { listCollections: 1.0, authorizedCollections: true, nameOnly: true } ).find().toArray(function(err,data){
-//             mongo.close(); 
-//             //res.end(JSON.stringify(data));
-//             res.end('Deprecated method');
-//         //});
-//       }); 
+    MongoClient.connect(url,{useNewUrlParser:true},function(err, mongo) {
+        if(err){
+            res.status(500).end(err);
+            return;
+        }
+        var db = mongo.db(SSR_DB);
+        db.listCollections().toArray(function(error, colls) {
+            if(error){
+                console.log(error)
+                res.status(500).end(error);
+                mongo.close();
+                return;
+            }
+            var collNames = colls.map(element =>{
+                return element.name;
+            })
+            console.log(collNames)
+            res.end(JSON.stringify(collNames));
+            mongo.close();
+            return;
+        });
+      }); 
  }
 
+ /*
+ *return: collection's documets in JSON formate
+ *params:string GET param: <collection-name>:
+ */
 function getCollection(req,res){
     var coll = req.params.coll;
     MongoClient.connect(url,{useNewUrlParser:true},function(err, mongo) {
         if(err){
-            res.jsonp(500, {'error': JSON.stringify(err) });
+            res.status(500).end(error);
             return;
         }
         var db = mongo.db(SSR_DB);
-        db.collection(coll).find({}).toArray(function(err, result) {
-            if (err || result.length === 0) {
-                res.jsonp(404, {'Error: 404 Not Found': JSON.stringify(err) });
+        db.collection(coll).find({}).toArray(function(error, result) {
+            if (error || result.length === 0) {
+                res.status(404).end('Error: 404 Not Found, '+ error);
                 return;
             }
             console.log(result);
@@ -40,24 +58,29 @@ function getCollection(req,res){
       }); 
 }
 
-//get doc by first name
+ /*
+ *return: list of document-JSON objects matching to query,
+ *        sending through request's body.
+ *params: JSON query POST request's body.
+ *        JSON structure:{collection: "name", data:{field1:"value",field2:"value"...}}
+ */
 function getDocument(req,res){
     var query = req.body;
     console.log(query);
     if(typeof(query.collection) != 'string' || typeof(query.data) != 'object'){
-        res.end('Error: 400 Bad Request');
+        res.status(400).end('Error: 400 Bad Request, '+ error);
         console.log('Error: 400 Bad Request');
         return;
     }
     MongoClient.connect(url,{useNewUrlParser:true},function(err, mongo) {
         if(err){
-            res.jsonp(500, {'error': JSON.stringify(err) });
+            res.status(500).end(error);
             return;
         }
         var db = mongo.db(SSR_DB);
         db.collection(query.collection).find(query.data).toArray(function(err, result) {
             if (err || result.length === 0) {
-                res.jsonp(404, {'Error: 404 Not Found': JSON.stringify(err) });
+                res.status(404).end('Error: 404 Not Found, '+ error);
                 return;
             }
             console.log(result);
@@ -67,37 +90,60 @@ function getDocument(req,res){
       }); 
 }
 
+ /*
+ *return: approve/reject of adding document to db.
+ *params: JSON document(structure) POST request's body.
+ *        JSON structure:{collection: "name", data:{field1:"value",field2:"value"...}}
+ */
 function addDocument(req,res){
     const doc = req.body;
     console.log(doc)
     if(typeof(doc.collection) != 'string' || typeof(doc.data) != 'object'){
-        res.end('Error: 400 Bad Request');
-        console.log('Error: 400 Bad Request');
+        res.status(400).end('Error: 400 Bad Request, '+ error);
+        console.log('params are not strings');
         return;
     }
     MongoClient.connect(url,{useNewUrlParser:true},function(err, mongo) {
         if(err){
-            res.jsonp(500, {'error': JSON.stringify(err) });
+            res.status(500).end(error);
             return;
         }
         var db = mongo.db(SSR_DB);
-        db.collection(doc.collection).insertOne(doc.data, function(error) {
-            if (error) {
-                res.jsonp(400, {'Error: 400 Bad Request': JSON.stringify(error) });
+        db.collection(doc.collection).find(doc.data).toArray(function(er, result) {
+            if (er) {
+                res.status(500).end(error);
+                return;
+            }
+            if(result.length !== 0){//if document already exist
+                console.log('Cannot create, document already exist')
+                res.status(409).end('Conflict error: document already exist');
                 mongo.close();
                 return;
             }
-            console.log("1 document inserted");
-            mongo.close(); 
-            res.end('Document added successfully');
-          }); 
+            db.collection(doc.collection).insertOne(doc.data, function(error) {
+                if (error) {
+                    res.status(400).end('Error: 400 Bad Request, '+ error);
+                    mongo.close();
+                    return;
+                }
+                console.log("1 document inserted");
+                mongo.close(); 
+                res.end('Document added successfully');
+            });
+        }); 
     }); 
 } 
 
+ /*
+ *return: approve/reject of creating collection in db.
+ *        if collection exist return: "conflict 409"
+ *params: JSON POST request's body.
+ *        JSON structure:{collection: "name", schema:{field1:"value",field2:"value"...}}
+ */
 function addCollection(req,res){
-    const coll = req.body.collection;
+    const collName = req.body.collection;
     var schema = req.body.schema;
-    console.log(coll);
+    console.log(collName);
     console.log(schema);
     // try {
     //     JSON.parse(schema);
@@ -107,74 +153,103 @@ function addCollection(req,res){
     // }
     MongoClient.connect(url,{useNewUrlParser:true},function(err, mongo) {
         if(err){
-            res.jsonp(500, {'error': JSON.stringify(err) });
+            res.status(500).end(error);
             return;
         }
         var db = mongo.db(SSR_DB);
-        db.createCollection(coll, function(err) {
-            if (err) {
-                res.jsonp(500, {'error': JSON.stringify(err) });
+        db.listCollections({name: collName}).next(function(err, collinfo) {
+            if (collinfo) {//if collection exist
+                console.log('Cannot create, collection already exist')
+                res.status(409).end('Conflict error: collection already exist');
                 mongo.close();
                 return;
             }
-            //add first document - prevent future errors
-            db.collection(coll).insertOne({empty : ""}, function(error) {
-                if (error) {
-                    res.jsonp(400, {'Error: 400 Bad Request': JSON.stringify(error) });
+            db.createCollection(collName, function(err) {
+                if (err) {
+                    res.status(500).end(err);
                     mongo.close();
                     return;
                 }
-                console.log("Collection created!");
-                mongo.close(); 
-                res.end('Collection created successfully');
+                //add first document - prevent future errors
+                db.collection(collName).insertOne({empty : ""}, function(error) {
+                    if (error) {
+                        res.status(400).end('Error: 400 Bad Request, '+ error);
+                        mongo.close();
+                        return;
+                    }
+                    console.log("Collection created!");
+                    mongo.close(); 
+                    res.end('Collection created successfully');
+                }); 
             }); 
-          }); 
+        });
     }); 
 }
 
+ /*
+ *return: approve/reject of deleting the first match by query.
+ *params: JSON POST request's body.
+ *        JSON structure:{collection: "name", data:{field1:"value",field2:"value"...}}
+ */
 function deleteDocument(req,res){
-    var coll = req.body.collection;
-    var query = req.body.data;
+    var doc = req.body;
     console.log(req.body)
     MongoClient.connect(url,{useNewUrlParser:true},function(err, mongo) {
         if(err){
-            res.jsonp(500, {'error': JSON.stringify(err) });
+            res.status(500).end(err);
             return;
         }
         var db = mongo.db(SSR_DB);
-        db.collection(coll).deleteOne(query, function(err, obj) {
-            if(err){
-                res.jsonp(404, {'error': JSON.stringify(err) });
+        db.collection(doc.collection).find(doc.data).toArray(function(er, result) {
+            if (er) {
+                res.status(500).end(er);
                 return;
-            } 
-          console.log("1 document deleted");
-          mongo.close();
-           res.end('Document deleted successfully');
+            }
+            if(result.length === 0){//if document already exist
+                console.log('Cannot delete, document doesn\'t exist')
+                res.status(404).end('Error: 404 Not Found, '+ er);
+                mongo.close();
+                return;
+            }
+            db.collection(doc.collection).deleteOne(doc.data, function(error, obj) {
+                if(error){
+                    res.status(404).end('Error: 404 Not Found, '+ error);
+                    return;
+                } 
+                console.log("1 document deleted");
+                mongo.close();
+                res.end('Document deleted successfully');
+            });
         });
     });
     
 }
 
+ /*
+ *return: approve/reject of delete existing collection.
+ *params: JSON POST request's body.
+ *        JSON structure:{collection: "name"}
+ */
 function deleteCollection(req,res){
     var coll = req.body.collection;
     console.log(coll)
     if(typeof(coll) != 'string'){
-        res.end('Error: 400 Bad Request');
+        rres.status(400).end('Error: 400 Bad Request, '+ error);
         console.log('Error: 400 Bad Request');
         return;
     }
     MongoClient.connect(url,{useNewUrlParser:true},function(err, mongo) {
         if(err){
-            res.jsonp(500, {'error': JSON.stringify(err) });
+            res.status(500).end(error);
             return;
         }
         var db = mongo.db(SSR_DB);
-        db.collection(coll).drop(function(err, delOK) {
-            if(err){
-                res.jsonp(404, {'error': JSON.stringify(err) });
+        db.collection(coll).drop(function(error, delOK) {
+            if(error || !delOK){
+                res.status(404).end('Error: 404 Not Found, '+ error);
                 return;
             } 
-            if (delOK) console.log("Collection deleted");
+            console.log("Collection deleted");
             mongo.close();
             res.end('Collection deleted successfully');
         });
