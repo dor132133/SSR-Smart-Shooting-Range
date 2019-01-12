@@ -1,15 +1,36 @@
 
 
- <header>
-  <div class="container">
-    <a routerLink="/" class="logo">{{appTitle}}</a>
-    <nav>
+
+
+<!--The content below is only a placeholder and can be replaced.-->
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>{{appTitle}}</span>
+    <!-- This fills the remaining space of the current row -->
+    <span class="example-spacer"></span>
+
+    <nav mat-tab-nav-bar color="primary">
+        <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.link" routerLinkActive #rla="routerLinkActive"
+          [active]="rla.isActive">
+          <h5 color="white">{{link.label}}</h5>
+        </a>
+    </nav>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+
+<!-- put all wanted page here -->
+<section>
+  <router-outlet></router-outlet>
+</section>
+
+
+<!-- <nav>
       <ul>
         <li><a routerLink="/">Home</a></li>
         <li><a routerLink="/sessions">Sessions</a></li>
         <li><a routerLink="/reports">Reports</a></li>
         <li><a routerLink="/collections">Collections</a></li>
       </ul>
-    </nav>
-  </div>
-</header>
+    </nav> -->

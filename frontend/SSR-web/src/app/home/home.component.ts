@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MongoService } from '../mongo.service';
-import { user } from '../../interfaces/user'
-
+import { User } from 'src/classes/user'
+import { Session } from 'src/classes/session';
+import { SessionsService } from '../sessions.service';
+import { Warrior } from 'src/classes/warrior';
+import { SSRMap } from 'src/classes/map';
 
 
 @Component({
@@ -13,8 +16,9 @@ export class HomeComponent implements OnInit {
 
   warriors: Object;
   users: Object;
+  
 
-  constructor(private mondoDB: MongoService) { }
+  constructor(private mondoDB: MongoService, private sessionsService: SessionsService) { }
 
   ngOnInit() {
   //  this.mondoDB.getCollection('warriors').subscribe(data => {
@@ -46,9 +50,27 @@ export class HomeComponent implements OnInit {
                                   team: "UDI"
                                 }
                                 })
-    this.mondoDB.addDocument(JSON.parse(query)).subscribe(res =>{
-      console.log(res)
-    })
+    let map = new SSRMap({},'',TrainType.STAGE_ONE,'');
+    let warrior = new Warrior('Dor','BY',26,'UDI','',JobType.GUID);
+    let session = new Session(map,new Date, warrior,[]);
+    console.log(map);
+    console.log(warrior);
+    console.log(session);
+
+    // var date: Date = new Date();
+    // var myTimes: Array<Time>;
+    // var warrior: Warrior = new warrior();
+    // var session = {
+    //   id: "",
+    //   map: "1",
+    //   date: Date,
+    //   warrior: Warrior,
+    //   times: myTimes
+    // }
+
+    // this.mondoDB.addDocument(JSON.parse(query)).subscribe(res =>{
+    //   console.log(res)
+    // })
   }
 
   addCollectionButton(name: string){

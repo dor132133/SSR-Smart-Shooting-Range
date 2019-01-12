@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SessionsComponent implements OnInit {
 
+  sessions: Object
+  
   constructor() { }
 
   ngOnInit() {

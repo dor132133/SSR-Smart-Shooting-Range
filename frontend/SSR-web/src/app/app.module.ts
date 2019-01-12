@@ -12,7 +12,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module'
-import { FormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
+import { EntrypointComponent } from './entrypoint/entrypoint.component'
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { FormsModule } from '@angular/forms'
     ReportsComponent,
     WarriorsComponent,
     NavComponent,
+    EntrypointComponent,
   ],
   imports: [
     BrowserModule,
