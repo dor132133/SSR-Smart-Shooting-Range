@@ -3,18 +3,20 @@
 
 
 import { Item } from './item';
+import { TrainType } from 'src/enums';
 
-export class SSRMap extends Item{
+export class Map extends Item{
 
   public id: string;
-  public screenShot: object;
+  public screenShot: string;
   public positions: string;
   public trainType: TrainType;
   public sizes: string;
 
 
-  constructor(screenShot: object, positions: string,trainType: TrainType, sizes: string) {
+  constructor(screenShot: string, positions: string,trainType: TrainType, sizes: string) {
     super();
+    this.id = '0001';
     this.screenShot = screenShot;
     this.positions = positions;
     this.trainType = trainType;

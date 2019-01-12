@@ -100,7 +100,7 @@ function addDocument(req,res){
     console.log(doc)
     if(typeof(doc.collection) != 'string' || typeof(doc.data) != 'object'){
         res.status(400).end('Error: 400 Bad Request, '+ error);
-        console.log('params are not strings');
+        console.log('params are not strings'); 
         return;
     }
     MongoClient.connect(url,{useNewUrlParser:true},function(err, mongo) {
@@ -109,28 +109,36 @@ function addDocument(req,res){
             return;
         }
         var db = mongo.db(SSR_DB);
-        db.collection(doc.collection).find(doc.data).toArray(function(er, result) {
-            if (er) {
-                res.status(500).end(error);
-                return;
-            }
-            if(result.length !== 0){//if document already exist
-                console.log('Cannot create, document already exist')
-                res.status(409).end('Conflict error: document already exist');
+        db.listCollections({name: doc.collection}).next(function(err, collinfo) {
+            if (!collinfo) {//if collection exist
+                console.log('Cannot added document, ' + doc.collection +' collection not found')
+                res.status(404).end('Error: Not Found, Cannot added document, ' + doc.collection +' collection not found');
                 mongo.close();
                 return;
             }
-            db.collection(doc.collection).insertOne(doc.data, function(error) {
-                if (error) {
-                    res.status(400).end('Error: 400 Bad Request, '+ error);
+            db.collection(doc.collection).find(doc.data).toArray(function(er, result) {
+                if (er) {
+                    res.status(500).end(er);
+                    return;
+                }
+                if(result.length !== 0){//if document already exist
+                    console.log('Cannot create, document already exist')
+                    res.status(409).end('Conflict error: document already exist');
                     mongo.close();
                     return;
                 }
-                console.log("1 document inserted");
-                mongo.close(); 
-                res.end('Document added successfully');
-            });
-        }); 
+                db.collection(doc.collection).insertOne(doc.data, function(error) {
+                    if (error) {
+                        res.status(400).end('Error: 400 Bad Request, '+ error);
+                        mongo.close();
+                        return;
+                    }
+                    console.log("1 document inserted to " + doc.collection);
+                    mongo.close(); 
+                    res.end('Document added successfully to ' + doc.collection);
+                });
+            }); 
+        })
     }); 
 } 
 
@@ -177,9 +185,9 @@ function addCollection(req,res){
                         mongo.close();
                         return;
                     }
-                    console.log("Collection created!");
+                    console.log(collName + " collection created!");
                     mongo.close(); 
-                    res.end('Collection created successfully');
+                    res.end(collName + ' collection created successfully');
                 }); 
             }); 
         });

@@ -7,19 +7,21 @@ import { Item } from './item';
 export class Session extends Item{
 
   public id: string;
-  public map: Map;
+  public mapId: string;
   public date: Date;
-  public warrior: Warrior;
+  public pic: string;
+  public warriorId: string;
   public times: Array<Shot>;
 
 
-  constructor(map: Map, date: Date,warrior: Warrior, times: Array<Shot>) {
+  constructor(mapId: string, date: Date,warriorId: string, pic: string, times: Array<Shot>) {
     super();
-    this.map = map;
+    this.id = '0001';
+    this.mapId = mapId;
     this.date = date;
-    this.warrior = warrior;
+    this.warriorId = warriorId;
     this.times = times;
-   
+    this.pic = pic;
   }
 
 

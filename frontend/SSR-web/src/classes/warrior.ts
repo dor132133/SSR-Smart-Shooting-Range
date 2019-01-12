@@ -1,6 +1,7 @@
 
 
 import { Item } from './item';
+import { JobType } from 'src/enums';
 
 export class Warrior extends Item{
 
@@ -15,6 +16,7 @@ export class Warrior extends Item{
 
   constructor(firstname: string, lastname: string,age: number, team: string,pic: string, job: JobType) {
     super();
+    this.id = '0001';
     this.firstname = firstname;
     this.lastname = lastname;
     this.age = age;

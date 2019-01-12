@@ -6,22 +6,22 @@ import { Injectable } from '@angular/core';
 import { MongoService } from './mongo.service';
 import { Session } from '../classes/session'
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class SessionsService {
 
-  sessions: Array<Session>;
+  sessions = [];
 
   constructor(private mondoDB: MongoService) {
-    this.getSessions();
-   }
+  }
 
-
-  getSessions(){
-    this.mondoDB.getCollection('sessions').subscribe(data =>{
-      console.log(data)
-      this.sessions = Object.values(data).slice(1);//slice the empty doc (that creates automaticlly)
+  getSessions(callback: (data) => void) {
+     return this.mondoDB.getCollection('sessions').subscribe(data => {
+       this.sessions = Object.values(data);
+       //console.log(this.sessions)
+       callback(data);
     })
   }
 
@@ -31,29 +31,23 @@ export class SessionsService {
     })
   }
 
-  //unchecked
   addSession(session: Session){
     var doc = {
         collection: "sessions",
-        data: [session]
+        data: session
     }
     var query = JSON.stringify(doc)
     console.log(query)
-    this.mondoDB.addDocument(JSON.parse(query)).subscribe(res =>{
-      console.log(res)
-    })
+    return this.mondoDB.addDocument(JSON.parse(query))
   }
 
   DeleteSession(session: Session){
     var doc = {
         collection: "sessions",
-        data: [session]
+        data: session
     }
     var query = JSON.stringify(doc)
-    this.mondoDB.deleteDocument(JSON.parse(query)).subscribe(res =>{
-      console.log(res)
-    })   
-                         
+    return this.mondoDB.deleteDocument(JSON.parse(query))                 
   }
 
 
