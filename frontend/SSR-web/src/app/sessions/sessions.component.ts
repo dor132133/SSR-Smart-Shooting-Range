@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { SessionsService } from '../sessions.service';
 import { Session } from 'src/classes/session';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { NewSessionDialogComponent } from '../new-session-dialog/new-session-dialog.component';
 
 @Component({
   selector: 'app-sessions',
@@ -11,7 +13,7 @@ export class SessionsComponent implements OnInit {
 
   sessions = [];
 
-  constructor(private sessionsService: SessionsService) { }
+  constructor(private sessionsService: SessionsService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.getSessions();
@@ -21,12 +23,6 @@ export class SessionsComponent implements OnInit {
     this.sessionsService.getSessions((data) => {
       this.sessions = Object.values(data);
     })
-      
-    
-    // .then(function(data){
-    //   console.log(data)
-    //   //this.sessions = data;
-    // })
   }
 
   addSession(){
@@ -36,6 +32,17 @@ export class SessionsComponent implements OnInit {
     })
   }
 
-  
+  openDialog(): void {
+    const dialogRef = this.dialog.open(NewSessionDialogComponent, {
+      width: '1500px',
+            //data: {name: 'New Session', animal: this.animal} //pass data into the dialog
+    });
+
+  dialogRef.afterClosed().subscribe(result => {
+      //console.log('The dialog was closed');
+      console.log(result);
+    });
+  }
+
 
 }

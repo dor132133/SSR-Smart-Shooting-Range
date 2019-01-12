@@ -12,8 +12,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module'
-import { FormsModule } from '@angular/forms';
-import { EntrypointComponent } from './entrypoint/entrypoint.component'
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { EntrypointComponent } from './entrypoint/entrypoint.component';
+import { SessionComponent } from './session/session.component';
+import { NewSessionDialogComponent } from './new-session-dialog/new-session-dialog.component'
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { EntrypointComponent } from './entrypoint/entrypoint.component'
     WarriorsComponent,
     NavComponent,
     EntrypointComponent,
+    SessionComponent,
+    NewSessionDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +37,11 @@ import { EntrypointComponent } from './entrypoint/entrypoint.component'
     HttpModule,
     BrowserAnimationsModule,
     MaterialModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule 
+  ],
+  entryComponents:[
+    NewSessionDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

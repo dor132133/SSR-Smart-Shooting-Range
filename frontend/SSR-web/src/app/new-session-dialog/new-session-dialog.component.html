@@ -1,0 +1,67 @@
+
+
+
+
+
+<h1 mat-dialog-title>New Session</h1>
+
+<div mat-dialog-content>
+
+
+    <mat-horizontal-stepper linear #stepper>
+
+        <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
+          <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Choose Warrior</ng-template>
+            <mat-form-field class="example-full-width">
+                <input type="text" placeholder="Warrior Assignee*" aria-label="Warrior Assignee" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+
+                  <!-- FIX THE ASYNC ISSUE -->
+                  <mat-option *ngFor="let warrior of warriors" [value]="warrior.firstname">
+                    <!-- <img class="example-option-img" aria-hidden [src]="warrior.pic" height="25"> -->
+                    <span>{{warrior.firstname}} {{warrior.lastname}}</span>
+                    <small> rate: {{warrior.rate}}</small>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            <div>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+
+
+        <mat-step [stepControl]="secondFormGroup" [editable]="isEditable">
+          <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Fill out your address</ng-template>
+            <mat-form-field>
+              <input matInput placeholder="Address" formControlName="secondCtrl" required>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+
+
+        <mat-step>
+          <ng-template matStepLabel>Done</ng-template>
+          You are now done.
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+          </div>
+        </mat-step>
+
+
+      </mat-horizontal-stepper>
+
+</div>
+
+
+<div mat-dialog-actions>
+  <button mat-button (click)="cancleButton()">Cancle</button>
+  <!-- <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> -->
+</div>
