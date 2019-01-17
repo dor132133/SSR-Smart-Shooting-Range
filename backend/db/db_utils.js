@@ -1,9 +1,7 @@
 
-var assert = require('assert');
 var MongoClient = require('mongodb').MongoClient;
 var url = require('../mongo_init').MONGO_URL;
 var SSR_DB = require('../mongo_init').MONGO_DB_NAME;
-const bodyParser = require('body-parser')
 
  /*
  *return: db collection's names in JSON array formate

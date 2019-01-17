@@ -1,10 +1,8 @@
 
 var express = require('express');
 var router = express.Router();
+var MAapi = require('../api/ma-api');
 
-var DBRouter = require('./DB_router');
-
-router.use('/DB', DBRouter);
-
+router.post('/start-session',MAapi.startSession);
 
 module.exports = router;

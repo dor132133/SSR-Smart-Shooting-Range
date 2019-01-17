@@ -2,22 +2,30 @@
 
 
 
-<h1>Hell Yeah</h1>
+<h1>Start Session</h1>
 
 <div class="example-boundary">
 
     
-    <!-- <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="wall01"></mat-icon></div>
     <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="wall01"></mat-icon></div>
+    <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="wall01"></mat-icon></div>
+    <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="wall02"></mat-icon></div>
+    <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="wall02"></mat-icon></div>
     <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="wall03"></mat-icon></div>
     <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="wall04"></mat-icon></div>
     <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="wall05"></mat-icon></div>
     <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="wall06"></mat-icon></div>
-    <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="sensor"></mat-icon></div>-->
+    <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="sensor"></mat-icon><h6>{{sensors[0]}}</h6></div>
+    <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="sensor"></mat-icon><h6>{{sensors[1]}}</h6></div>
+    <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="sensor"></mat-icon><h6>{{sensors[2]}}</h6></div>
     <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="warrior"></mat-icon></div> 
+    <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="target"></mat-icon><h6>{{targets[0]}}</h6></div>
+    <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="target"></mat-icon><h6>{{targets[1]}}</h6></div>
+    <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="target"></mat-icon><h6>{{targets[2]}}</h6></div>
     
 </div>
 
-<button mat-raised-button (click)="addComponents()">addComponent</button>
+<!-- <button mat-raised-button (click)="addComponents()">addComponent</button> -->
 
+<button mat-raised-button width="100px" color="primary" (click)="start({'session' : '001'})">Start</button>
 <button mat-raised-button (click)="exit()">Exit</button>

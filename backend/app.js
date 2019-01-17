@@ -29,10 +29,10 @@ var server = app.listen(8081, function () {
    console.log("Server is listening at http://127.0.0.1:8081/")
 });  
 
-var HARouter = require('./routers/HA_router');
+var MARouter = require('./routers/MA_router');
 var ESPRouter = require('./routers/ESP_router');
 var DBRouter = require('./routers/DB_router');
-app.use('/HA', HARouter);
+app.use('/MA', MARouter);
 app.use('/ESP', ESPRouter);
 app.use('/DB', DBRouter);
 

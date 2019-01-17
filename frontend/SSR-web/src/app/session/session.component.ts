@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
 import * as $ from 'jquery';
+import { SsrApiService } from '../ssr-api.service';
 
 @Component({
   selector: 'app-session',
@@ -11,32 +12,31 @@ import * as $ from 'jquery';
 })
 export class SessionComponent implements OnInit {
 
-  SSRComponents = [
-    'wall01', 'wall02', 'wall03', 'wall04', 'wall05', 'wall06', 'sensor', 'warrior', 'target' 
-  ]
+  sensors = ['01', '02', '03']
+  targets = ['01', '02', '03']
 
-  example_box_css = { 
-      "width": "100px",
-      "height": "100px",
-      "border": "solid 1px #ccc",
-      "color": "rgba(0, 0, 0, 0.87)",
-      "cursor": "move",
-      "display": "inline-flex",
-      "justify-content": "center",
-      "align-items": "center",
-      "text-align": "center",
-      "background": "#fff",
-      "border-radius": "4px",
-      "margin-right":" 25px",
-      "position": "relative",
-      "z-index": "1",
-      "box-sizing":" border-box",
-      "padding": "10px",
-      "transition": "box-shadow 200ms cubic-bezier(0, 0, 0.2, 1)",
-      "box-shadow":" 0 3px 1px -2px rgba(0, 0, 0, 0.2),0 2px 2px 0 rgba(0, 0, 0, 0.14),0 1px 5px 0 rgba(0, 0, 0, 0.12)"}
+  // example_box_css = { 
+  //     "width": "50px",
+  //     "height": "50px",
+  //     "border": "solid 1px #ccc",
+  //     "color": "rgba(0, 0, 0, 0.87)",
+  //     "cursor": "move",
+  //     "display": "inline-flex",
+  //     "justify-content": "center",
+  //     "align-items": "center",
+  //     "text-align": "center",
+  //     "background": "#fff",
+  //     "border-radius": "4px",
+  //     "margin-right":" 25px",
+  //     "position": "relative",
+  //     "z-index": "1",
+  //     "box-sizing":" border-box",
+  //     "padding": "10px",
+  //     "transition": "box-shadow 200ms cubic-bezier(0, 0, 0.2, 1)",
+  //     "box-shadow":" 0 3px 1px -2px rgba(0, 0, 0, 0.2),0 2px 2px 0 rgba(0, 0, 0, 0.14),0 1px 5px 0 rgba(0, 0, 0, 0.12)"}
 
 
-  constructor(private router: Router,private iconRegistry: MatIconRegistry,private sanitizer: DomSanitizer){
+  constructor(private router: Router,private iconRegistry: MatIconRegistry,private sanitizer: DomSanitizer,private api: SsrApiService){
     iconRegistry.addSvgIcon('wall01',sanitizer.bypassSecurityTrustResourceUrl('assets/icons/wall01.svg'));
     iconRegistry.addSvgIcon('wall02',sanitizer.bypassSecurityTrustResourceUrl('assets/icons/wall02.svg'));
     iconRegistry.addSvgIcon('wall03',sanitizer.bypassSecurityTrustResourceUrl('assets/icons/wall03.svg'));
@@ -48,13 +48,21 @@ export class SessionComponent implements OnInit {
     iconRegistry.addSvgIcon('warrior',sanitizer.bypassSecurityTrustResourceUrl('assets/icons/warrior.svg'));
   }
 
-  addComponents(component: string){
-    console.log('click')
-    $(".example-boundary").append($('<div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="wall01"></mat-icon></div>'))
-    $(".example-box").scss(this.example_box_css)
-  }
+  // addComponents(component: string){
+  //   console.log('click')
+  //   $(".example-boundary").append($('<div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="wall01"></mat-icon></div>'))
+  //   $(".example-box").scss(this.example_box_css)
+  // }
 
   ngOnInit() {
+  }
+
+  start(data: JSON){
+    this.api.startSession(data).subscribe(res => {
+      //this.sessions = Object.values(data);
+      console.log(res)
+      //callback(data);
+   })
   }
 
   exit(){
