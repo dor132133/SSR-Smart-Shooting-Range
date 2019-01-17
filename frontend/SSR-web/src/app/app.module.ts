@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { EntrypointComponent } from './entrypoint/entrypoint.component';
 import { SessionComponent } from './session/session.component';
 import { NewSessionDialogComponent } from './new-session-dialog/new-session-dialog.component'
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { NewSessionDialogComponent } from './new-session-dialog/new-session-dial
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule 
+    ReactiveFormsModule ,
+    DragDropModule
   ],
   entryComponents:[
     NewSessionDialogComponent

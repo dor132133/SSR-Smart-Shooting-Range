@@ -3,15 +3,18 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common';
 import { MatButtonModule, MatToolbarModule, MatInputModule,
      MatProgressSpinnerModule, MatCardModule, MatTabsModule,
-     MatListModule,MatDialogModule,MatStepperModule,MatAutocompleteModule} from '@angular/material'
+     MatListModule,MatDialogModule,MatStepperModule,MatAutocompleteModule,
+     MatSelectModule,MatIconModule} from '@angular/material'
 @NgModule({
     imports: [MatButtonModule, MatToolbarModule,MatInputModule,
                MatProgressSpinnerModule, MatCardModule, MatTabsModule,
-               MatListModule,MatDialogModule,MatStepperModule,MatAutocompleteModule],
+               MatListModule,MatDialogModule,MatStepperModule,MatAutocompleteModule,
+               MatSelectModule,MatIconModule],
                
     exports: [MatButtonModule, MatToolbarModule,MatInputModule,
                MatProgressSpinnerModule, MatCardModule, MatTabsModule,
-               MatListModule,MatDialogModule,MatStepperModule,MatAutocompleteModule]
+               MatListModule,MatDialogModule,MatStepperModule,MatAutocompleteModule,
+               MatSelectModule, MatIconModule]
 })
 
 export class MaterialModule {}

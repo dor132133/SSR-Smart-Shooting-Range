@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-entrypoint',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EntrypointComponent implements OnInit {
 
-  constructor() { }
 
-  ngOnInit() {
-  }
+  constructor(private router: Router) {
+
+}
+
+ngOnInit(){
+
+}
+
+
+
+
+
+
 
 }

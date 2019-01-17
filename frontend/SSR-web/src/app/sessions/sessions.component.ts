@@ -3,6 +3,8 @@ import { SessionsService } from '../sessions.service';
 import { Session } from 'src/classes/session';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { NewSessionDialogComponent } from '../new-session-dialog/new-session-dialog.component';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-sessions',
@@ -13,7 +15,7 @@ export class SessionsComponent implements OnInit {
 
   sessions = [];
 
-  constructor(private sessionsService: SessionsService, private dialog: MatDialog) { }
+  constructor(private sessionsService: SessionsService, private dialog: MatDialog, private router: Router) { }
 
   ngOnInit() {
     this.getSessions();
@@ -40,9 +42,19 @@ export class SessionsComponent implements OnInit {
 
   dialogRef.afterClosed().subscribe(result => {
       //console.log('The dialog was closed');
-      console.log(result);
+      //console.log(result);
     });
   }
+
+  startSession() {
+          this.router.navigate(['/session']).then( (e) => {
+            if (e) {
+              //console.log("Navigation is successful!");
+            } else {
+              console.log("Navigation has failed!");
+            }
+          });
+  };
 
 
 }

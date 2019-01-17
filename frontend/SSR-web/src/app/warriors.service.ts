@@ -15,7 +15,6 @@ export class WarriorsService {
   getWarriors(callback: (data) => void) {
      return this.mondoDB.getCollection('warriors').subscribe(data => {
        this.warriors = Object.values(data);
-       //console.log(this.sessions)
        callback(data);
     })
   }

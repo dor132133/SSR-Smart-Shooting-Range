@@ -22,7 +22,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-
 io = io.listen(server, {log:false, origins:'*:*'});
 
 //start server
@@ -46,9 +45,9 @@ mymongo.dbHealthCheck();
 process.stdin.resume();//so the program will not close instantly
 
 function exitHandler(options, exitCode) {
-    if (options.cleanup) console.log('clean');
+    if (options.cleanup) console.log('clean'); 
     if (exitCode || exitCode === 0) console.log(exitCode);
     if (options.exit) process.exit();
 }
-
-module.exports = app;
+      
+module.exports = app; 

@@ -7,32 +7,59 @@
 
 <div mat-dialog-content>
 
+    <!-- <mat-horizontal-stepper  [linear]="true" #stepper>
 
-    <mat-horizontal-stepper linear #stepper>
+        <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Choose Warrior</ng-template> 
+             -->
 
-        <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
-          <form [formGroup]="firstFormGroup">
-            <ng-template matStepLabel>Choose Warrior</ng-template>
-            <mat-form-field class="example-full-width">
-                <input type="text" placeholder="Warrior Assignee*" aria-label="Warrior Assignee" matInput [formControl]="myControl" [matAutocomplete]="auto">
+             <h4>mat select</h4>
+              <mat-form-field>
+                <mat-select placeholder="Favorite animal" [formControl]="animalControl" required>
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let animal of animals" [value]="animal">
+                    {{animal.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error>
+                <mat-hint>{{animalControl.value?.sound}}</mat-hint>
+              </mat-form-field>
+
+             <!-- <mat-form-field>
+                <mat-select placeholder="Assign a warrior..." [formControl]="myControl" required>
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let warrior of warriors" [value]="warrior">
+                      <span>{{warrior.firstname}} {{warrior.lastname}}</span>
+                       <small> rate: {{warrior.rate}}</small> 
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="myControl.hasError('required')">Please choose a warrior</mat-error>
+                <mat-hint>{{myControl.value?.rate}}</mat-hint>
+              </mat-form-field>
+ -->
+
+              
+              <!-- <mat-form-field class="example-full-width">
+                <input type="text" placeholder="Assign a warrior..." aria-label="Assignee" matInput [formControl]="myControl" [matAutocomplete]="auto"  required>
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-
-                  <!-- FIX THE ASYNC ISSUE -->
-                  <mat-option *ngFor="let warrior of warriors" [value]="warrior.firstname">
-                    <!-- <img class="example-option-img" aria-hidden [src]="warrior.pic" height="25"> -->
+                  <mat-option *ngFor="let warrior of warriors" [value]="warrior.firstname +' '+ warrior.lastname +' from '+ warrior.team">
+                    <img class="example-option-img" aria-hidden [src]="warrior.pic" height="25"> 
                     <span>{{warrior.firstname}} {{warrior.lastname}}</span>
                     <small> rate: {{warrior.rate}}</small>
                   </mat-option>
                 </mat-autocomplete>
-              </mat-form-field>
-            <div>
+              </mat-form-field> -->
+
+
+            <!-- <div>
               <button mat-button matStepperNext>Next</button>
-            </div>
-          </form>
-        </mat-step>
+            </div> -->
+        <!-- </form> -->
+        <!-- </mat-step> -->
 
-
-        <mat-step [stepControl]="secondFormGroup" [editable]="isEditable">
+<!-- 
+        <mat-step [stepControl]="secondFormGroup">
           <form [formGroup]="secondFormGroup">
             <ng-template matStepLabel>Fill out your address</ng-template>
             <mat-form-field>
@@ -58,7 +85,7 @@
 
       </mat-horizontal-stepper>
 
-</div>
+</div> -->
 
 
 <div mat-dialog-actions>
