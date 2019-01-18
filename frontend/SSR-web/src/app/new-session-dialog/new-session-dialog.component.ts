@@ -20,28 +20,13 @@ export interface Animal {
 export class NewSessionDialogComponent implements OnInit {
 
  
-  //myControl = new FormControl('', [Validators.required]);
-  animalControl = new FormControl('', [Validators.required]);
+  myControl = new FormControl('', [Validators.required]);
   title: string;
   warriors: Warrior[];
-
-  animals: Animal[] = [
-    {name: 'Dog', sound: 'Woof!'},
-    {name: 'Cat', sound: 'Meow!'},
-    {name: 'Cow', sound: 'Moo!'},
-    {name: 'Fox', sound: 'Wa-pa-pa-pa-pa-pa-pow!'},
-  ];
-
-
-
-
-
-
-
-  // filteredWarriors: Observable<Warrior[]>;
- // firstFormGroup: FormGroup;
-  // secondFormGroup: FormGroup;
-  // isOptional = true;
+  filteredWarriors: Observable<Warrior[]>;
+ firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  isOptional = true;
 
 
   constructor(private warriorsService:WarriorsService,
@@ -51,27 +36,28 @@ export class NewSessionDialogComponent implements OnInit {
     }
 
   ngOnInit() {
-    // this.firstFormGroup = this.formBuilder.group({
-    //   firstCtrl: ['', Validators.required]
-    // });
-    // this.secondFormGroup = this.formBuilder.group({
-    //   secondCtrl: ''
-    // });
+    this.firstFormGroup = this.formBuilder.group({
+      firstCtrl: ['', Validators.required]
+    });
+    this.secondFormGroup = this.formBuilder.group({
+      secondCtrl: ''
+    });
   }
-  //   this.filteredWarriors = this.myControl.valueChanges.pipe(
-  //     startWith<string | Warrior>(''),
-  //     map(value => typeof value === 'string' ? value : value.firstname),
-  //     map(name => name ? this._filter(name) : this.warriors.slice())
-  //   );
-  // }
-  // private _filter(name: string): Warrior[] {
-  //   const filterValue = name.toLowerCase();
-  //   return this.warriors.filter(option => option.firstname.toLowerCase().indexOf(filterValue) === 0);
-  // }
 
-  // displayFn(warrior ? : Warrior): string | undefined {
-  //   return warrior ? warrior.firstname : undefined;
-  // }
+    // this.filteredWarriors = this.myControl.valueChanges.pipe(
+    //   startWith<string | Warrior>(''),
+    //   map(value => typeof value === 'string' ? value : value.firstname),
+    //   map(name => name ? this._filter(name) : this.warriors.slice())
+    // );
+  
+  private _filter(name: string): Warrior[] {
+    const filterValue = name.toLowerCase();
+    return this.warriors.filter(option => option.firstname.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  displayFn(warrior ? : Warrior): string | undefined {
+    return warrior ? warrior.firstname : undefined;
+  }
 
   cancleButton(){
     this.dialogRef.close("Cancled");//close(data) can pass data back to the main page

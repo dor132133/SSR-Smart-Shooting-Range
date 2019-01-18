@@ -26,6 +26,11 @@
 </div>
 
 <!-- <button mat-raised-button (click)="addComponents()">addComponent</button> -->
+<mat-card class="example-card">
+    <mat-card-actions>
+        <button mat-raised-button id="start" color="primary" (click)="start({'session' : '001'})">Start</button>
+        <div ng-controller='TimeCtrl'><p>{{ clock | date:'HH:mm:ss'}}</p></div>
+    </mat-card-actions>
+</mat-card>
 
-<button mat-raised-button width="100px" color="primary" (click)="start({'session' : '001'})">Start</button>
-<button mat-raised-button (click)="exit()">Exit</button>
+<button mat-stroked-button (click)="exit()">Exit</button>

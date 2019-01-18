@@ -12,7 +12,7 @@ export class SsrApiService {
   constructor(private http: HttpClient) { }
 
 
-startSession(data : JSON){//query format: {collection:value, data:{doc query}}
+startSession(data : JSON){
   return this.http.post(environment.API_URL + 'start-session/', data);
 }
 

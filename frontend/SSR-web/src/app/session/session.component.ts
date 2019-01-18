@@ -58,10 +58,22 @@ export class SessionComponent implements OnInit {
   }
 
   start(data: JSON){
+    console.log(data)
     this.api.startSession(data).subscribe(res => {
       //this.sessions = Object.values(data);
       console.log(res)
       //callback(data);
+
+
+      
+      // var controller = angular.module('SessionComponent', []);
+      // module.controller('TimeCtrl', function($scope, $interval) {
+      //   var tick = function() {
+      //     $scope.clock = Date.now();
+      //   }
+      //   tick();
+      //   $interval(tick, 1000);
+      // });
    })
   }
 
