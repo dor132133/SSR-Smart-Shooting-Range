@@ -1,8 +1,6 @@
 
 
 
-
-
 <h1 mat-dialog-title>New Session</h1>
 
 <div mat-dialog-content>
@@ -25,20 +23,6 @@
                 <mat-error *ngIf="myControl.hasError('required')">Please choose a warrior</mat-error>
                 <mat-hint>{{myControl.value?.rate}}</mat-hint>
               </mat-form-field>
-
-
-              
-              <!-- <mat-form-field class="example-full-width">
-                <input type="text" placeholder="Assign a warrior..." aria-label="Assignee" matInput [formControl]="myControl" [matAutocomplete]="auto"  required>
-                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                  <mat-option *ngFor="let warrior of warriors" [value]="warrior.firstname +' '+ warrior.lastname +' from '+ warrior.team">
-                    <img class="example-option-img" aria-hidden [src]="warrior.pic" height="25"> 
-                    <span>{{warrior.firstname}} {{warrior.lastname}}</span>
-                    <small> rate: {{warrior.rate}}</small>
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field> -->
-
 
             <div>
               <button mat-button matStepperNext>Next</button>
@@ -76,7 +60,7 @@
 </div>
 
 
-<div mat-dialog-actions>
-  <button mat-button (click)="cancleButton()">Cancle</button>
+  <div mat-dialog-actions>
+    <button mat-button (click)="cancleButton()">Cancle</button>
   <!-- <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> -->
 </div>

@@ -1,18 +1,115 @@
 
 
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <span>Collections</span>
 
-    <span class="example-spacer"></span>
-    
-    <button mat-button>Users</button>
-    <button mat-button>Warriors</button>
-    <button mat-button>Teams</button>
-  </mat-toolbar-row>
-</mat-toolbar>
+<mat-tab-group [color]="accent">
+    <mat-tab label="Warriors">
+        <mat-card class="warriors-card">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <!-- <mat-card-title>Warriors</mat-card-title> -->
+              <mat-card-subtitle>all warriors information...</mat-card-subtitle>
+            </mat-card-header>
+        
+            
+            <mat-card-content  [style.overflow]="'auto'" [style.height.px]="'300'">
+        
+                <mat-list *ngIf="warriors">
+                  <mat-list-item *ngFor="let warrior of warriors"> 
+                    <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
+                    <h4 mat-line>{{warrior.firstname}} {{warrior.lastname}}</h4>
+                    <p mat-line> {{warrior.team}}</p>
+                     rate: {{warrior.rate}}
+                    <mat-divider></mat-divider>
+                  </mat-list-item>
+                </mat-list>
+  
+            </mat-card-content>
+        
+            <mat-card-actions>
+                <button mat-raised-button color="warn" (click)="openNewWarriorDialog()">Add New Warrior</button>
+            </mat-card-actions>
+
+          </mat-card>
+    </mat-tab>
+
+    <mat-tab label="Teams">
+        <mat-card class="teams-card">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <!-- <mat-card-title>Teams</mat-card-title> -->
+              <mat-card-subtitle>all teams information...</mat-card-subtitle>
+            </mat-card-header>
+        
+            
+            <mat-card-content  [style.overflow]="'auto'" [style.height.px]="'300'">
+                <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+                <mat-list *ngIf="teams">
+                  <mat-list-item *ngFor="let team of teams"> 
+                      <!-- <img src="{{team.pic}}" alt="Smiley face" height="42" width="42"> -->
+                    <h4 mat-line>{{team.name}}</h4>
+                    <p mat-line> {{team.numOfMems}}</p>
+                     Rate: {{team.rate}}
+                    <mat-divider></mat-divider>
+                  </mat-list-item>
+                </mat-list>
+  
+            </mat-card-content>
+        
+            <mat-card-actions>
+                <button mat-raised-button color="warn" (click)="addTeam()">Add New Team</button>
+            </mat-card-actions>
+
+          </mat-card>
+    </mat-tab>
 
 
+    <mat-tab label="Users">
+        <mat-card class="users-card">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <!-- <mat-card-title>Teams</mat-card-title> -->
+              <mat-card-subtitle>all users information...</mat-card-subtitle>
+            </mat-card-header>
+        
+            
+            <mat-card-content  [style.overflow]="'auto'" [style.height.px]="'300'">
+                <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+                <mat-list *ngIf="users">
+                  <mat-list-item *ngFor="let user of users"> 
+                      <!-- <img src="{{team.pic}}" alt="Smiley face" height="42" width="42"> -->
+                    <h4 mat-line>{{user.email}}</h4>
+                    <p mat-line> {{user.password}}</p>
+                     {{user.type}}
+                    <mat-divider></mat-divider>
+                  </mat-list-item>
+                </mat-list>
+  
+            </mat-card-content>
+        
+            <mat-card-actions>
+                <button mat-raised-button color="warn" (click)="addUser()">Add New User</button>
+            </mat-card-actions>
+
+          </mat-card>
+    </mat-tab>
+  </mat-tab-group>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
 <mat-card>
   <mat-form-field>
     <input matInput [(ngModel)]="answer" placeholder="Who has the best app?">
@@ -21,10 +118,10 @@
   <br>
   
   <button mat-raised-button (click)="showAnswer()">Answer me</button>
-  <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+  
 </mat-card>
 
 
 <mat-card *ngIf="answerDisplay">
   <h1>{{ answerDisplay }}, you're damn right.</h1>
-</mat-card>
+</mat-card> -->

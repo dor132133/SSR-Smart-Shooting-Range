@@ -2,7 +2,6 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
-import * as $ from 'jquery';
 import { SsrApiService } from '../ssr-api.service';
 
 @Component({
@@ -37,15 +36,15 @@ export class SessionComponent implements OnInit {
 
 
   constructor(private router: Router,private iconRegistry: MatIconRegistry,private sanitizer: DomSanitizer,private api: SsrApiService){
-    iconRegistry.addSvgIcon('wall01',sanitizer.bypassSecurityTrustResourceUrl('assets/icons/wall01.svg'));
-    iconRegistry.addSvgIcon('wall02',sanitizer.bypassSecurityTrustResourceUrl('assets/icons/wall02.svg'));
-    iconRegistry.addSvgIcon('wall03',sanitizer.bypassSecurityTrustResourceUrl('assets/icons/wall03.svg'));
-    iconRegistry.addSvgIcon('wall04',sanitizer.bypassSecurityTrustResourceUrl('assets/icons/wall04.svg'));
-    iconRegistry.addSvgIcon('wall05',sanitizer.bypassSecurityTrustResourceUrl('assets/icons/wall05.svg'));
-    iconRegistry.addSvgIcon('wall06',sanitizer.bypassSecurityTrustResourceUrl('assets/icons/wall06.svg'));
-    iconRegistry.addSvgIcon('sensor',sanitizer.bypassSecurityTrustResourceUrl('assets/icons/sensor.svg'));
-    iconRegistry.addSvgIcon('target',sanitizer.bypassSecurityTrustResourceUrl('assets/icons/target.svg'));
-    iconRegistry.addSvgIcon('warrior',sanitizer.bypassSecurityTrustResourceUrl('assets/icons/warrior.svg'));
+    iconRegistry.addSvgIcon('wall01',sanitizer.bypassSecurityTrustResourceUrl('assets/icons_sr_components/wall01.svg'));
+    iconRegistry.addSvgIcon('wall02',sanitizer.bypassSecurityTrustResourceUrl('assets/icons_sr_components/wall02.svg'));
+    iconRegistry.addSvgIcon('wall03',sanitizer.bypassSecurityTrustResourceUrl('assets/icons_sr_components/wall03.svg'));
+    iconRegistry.addSvgIcon('wall04',sanitizer.bypassSecurityTrustResourceUrl('assets/icons_sr_components/wall04.svg'));
+    iconRegistry.addSvgIcon('wall05',sanitizer.bypassSecurityTrustResourceUrl('assets/icons_sr_components/wall05.svg'));
+    iconRegistry.addSvgIcon('wall06',sanitizer.bypassSecurityTrustResourceUrl('assets/icons_sr_components/wall06.svg'));
+    iconRegistry.addSvgIcon('sensor',sanitizer.bypassSecurityTrustResourceUrl('assets/icons_sr_components/sensor.svg'));
+    iconRegistry.addSvgIcon('target',sanitizer.bypassSecurityTrustResourceUrl('assets/icons_sr_components/target.svg'));
+    iconRegistry.addSvgIcon('warrior',sanitizer.bypassSecurityTrustResourceUrl('assets/icons_sr_components/warrior.svg'));
   }
 
   // addComponents(component: string){

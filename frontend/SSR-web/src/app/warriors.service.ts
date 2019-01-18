@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MongoService } from './mongo.service';
 import { Warrior } from 'src/classes/warrior';
+import { ErrorService } from './error.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class WarriorsService {
 
   warriors = [];
 
-  constructor(private mondoDB: MongoService) {
+  constructor(private mondoDB: MongoService, private errorService: ErrorService) {
   }
 
   getWarriors(callback: (data) => void) {
@@ -25,23 +26,35 @@ export class WarriorsService {
     })
   }
 
-  addWarrior(warrior: Warrior){
+  addWarrior(warrior: Warrior, callback: (data) => void){
     var doc = {
         collection: "warriors",
         data: warrior
     }
     var query = JSON.stringify(doc)
-    console.log(query)
-    return this.mondoDB.addDocument(JSON.parse(query))
+    var _this=this;
+    //console.log(query)
+    this.mondoDB.addDocument(JSON.parse(query)).subscribe(
+      res => console.log('HTTP response', res),
+      err => {
+        _this.errorService.httpErrorHandler(err);
+        callback(err)
+      }); 
   }
 
-  DeleteWarrior(warrior: Warrior){
+  DeleteWarrior(warrior: Warrior, callback: (data) => void){
     var doc = {
         collection: "warriors",
         data: warrior
     }
     var query = JSON.stringify(doc)
-    return this.mondoDB.deleteDocument(JSON.parse(query))                 
+    var _this=this;
+    this.mondoDB.deleteDocument(JSON.parse(query)).subscribe(
+      res => console.log('HTTP response', res),
+      err => {
+        _this.errorService.httpErrorHandler(err);
+        callback(err)
+      });                  
   }
 
 }

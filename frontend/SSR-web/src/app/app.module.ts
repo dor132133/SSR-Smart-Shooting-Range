@@ -17,6 +17,8 @@ import { EntrypointComponent } from './entrypoint/entrypoint.component';
 import { SessionComponent } from './session/session.component';
 import { NewSessionDialogComponent } from './new-session-dialog/new-session-dialog.component'
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { NewWarriorDialogComponent } from './new-warrior-dialog/new-warrior-dialog.component';
+import { NewTeamDialogComponent } from './new-team-dialog/new-team-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     NavComponent,
     EntrypointComponent,
     SessionComponent,
-    NewSessionDialogComponent
+    NewSessionDialogComponent,
+    NewWarriorDialogComponent,
+    NewTeamDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +47,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     DragDropModule
   ],
   entryComponents:[
-    NewSessionDialogComponent
+    NewSessionDialogComponent,
+    NewWarriorDialogComponent,
+    NewTeamDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

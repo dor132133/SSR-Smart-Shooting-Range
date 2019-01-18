@@ -11,3 +11,8 @@ export enum TrainType {
     STAGE_THREE = "STAGE_THREE",
 }
 
+export enum UserType {
+    ADMIN = "ADMIN",
+    OPERATOR = "OPERATOR",
+    GUEST = "GUEST",
+}

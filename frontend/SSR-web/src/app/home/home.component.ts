@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
 
   addDocumentButton(){
     let session = new Session('mapId',new Date, 'warriorId','',[]);
-    this.sessionsService.addSession(session).subscribe(res =>{
+    this.sessionsService.addSession(session, (res) =>{
       console.log(res)
     })
   }
@@ -63,9 +63,9 @@ export class HomeComponent implements OnInit {
   }
 
   DeleteDocumentButton(){
-    var query = JSON.stringify({ collection : "sessions",
+    var query = JSON.stringify({ collection : "teams",
                        data: {
-                         id: "0001"
+                         name: "Dicks"
                         }
                 })
     this.mondoDB.deleteDocument(JSON.parse(query)).subscribe(res =>{

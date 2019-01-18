@@ -29,8 +29,10 @@ export class SessionsComponent implements OnInit {
 
   addSession(){
     let session = new Session('mapId',new Date, 'warriorId','',[]);
-    this.sessionsService.addSession(session).subscribe(res =>{
-      console.log(res)
+    var _this = this
+    this.sessionsService.addSession(session, (res) => {
+      if(res.status == 200)
+        _this.getSessions()
     })
   }
 

@@ -1,37 +1,38 @@
-<div layout="row" layout-margin layout-wrap layout-align="center center">
 
-<mat-card flex="25" class="sessions-card">
+
+
+<!-- <div layout="row" layout-margin layout-wrap layout-align="center center"> -->
+
+<mat-card class="sessions-card">
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Shiba Inu</mat-card-title>
-      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+      <mat-card-title>Sessions</mat-card-title>
+      <mat-card-subtitle>all session information...</mat-card-subtitle>
     </mat-card-header>
 
     
-    <mat-card-content>
+    <mat-card-content  [style.overflow]="'auto'" [style.height.px]="'300'">
 
         <mat-list *ngIf="sessions">
-          
-          <h3 mat-subheader>Sessions</h3>
           <mat-list-item *ngFor="let session of sessions"> 
             <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
             <h4 mat-line>{{session.id}}</h4>
             <p mat-line> {{session.warriorId}}</p>
-            <p mat-line> {{sessions.date}} </p>
+            <p mat-line> {{session.date}} </p>
+            <mat-divider></mat-divider>
           </mat-list-item>
-
         </mat-list>
 
     </mat-card-content>
 
 
     <mat-card-actions>
-        <button mat-raised-button (click)="openDialog()">Create & Start (Not working)</button>
-        <button mat-raised-button (click)="startSession()">Start</button>
+        <button mat-raised-button color="warn" (click)="openDialog()">Create & Start (Not working)</button>
+        <button mat-raised-button color="warn" (click)="startSession()">Start</button>
     </mat-card-actions>
 
 
   </mat-card>
 
 
-</div>
+<!-- </div> -->
