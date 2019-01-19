@@ -58,6 +58,16 @@ export class CollectionsComponent implements OnInit {
       console.log(result);
       if(result !== false)
         this.addWarrior(result)
+        let query = JSON.parse(JSON.stringify({name : result.team}))//update the new warrior's team num of mems
+        this.teamsService.getTeamByQuery(query,(team) => {
+          var newTeam = <Team>JSON.parse(JSON.stringify(team));
+           console.log(team)
+           console.log(newTeam)
+           newTeam.numOfMems +=1
+          this.teamsService.updateTeam(team,newTeam, (data)=> {
+            console.log(data)
+          })
+        })
     });
   }
 
@@ -102,7 +112,6 @@ export class CollectionsComponent implements OnInit {
     this.showSpinner = false;
     })
   }
-
 
   addWarrior(warrior: Warrior){
     var _this=this;

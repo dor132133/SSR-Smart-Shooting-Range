@@ -46,7 +46,8 @@
           <mat-form-field class="example-full-width">
               <mat-select placeholder="Team"  [(ngModel)]="newWarrior.team">
                   <mat-option *ngFor="let team of teams" [value]="team.name">
-                    {{team.pic}}{{team.name}}
+                    <img class="example-option-img" aria-hidden [src]="team.pic" height="35">
+                    <span>{{team.name}}</span>
                   </mat-option>
               </mat-select>
           </mat-form-field>

@@ -7,13 +7,13 @@
 
     public id: string;
     public name: string;
-    public numOfMems: Number;
-    public rate: Number;
+    public numOfMems: number;
+    public rate: number;
     public pic: string;
     public description: string;
   
   
-    constructor(name: string,numOfMems: Number, pic: string,description: string) {
+    constructor(name: string,numOfMems: number, pic: string,description: string) {
       super();
       this.id = '0001';
       this.name = name;

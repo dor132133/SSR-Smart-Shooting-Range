@@ -30,7 +30,6 @@ export class WarriorsService {
     let query = JSON.stringify(warrior)
     var _this = this
     this.mongoDB.getDocument(JSON.parse(query)).subscribe(data => {
-      this.warriors = Object.values(data);
       callback(data);
    },err=> {
      _this.errorService.httpErrorHandler(err);
@@ -43,7 +42,6 @@ export class WarriorsService {
                                })
     var _this=this
     this.mongoDB.getDocument(JSON.parse(doc)).subscribe(data => {
-      this.warriors = Object.values(data);
       callback(data);
     },err=> {
       _this.errorService.httpErrorHandler(err);
@@ -98,5 +96,8 @@ export class WarriorsService {
           _this.errorService.httpErrorHandler(err);
           callback(err)
         });                  
-  }  
+  }
+  
+  
+
 }

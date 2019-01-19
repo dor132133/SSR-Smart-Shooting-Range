@@ -10,13 +10,39 @@ export class TeamsService {
 
   teams = []
 
-  constructor(private mondoDB: MongoService,private errorService: ErrorService) { }
+  constructor(private mongoDB: MongoService,private errorService: ErrorService) { }
 
   getTeams(callback: (data) => void) {
-      return this.mondoDB.getCollection('teams').subscribe(data => {
+      return this.mongoDB.getCollection('teams').subscribe(data => {
         this.teams = Object.values(data);
         callback(data);
     })
+  }
+
+  getTeamById(myId: string, callback: (data) => void){
+    let warrior = { collection: "teams",
+                    data: { _id: myId}
+                  }
+    let query = JSON.stringify(warrior)
+    var _this = this
+    this.mongoDB.getDocument(JSON.parse(query)).subscribe(data => {
+      callback(data);
+   },err=> {
+     _this.errorService.httpErrorHandler(err);
+   })              
+  }
+
+  getTeamByQuery(query: JSON, callback: (data) => void){
+    var doc = JSON.stringify({  collection : "teams",
+                                  data: query
+                               })
+    var _this=this
+    this.mongoDB.getDocument(JSON.parse(doc)).subscribe(data => {
+      callback(data);
+    },err=> {
+      _this.errorService.httpErrorHandler(err);
+    })              
+
   }
 
   addTeam(team: Team ,callback: (res) => void){
@@ -27,7 +53,7 @@ export class TeamsService {
     var query = JSON.stringify(doc)
     //console.log(query)
     var _this=this;
-    this.mondoDB.addDocument(JSON.parse(query)).subscribe(
+    this.mongoDB.addDocument(JSON.parse(query)).subscribe(
       res => console.log('HTTP response', res),
       err => {
         _this.errorService.httpErrorHandler(err);
@@ -35,20 +61,39 @@ export class TeamsService {
       }); 
   }
 
-  DeleteTeam(team: Team,callback: (res) => void){
+  deleteTeam(team: Team,callback: (res) => void){
   var doc = {
       collection: "teams",
       data: team
   }
   var query = JSON.stringify(doc)
   var _this=this;
-  this.mondoDB.deleteDocument(JSON.parse(query)).subscribe(
+  this.mongoDB.deleteDocument(JSON.parse(query)).subscribe(
     res => console.log('HTTP response', res),
     err => {
       _this.errorService.httpErrorHandler(err);
       callback(err)
     });                  
-}
+  }
+
+  updateTeam(originTeam: Team, updateTeam: Team, callback: (res)=> void){
+    var doc = {
+      collection: "teams",
+      data: {
+        origin: originTeam,
+        new: updateTeam
+      }
+    }
+    var query = JSON.stringify(doc)
+    var _this=this;
+    this.mongoDB.updateDocument(JSON.parse(query)).subscribe(
+      res => console.log('HTTP response', res),
+      err => {
+        _this.errorService.httpErrorHandler(err);
+        callback(err)
+      });      
+  }
+
 
 
 
