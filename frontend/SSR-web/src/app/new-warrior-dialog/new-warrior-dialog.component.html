@@ -9,13 +9,60 @@
   <div mat-dialog-content>
       <div class="example-container">
           <mat-form-field>
-            <input matInput placeholder="FirstName">
+            <input matInput placeholder="FirstName" [(ngModel)]="newWarrior.firstname">
           </mat-form-field>
+          <div class="divider"></div>
+          <mat-form-field>
+              <input matInput placeholder="Lastname" [(ngModel)]="newWarrior.lastname">
+            </mat-form-field>
         </div>
+        <div class="age-container">
+            <mat-form-field>
+              <input matInput placeholder="Age" type="number" [(ngModel)]="newWarrior.age">
+            </mat-form-field>
+        </div> 
 
+        <table class="example-full-width"><tr>
+          <td class="areaNumber-container">
+              <mat-form-field>
+                  <mat-select  [(ngModel)]="myAreaPhoneNumber">
+                      <mat-option *ngFor="let number of areaNumbers" [value]="number">
+                        {{number}}
+                      </mat-option>
+                  </mat-select> 
+              </mat-form-field>
+          </td>
+          <!-- <td>&ndash;   </td> -->
+          <td> 
+            <mat-form-field>
+            <input type="number" #PhonLength matInput placeholder="Phone number" [(ngModel)]="myPhoneNumber">
+            <mat-hint align="end">{{PhonLength.value.length}} / 7</mat-hint>
+            </mat-form-field>
+          </td>
+        </tr></table>
+
+
+        <div class="example-container">
+          <mat-form-field class="example-full-width">
+              <mat-select placeholder="Team"  [(ngModel)]="newWarrior.team">
+                  <mat-option *ngFor="let team of teams" [value]="team.name">
+                    {{team.pic}}{{team.name}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+          <div class="divider"></div>
+          <mat-form-field class="example-full-width">
+              <mat-select placeholder="Job Type"  [(ngModel)]="newWarrior.job">
+                  <mat-option *ngFor="let job of jobType" [value]="job">
+                    {{job}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+      </div>
   </div>
 
   <div mat-dialog-actions>
     <button mat-button (click)="cancleButton()">Cancle</button>
+    <button mat-button (click)="AddNewWarrior()">Check</button>
   <!-- <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> -->
   </div>  

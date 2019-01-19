@@ -12,16 +12,19 @@ export class Warrior extends Item{
   public team: string;
   public  pic: string;
   public job: JobType
+  public phone: string
+  public rate: Number
 
 
-  constructor(firstname: string, lastname: string,age: number, team: string,pic: string, job: JobType) {
+  constructor(firstname: string, lastname: string,age: number, team: string,pic: string, job: JobType, phone: string) {
     super();
-    this.id = '0001';
     this.firstname = firstname;
     this.lastname = lastname;
     this.age = age;
     this.pic = pic;
     this.job = job; 
+    this.phone = phone; 
+    this.rate = 0;
   }
 
 

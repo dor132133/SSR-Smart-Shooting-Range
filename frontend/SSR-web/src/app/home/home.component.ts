@@ -41,13 +41,6 @@ export class HomeComponent implements OnInit {
     })
   }
 
-
-
-
-
-
-
-
   //Administrator users only
   addCollectionButton(name: string){
      var schema = JSON.parse('{}');
@@ -60,12 +53,12 @@ export class HomeComponent implements OnInit {
     this.mondoDB.deleteCollection(name).subscribe(res =>{
       console.log(res)
     });
-  }
+  } 
 
   DeleteDocumentButton(){
-    var query = JSON.stringify({ collection : "teams",
+    var query = JSON.stringify({ collection : "warriors",
                        data: {
-                         name: "Dicks"
+                         firstname: "Avi"
                         }
                 })
     this.mondoDB.deleteDocument(JSON.parse(query)).subscribe(res =>{

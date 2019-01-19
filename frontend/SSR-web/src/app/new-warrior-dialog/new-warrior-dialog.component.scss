@@ -1,9 +1,27 @@
 
-.example-container {
+.age-container {
     display: flex;
     flex-direction: column;
   }
   
-  .example-container > * {
-    width: 50%;
+  .age-container > * {
+    width: 10%;
   }
+
+  .areaNumber-container > *{
+      width: 50%;
+      margin: 0px;
+      padding: 0px
+  }
+
+  .divider{
+    width:30px;
+    height:auto;
+    display:inline-block;
+}
+
+.example-tel-input-spacer {
+    opacity: 0;
+    transition: opacity 200ms;
+  }
+

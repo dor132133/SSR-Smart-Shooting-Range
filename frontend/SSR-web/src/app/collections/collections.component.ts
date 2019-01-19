@@ -41,6 +41,8 @@ export class CollectionsComponent implements OnInit {
   dialogRef.afterClosed().subscribe(result => {
       //console.log('The dialog was closed');
       console.log(result);
+      if(result !== false)
+        this.addWarrior(result.res)
     });
   }
 
@@ -90,13 +92,14 @@ export class CollectionsComponent implements OnInit {
   }
 
 
-  addWarrior(){
-    let warrior = new Warrior('Gadi','Vilentski',30,'Killers','',JobType.GUID);
+  addWarrior(warrior: Warrior){
     var _this=this;
     this.showSpinner = true;
     this.warriorsService.addWarrior(warrior, (res) => {
-      if(res.status == 200)
+      if(res.status == 200){
         _this.getWarriors()
+        this.errorService.openSnackBar('New Warrior added!','Success') 
+      }
     this.showSpinner = false;
     })
   }

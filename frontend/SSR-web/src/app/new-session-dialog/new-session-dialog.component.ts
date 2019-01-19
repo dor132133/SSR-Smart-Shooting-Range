@@ -24,7 +24,7 @@ export class NewSessionDialogComponent implements OnInit {
   title: string;
   warriors: Warrior[];
   filteredWarriors: Observable<Warrior[]>;
- firstFormGroup: FormGroup;
+  firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   isOptional = true;
 
