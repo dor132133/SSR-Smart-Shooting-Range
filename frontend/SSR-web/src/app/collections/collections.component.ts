@@ -10,6 +10,7 @@ import { Warrior } from 'src/classes/warrior';
 import { UserType, JobType } from 'src/enums';
 import { MatDialog } from '@angular/material';
 import { NewWarriorDialogComponent } from '../new-warrior-dialog/new-warrior-dialog.component';
+import { NewTeamDialogComponent } from '../new-team-dialog/new-team-dialog.component';
 
 @Component({
   selector: 'app-collections',
@@ -32,6 +33,20 @@ export class CollectionsComponent implements OnInit {
     this.getTeams();
   }
 
+  openNewTeamDialog(): void {
+    const dialogRef = this.dialog.open(NewTeamDialogComponent, {
+      width: '1500px',
+            //data: {name: 'New Session', animal: this.animal} //pass data into the dialog
+    });
+
+  dialogRef.afterClosed().subscribe(result => {
+      //console.log('The dialog was closed');
+     //console.log(result);
+      if(result !== false)
+        this.addTeam(result)
+    });
+  }
+
   openNewWarriorDialog(): void {
     const dialogRef = this.dialog.open(NewWarriorDialogComponent, {
       width: '1500px',
@@ -42,16 +57,14 @@ export class CollectionsComponent implements OnInit {
       //console.log('The dialog was closed');
       console.log(result);
       if(result !== false)
-        this.addWarrior(result.res)
+        this.addWarrior(result)
     });
   }
-
-
 
   getWarriors(){
     this.warriorsService.getWarriors((data) => {
       this.warriors = Object.values(data);
-      //console.log(this.warriors)
+      console.log(this.warriors)
     })
   }
 
@@ -69,8 +82,7 @@ export class CollectionsComponent implements OnInit {
     })
   }
 
-  addTeam(){
-    let team = new Team("Dicks",2,'','Special crazy unit...');
+  addTeam(team: Team){
     var _this=this;
     this.showSpinner = true;
     this.teamsService.addTeam(team, (res) => {

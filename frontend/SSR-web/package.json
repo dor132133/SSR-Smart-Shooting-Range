@@ -9,6 +9,11 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^7.1.4",
@@ -22,9 +27,15 @@
     "@angular/platform-browser": "~7.1.0",
     "@angular/platform-browser-dynamic": "~7.1.0",
     "@angular/router": "~7.1.0",
+    "buffer": "^5.2.1",
     "core-js": "^2.5.4",
+    "events": "^3.0.0",
+    "file-system": "^2.2.2",
+    "fs": "0.0.1-security",
     "hammerjs": "^2.0.8",
     "rxjs": "~6.3.3",
+    "stream": "0.0.2",
+    "timers": "^0.1.1",
     "tslib": "^1.9.0",
     "yarn": "^1.13.0",
     "zone.js": "~0.8.26"
@@ -36,7 +47,7 @@
     "@angular/language-service": "~7.1.0",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "~8.9.4",
+    "@types/node": "^8.9.5",
     "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",

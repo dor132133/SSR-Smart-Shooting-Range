@@ -16,7 +16,7 @@ import { ErrorService } from '../error.service';
 export class NewWarriorDialogComponent implements OnInit {
 
   areaNumbers = ['02','03','04','08','050','052','053','054','057','058']
-  newWarrior = new Warrior('','',0,'','',null,'');
+  newWarrior = new Warrior('','',null,'','',null,'');
   teams = []
   jobType = [JobType.GUEST, JobType.GUID, JobType.OTHER]
   myAreaPhoneNumber = ''
@@ -30,25 +30,30 @@ export class NewWarriorDialogComponent implements OnInit {
     this.getTeams();
   }
 
-  AddNewWarrior(){
+  checkFields(){
     if(this.myPhoneNumber.toString().length !== 7){this.errorService.openSnackBar('Wrong Phone Number','Error')
-      return}
+      return false}
     if(this.myAreaPhoneNumber.toString().length <= 0){this.errorService.openSnackBar('Wrong Area Phone Number','Error')
-      return}
+      return false}
     if(this.newWarrior.firstname.replace(' ','') == ''){this.errorService.openSnackBar('Enter First Name','Error')
-     return}
+     return false}
     if(this.newWarrior.lastname.replace(' ','') == ''){this.errorService.openSnackBar('Enter Last Name','Error')
-    return}
+    return false}
     if(this.newWarrior.age <= 0){this.errorService.openSnackBar('Wrong Age','Error')
-    return}
+    return false}
     if(this.newWarrior.team == ''){this.errorService.openSnackBar('Choose Team','Error')
-    return}
+    return false}
     if(this.newWarrior.job == null){this.errorService.openSnackBar('Choose Job','Error')
-    return}
+    return false}
+    return true
+  }
 
-    this.newWarrior.phone = this.myAreaPhoneNumber.toString() +'-'+ this.myPhoneNumber.toString();
-    this.data = this.newWarrior
-    this.dialogRef.close(this.data);//close(data) can pass data back to the main page
+  AddNewWarrior(){
+    if(this.checkFields()){
+      this.newWarrior.phone = this.myAreaPhoneNumber.toString() +'-'+ this.myPhoneNumber.toString();
+      this.data = this.newWarrior
+      this.dialogRef.close(this.data);//close(data) can pass data back to the main page
+    }
   }
 
   cancleButton(){

@@ -5,8 +5,8 @@
 
 
 <h1 mat-dialog-title>New Session</h1>
-
   <div mat-dialog-content>
+        <img width="150px" height="150px" src="assets/icons_general/target2.svg">
       <div class="example-container">
           <mat-form-field>
             <input matInput placeholder="FirstName" [(ngModel)]="newWarrior.firstname">
@@ -16,7 +16,7 @@
               <input matInput placeholder="Lastname" [(ngModel)]="newWarrior.lastname">
             </mat-form-field>
         </div>
-        <div class="age-container">
+        <div class="age-container">      
             <mat-form-field>
               <input matInput placeholder="Age" type="number" [(ngModel)]="newWarrior.age">
             </mat-form-field>
@@ -63,6 +63,6 @@
 
   <div mat-dialog-actions>
     <button mat-button (click)="cancleButton()">Cancle</button>
-    <button mat-button (click)="AddNewWarrior()">Check</button>
+    <button mat-raised-button color="primary" (click)="AddNewWarrior()">Add</button>
   <!-- <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> -->
   </div>  

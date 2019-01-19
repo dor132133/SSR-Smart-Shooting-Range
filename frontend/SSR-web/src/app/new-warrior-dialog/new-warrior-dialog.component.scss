@@ -6,6 +6,12 @@
   
   .age-container > * {
     width: 10%;
+    float: left;
+  }
+
+  img {
+    float:right;
+    margin-right: 2%
   }
 
   .areaNumber-container > *{

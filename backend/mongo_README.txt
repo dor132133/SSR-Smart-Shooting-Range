@@ -43,3 +43,5 @@ Mongo on Docker:
     use <db-name>
 #list of collections
     show collections
+#collection content 
+    db.<collection-name>.find()

@@ -48,6 +48,9 @@ export class MongoService {
     return this.http.put(environment.mongoDB_URL + 'delete/collection', json)
   }
 
+  updateDocument(document: JSON){
+    return this.http.put(environment.mongoDB_URL + '/update/document', document)
+  }
 
 
 

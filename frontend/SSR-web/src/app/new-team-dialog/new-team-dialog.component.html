@@ -1,3 +1,39 @@
-<p>
-  new-team-dialog works!
-</p>
+
+
+
+
+
+
+
+
+
+
+<h1 mat-dialog-title>New Team</h1>
+
+<div mat-dialog-content>
+     <img width="150px" height="150px" src="{{newTeam.pic}}"> 
+    <div class="example-container">
+        <mat-form-field>
+          <input matInput placeholder="Name" [(ngModel)]="newTeam.name">
+        </mat-form-field>
+        <div class="divider"></div>
+        <mat-form-field>
+            <mat-select [(ngModel)]="newTeam.pic" placeholder="Icon">
+                <mat-option *ngFor="let icon of icons" [value]="icon">
+                    <img class="example-option-img" aria-hidden [src]="icon" height="45">
+                </mat-option>
+            </mat-select> 
+        </mat-form-field>
+      </div>
+      <mat-form-field class="example-full-width">
+          <textarea matInput placeholder="Description about the team" [(ngModel)]='newTeam.description'></textarea>
+      </mat-form-field>
+
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="cancleButton()">Cancle</button>
+  <button mat-raised-button color="primary" (click)="AddNewTeam()">Add</button>
+<!-- <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> -->
+</div>  
+

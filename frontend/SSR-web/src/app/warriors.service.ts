@@ -10,20 +10,45 @@ export class WarriorsService {
 
   warriors = [];
 
-  constructor(private mondoDB: MongoService, private errorService: ErrorService) {
+  constructor(private mongoDB: MongoService, private errorService: ErrorService) {
   }
 
   getWarriors(callback: (data) => void) {
-     return this.mondoDB.getCollection('warriors').subscribe(data => {
+    var _this=this;
+     return this.mongoDB.getCollection('warriors').subscribe(data => {
        this.warriors = Object.values(data);
        callback(data);
+    },err=> {
+      _this.errorService.httpErrorHandler(err);
     })
   }
 
-  getWarriorByDate(date: Date){
-    return this.warriors.find(function(element){
-        return element.date===date;
-    })
+  getWarriorById(myId: string, callback: (data) => void){
+    let warrior = { collection: "warriors",
+                    data: { _id: myId}
+                  }
+    let query = JSON.stringify(warrior)
+    var _this = this
+    this.mongoDB.getDocument(JSON.parse(query)).subscribe(data => {
+      this.warriors = Object.values(data);
+      callback(data);
+   },err=> {
+     _this.errorService.httpErrorHandler(err);
+   })              
+  }
+
+  getWarriorByQuery(query: JSON, callback: (data) => void){
+    var doc = JSON.stringify({  collection : "warriors",
+                                  data: query
+                               })
+    var _this=this
+    this.mongoDB.getDocument(JSON.parse(doc)).subscribe(data => {
+      this.warriors = Object.values(data);
+      callback(data);
+    },err=> {
+      _this.errorService.httpErrorHandler(err);
+    })              
+
   }
 
   addWarrior(warrior: Warrior, callback: (data) => void){
@@ -33,8 +58,8 @@ export class WarriorsService {
     }
     var query = JSON.stringify(doc)
     var _this=this;
-    //console.log(query)
-    this.mondoDB.addDocument(JSON.parse(query)).subscribe(
+    console.log(query)
+    this.mongoDB.addDocument(JSON.parse(query)).subscribe(
       res => console.log('HTTP response', res),
       err => {
         _this.errorService.httpErrorHandler(err);
@@ -49,7 +74,7 @@ export class WarriorsService {
     }
     var query = JSON.stringify(doc)
     var _this=this;
-    this.mondoDB.deleteDocument(JSON.parse(query)).subscribe(
+    this.mongoDB.deleteDocument(JSON.parse(query)).subscribe(
       res => console.log('HTTP response', res),
       err => {
         _this.errorService.httpErrorHandler(err);
@@ -57,4 +82,21 @@ export class WarriorsService {
       });                  
   }
 
+  updateWarrior(originWarrior: Warrior,updateWarrior: Warrior, callback: (data) => void){
+      var doc = {
+        collection: "warriors",
+        data: {
+          origin: originWarrior,
+          new: updateWarrior
+        }
+      }
+      var query = JSON.stringify(doc)
+      var _this=this;
+      this.mongoDB.updateDocument(JSON.parse(query)).subscribe(
+        res => console.log('HTTP response', res),
+        err => {
+          _this.errorService.httpErrorHandler(err);
+          callback(err)
+        });                  
+  }  
 }

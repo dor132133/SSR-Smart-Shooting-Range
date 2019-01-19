@@ -6,6 +6,7 @@ import { SessionsService } from '../sessions.service';
 import { Warrior } from 'src/classes/warrior';
 import { Map } from 'src/classes/map';
 import { TrainType, JobType } from 'src/enums';
+import { WarriorsService } from '../warriors.service';
 
 @Component({
   selector: 'app-home',
@@ -19,10 +20,30 @@ export class HomeComponent implements OnInit {
   sessions: Object;
   
 
-  constructor(private mondoDB: MongoService, private sessionsService: SessionsService) { }
+  constructor(private mondoDB: MongoService, private sessionsService: SessionsService, private warriorsService: WarriorsService) { }
 
   ngOnInit() {
 
+  }
+
+
+  updateWarriorButton(){
+    this.warriorsService.getWarriorById('5c427cf576b68700434170cc',(warrior) => {
+      var newWarrior = <Warrior>JSON.parse(JSON.stringify(warrior));
+      newWarrior.firstname = 'Dude'
+      console.log(warrior)
+      console.log(newWarrior)
+      this.warriorsService.updateWarrior(warrior,newWarrior, (data)=> {
+        console.log(data)
+      })
+    })
+  }
+
+  getWarriorByQuery(){
+    var query = JSON.stringify({  collection : "warriors",
+                                  data: {firstname : "Dor"}
+                               })
+    this.mondoDB.getDocument(JSON.parse(query)).subscribe(res => console.log(res))
   }
 
   showCollectionButton(name: string){
@@ -47,7 +68,7 @@ export class HomeComponent implements OnInit {
      this.mondoDB.addCollection(name, schema).subscribe(res =>{
        console.log(res)
      })
-   }
+   } 
 
   deleteCollectionButton(name: string){
     this.mondoDB.deleteCollection(name).subscribe(res =>{
