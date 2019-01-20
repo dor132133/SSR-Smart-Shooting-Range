@@ -5,7 +5,6 @@ import { JobType } from 'src/enums';
 
 export class Warrior extends Item{
 
-  public id: string;
   public firstname: string;
   public lastname: string;
   public age: number;
@@ -21,6 +20,7 @@ export class Warrior extends Item{
     this.firstname = firstname;
     this.lastname = lastname;
     this.age = age;
+    this.team = team;
     this.pic = pic;
     this.job = job; 
     this.phone = phone; 

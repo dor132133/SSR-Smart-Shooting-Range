@@ -2,6 +2,7 @@
 
 
 <mat-tab-group [color]="accent">
+
     <mat-tab label="Warriors">
         <mat-card class="warriors-card">
             <mat-card-header>
@@ -26,7 +27,7 @@
             </mat-card-content>
         
             <mat-card-actions>
-                <button mat-raised-button color="warn" (click)="openNewWarriorDialog()">Add New Warrior</button>
+                <button mat-raised-button color="primary" (click)="openNewWarriorDialog()">Add New Warrior</button>
             </mat-card-actions>
 
           </mat-card>
@@ -56,12 +57,11 @@
             </mat-card-content>
         
             <mat-card-actions>
-                <button mat-raised-button color="warn" (click)="openNewTeamDialog()">Add New Team</button>
+                <button mat-raised-button color="primary" (click)="openNewTeamDialog()">Add New Team</button>
             </mat-card-actions>
 
           </mat-card>
     </mat-tab>
-
 
     <mat-tab label="Users">
         <mat-card class="users-card">
@@ -87,11 +87,12 @@
             </mat-card-content>
         
             <mat-card-actions>
-                <button mat-raised-button color="warn" (click)="addUser()">Add New User</button>
+                <!-- <button mat-raised-button color="warn" (click)="addUser()">Add New User</button> -->
             </mat-card-actions>
 
           </mat-card>
     </mat-tab>
+    
   </mat-tab-group>
 
 

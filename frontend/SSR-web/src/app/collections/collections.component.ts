@@ -55,39 +55,48 @@ export class CollectionsComponent implements OnInit {
 
   dialogRef.afterClosed().subscribe(result => {
       //console.log('The dialog was closed');
-      console.log(result);
-      if(result !== false)
+      //console.log(result);
+      if(result !== false){
         this.addWarrior(result)
         let query = JSON.parse(JSON.stringify({name : result.team}))//update the new warrior's team num of mems
         this.teamsService.getTeamByQuery(query,(team) => {
           var newTeam = <Team>JSON.parse(JSON.stringify(team));
-           console.log(team)
-           console.log(newTeam)
+           //console.log(team)
+           //console.log(newTeam)
            newTeam.numOfMems +=1
           this.teamsService.updateTeam(team,newTeam, (data)=> {
-            console.log(data)
+            //console.log(data)
+            this.getTeams()
           })
         })
+      }
     });
   }
 
   getWarriors(){
     this.warriorsService.getWarriors((data) => {
-      this.warriors = Object.values(data);
-      console.log(this.warriors)
+      this.warriors = Object.values(data).filter(function(element){
+        return element['empty']==undefined
+      })
+      //console.log(this.warriors)
     })
   }
 
   getTeams(){
     this.teamsService.getTeams((data) => {
-      this.teams = Object.values(data);
+      //console.log(data)
+      this.teams = Object.values(data).filter(function(element){
+        return element['empty']==undefined
+      })
       //console.log(this.teams)
     })
   }
 
   getUsers(){
     this.usersService.getUsers((data) => {
-      this.users = Object.values(data);
+      this.users = Object.values(data).filter(function(element){
+        return element['empty']==undefined
+      })
       //console.log(this.users)
     })
   }

@@ -7,39 +7,101 @@
 
     <mat-horizontal-stepper  [linear]="true" #stepper>
 
-        <mat-step [stepControl]="firstFormGroup">
-            <form [formGroup]="firstFormGroup">
+        <mat-step>
+          <form>
             <ng-template matStepLabel>Choose Warrior</ng-template> 
             
 
-             <mat-form-field>
-                <mat-select placeholder="Assign a warrior..." [formControl]="myControl" required>
+             <mat-form-field class="form-field">
+                <mat-select placeholder="Assign a warrior..."  [(ngModel)]="chosenWarrior" [ngModelOptions]="{standalone: true}">
                   <mat-option>--</mat-option>
                   <mat-option *ngFor="let warrior of warriors" [value]="warrior">
+                    
                       <span>{{warrior.firstname}} {{warrior.lastname}}</span>
-                       <small> rate: {{warrior.rate}}</small> 
+                 
+                    <div class="floatRight">
+                       {{warrior.team}}
+                       <img *ngIf="warrior.teamPic" aria-hidden [src]="warrior.teamPic" height="25">
+                    </div>
+
                   </mat-option>
                 </mat-select>
-                <mat-error *ngIf="myControl.hasError('required')">Please choose a warrior</mat-error>
-                <mat-hint>{{myControl.value?.rate}}</mat-hint>
+                <!-- <mat-error *ngIf="myControl.hasError('required')">Please choose a warrior</mat-error> -->
+                <mat-hint style="color:red;" *ngIf="chosenWarrior==undefined">Please choose a warrior</mat-hint>
               </mat-form-field>
 
             <div>
-              <button mat-button matStepperNext>Next</button>
+                <button mat-raised-button class="floatRight" color="primary" (click)="goForwardStepOne(stepper)" type="button">Next</button>
             </div> 
+
          </form> 
         </mat-step>
 
 
-        <mat-step [stepControl]="secondFormGroup">
-          <form [formGroup]="secondFormGroup">
-            <ng-template matStepLabel>Fill out your address</ng-template>
-            <mat-form-field>
-              <input matInput placeholder="Address" formControlName="secondCtrl" required>
-            </mat-form-field>
+        <mat-step>
+          <form>
+            <ng-template matStepLabel>Pick up map</ng-template>
+
+            <div class="example-container">
+              <mat-form-field class="form-field">
+                  <mat-select placeholder="Assign a map..."  [(ngModel)]="choosenMap" [ngModelOptions]="{standalone: true}">
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let map of maps" [value]="map">
+                      
+                        <span>{{map.name}}</span>
+                  
+                      <div class="mapScreenShot">
+                        {{map.trainType.name}}
+                        <img *ngIf="map.trainType.icon" aria-hidden [src]="map.trainType.icon" height="25">
+                      </div>
+
+                    </mat-option>
+                  </mat-select>
+                  <!-- <mat-error *ngIf="myControl.hasError('required')">Please choose a warrior</mat-error> -->
+                  <mat-hint style="color:red;" *ngIf="chosenMap==undefined">Please choose a map</mat-hint>
+              </mat-form-field>
+            </div>
+
+            <div class="example-full-width"> 
+                  <mat-accordion>
+                    <mat-expansion-panel>
+
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            Create New Map
+                          </mat-panel-title>
+                          <mat-panel-description>
+                            peak a name and choose train type 
+                          </mat-panel-description>
+                        </mat-expansion-panel-header>
+                                            
+                          <mat-form-field>
+                            <input matInput placeholder="Name">
+                          </mat-form-field>
+                          <div class="divider"></div>
+                          <mat-form-field>
+                              <mat-select placeholder="Choose Train Type..."  [(ngModel)]="chosenTrainType" [ngModelOptions]="{standalone: true}">
+                                  <mat-option>--</mat-option>
+                                  <mat-option *ngFor="let trainType of TrainType" [value]="trainType">
+                                    
+                                      <span>{{trainType.name}}</span>
+                                
+                                    <div class="floatRight">
+                                      <img *ngIf="trainType.icon" aria-hidden [src]="trainType.icon" height="25">
+                                    </div>
+                
+                                  </mat-option>
+                                </mat-select>
+                          </mat-form-field>                                       
+
+                    </mat-expansion-panel>
+                  </mat-accordion>
+           
+            </div>
+            <p></p>
             <div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button matStepperNext>Next</button>
+              <button mat-raised-button class="floatRight" color="primary" (click)="goForwardStepOne(stepper)" type="button">Next</button>
+              <button mat-raised-button class="floatRight"  matStepperPrevious>Back</button>
             </div>
           </form>
         </mat-step>
@@ -49,8 +111,9 @@
           <ng-template matStepLabel>Done</ng-template>
           You are now done.
           <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="stepper.reset()">Reset</button>
+            <button mat-raised-button class="floatRight" color="primary" (click)="close()" type="button">Start Session</button>
+            <button mat-raised-button matStepperPrevious>Back</button>
+            <button mat-raised-button (click)="stepper.reset()">Reset</button>
           </div>
         </mat-step>
 
@@ -59,8 +122,9 @@
 
 </div>
 
-
   <div mat-dialog-actions>
-    <button mat-button (click)="cancleButton()">Cancle</button>
+    <button mat-button (click)="close()">Cancle</button>
   <!-- <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> -->
+
+
 </div>

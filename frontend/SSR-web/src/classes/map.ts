@@ -7,16 +7,17 @@ import { TrainType } from 'src/enums';
 
 export class Map extends Item{
 
-  public id: string;
+
+  public name: string;
   public screenShot: string;
   public positions: string;
-  public trainType: TrainType;
+  public trainType: Object;
   public sizes: string;
 
 
-  constructor(screenShot: string, positions: string,trainType: TrainType, sizes: string) {
+  constructor(name: string, screenShot: string, positions: string,trainType: Object, sizes: string) {
     super();
-    this.id = '0001';
+    this.name = name;
     this.screenShot = screenShot;
     this.positions = positions;
     this.trainType = trainType;

@@ -1,0 +1,31 @@
+
+
+
+.form-field{
+    width: 50%
+}
+
+::ng-deep .mat-horizontal-stepper-header {
+    pointer-events: none !important;
+}
+small{
+    align-self: flex-end
+}
+
+.floatRight{
+    float: right;
+}
+
+.stepTwo {
+    width: 100%
+}
+
+.divider{
+    width:50px;
+    height:auto;
+    display:inline-block;
+}
+
+.example-full-width {
+    width: 100%;
+  }

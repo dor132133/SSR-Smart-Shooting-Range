@@ -6,7 +6,6 @@ import { Item } from './item';
 
 export class Session extends Item{
 
-  public id: string;
   public mapId: string;
   public date: Date;
   public pic: string;
@@ -16,7 +15,7 @@ export class Session extends Item{
 
   constructor(mapId: string, date: Date,warriorId: string, pic: string, times: Array<Shot>) {
     super();
-    this.id = '0001';
+  
     this.mapId = mapId;
     this.date = date;
     this.warriorId = warriorId;

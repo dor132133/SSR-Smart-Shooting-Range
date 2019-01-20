@@ -16,9 +16,10 @@
         <mat-list *ngIf="sessions">
           <mat-list-item *ngFor="let session of sessions"> 
             <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
-            <h4 mat-line>{{session.id}}</h4>
+            <h3 mat-line>{{session.id}}</h3>
+            <h3 mat-line align="right"> {{session.date}} </h3>
             <p mat-line> {{session.warriorId}}</p>
-            <p mat-line> {{session.date}} </p>
+            
             <mat-divider></mat-divider>
           </mat-list-item>
         </mat-list>

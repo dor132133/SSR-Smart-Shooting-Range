@@ -4,17 +4,17 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule, MatToolbarModule, MatInputModule,
      MatProgressSpinnerModule, MatCardModule, MatTabsModule,
      MatListModule,MatDialogModule,MatStepperModule,MatAutocompleteModule,
-     MatSelectModule,MatIconModule,MatSnackBarModule} from '@angular/material'
+     MatSelectModule,MatIconModule,MatSnackBarModule,MatExpansionModule} from '@angular/material'
 @NgModule({
     imports: [MatButtonModule, MatToolbarModule,MatInputModule,
                MatProgressSpinnerModule, MatCardModule, MatTabsModule,
                MatListModule,MatDialogModule,MatStepperModule,MatAutocompleteModule,
-               MatSelectModule,MatIconModule,MatSnackBarModule],
+               MatSelectModule,MatIconModule,MatSnackBarModule,MatExpansionModule],
                
     exports: [MatButtonModule, MatToolbarModule,MatInputModule,
                MatProgressSpinnerModule, MatCardModule, MatTabsModule,
                MatListModule,MatDialogModule,MatStepperModule,MatAutocompleteModule,
-               MatSelectModule, MatIconModule,MatSnackBarModule]
+               MatSelectModule, MatIconModule,MatSnackBarModule,MatExpansionModule]
 })
 
 export class MaterialModule {}
