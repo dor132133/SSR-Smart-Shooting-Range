@@ -11,6 +11,10 @@ import { Team } from 'src/classes/team';
 import { TeamsService } from '../teams.service';
 import { MatStepper } from '@angular/material/stepper';
 import {TrainType} from "src/enums"
+import { Map } from 'src/classes/map';
+import { MapService } from '../map.service';
+import { Target } from 'src/classes/target';
+import { Sensor } from 'src/classes/sensor';
 
 
 @Component({
@@ -20,16 +24,23 @@ import {TrainType} from "src/enums"
 })
 export class NewSessionDialogComponent implements OnInit {
 
-
-  title: string;
   warriors = [];
   teams = [];
   chosenWarrior: Object
-  chosenMap: Object;
+  chosenMap: Map;
+  newMap = new Map('','',0,0);
   panelOpenState = false;
-  chosenTrainType = Object
-
-  constructor(private warriorsService:WarriorsService, private teamsService: TeamsService,
+  ICONS_PATH = 'assets/icons_map/';
+  trainIcons = [
+    this.ICONS_PATH + 'city-hall.svg', this.ICONS_PATH + 'town-hall.svg',this.ICONS_PATH + 'route.svg',
+    this.ICONS_PATH + 'route2.svg', this.ICONS_PATH + 'running.svg', this.ICONS_PATH + 'target.svg',
+    this.ICONS_PATH + 'gun.svg'
+  ]
+  numbers = [1,2,3,4,5,6]
+  numOfTargets: number
+  numOfSensors: number
+  
+  constructor(private warriorsService:WarriorsService, private teamsService: TeamsService, private mapService: MapService,
     public dialogRef: MatDialogRef<NewSessionDialogComponent>,
     private formBuilder: FormBuilder,@Inject(MAT_DIALOG_DATA) public data: any) {
     }
@@ -46,15 +57,58 @@ export class NewSessionDialogComponent implements OnInit {
     return false
   }
   goForwardStepTwo(stepper: MatStepper){
-    if(this.chosenMap)
+    if(this.chosenMap==undefined)//undefined mean that the user choose to create a new map
+      stepper.next();
+    else{
+      stepper.next();
+      stepper.next();
+    }
+    return false
+  }
+
+  goForwardStepThree(stepper: MatStepper){
+    if(this.newMap)
       stepper.next();
     return false
   }
 
+  goBackStepThree(stepper: MatStepper){
+    if(this.chosenMap==undefined)//undefined mean that the user choose to create a new map
+      stepper.previous();
+    else{
+      stepper.previous();
+      stepper.previous();
+    }
+    return false
+  }
+  
   close(){
     console.log(this.chosenWarrior)
     console.log(this.chosenMap)
-    this.dialogRef.close("Cancled");//close(data) can pass data back to the main page
+    console.log(this.newMap)
+    console.log(this.numOfTargets)
+    console.log(this.numOfSensors)
+    var data;
+    if(this.chosenMap!==undefined){
+      data = { warrior: this.chosenWarrior,
+                  map: this.chosenMap
+                }
+    }
+    else{
+      for(let i=0; i<this.numOfTargets;i++){
+        let target = new Target(i,undefined,0,0);
+        this.newMap.targets.push(target)
+      }
+      for(let i=0; i<this.numOfSensors;i++){
+        let sensor = new Sensor(i,0,0);
+        this.newMap.sensors.push(sensor)
+      }
+      data = { warrior: this.chosenWarrior,
+               map: this.newMap
+      }
+    }
+
+    this.dialogRef.close(data);
   }
 
   getData(){
@@ -92,9 +146,6 @@ export class NewSessionDialogComponent implements OnInit {
       //console.log(this.teams)
     })
   }
-
-
-
 
 
 }

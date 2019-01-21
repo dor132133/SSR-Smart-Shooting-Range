@@ -48,11 +48,10 @@
                     <mat-option>--</mat-option>
                     <mat-option *ngFor="let map of maps" [value]="map">
                       
-                        <span>{{map.name}}</span>
+                        <span>{{map.trainName}}</span>
                   
                       <div class="mapScreenShot">
-                        {{map.trainType.name}}
-                        <img *ngIf="map.trainType.icon" aria-hidden [src]="map.trainType.icon" height="25">
+                        <img *ngIf="map.icon" aria-hidden [src]="map.icon" height="25">
                       </div>
 
                     </mat-option>
@@ -61,48 +60,62 @@
                   <mat-hint style="color:red;" *ngIf="chosenMap==undefined">Please choose a map</mat-hint>
               </mat-form-field>
             </div>
-
-            <div class="example-full-width"> 
-                  <mat-accordion>
-                    <mat-expansion-panel>
-
-                        <mat-expansion-panel-header>
-                          <mat-panel-title>
-                            Create New Map
-                          </mat-panel-title>
-                          <mat-panel-description>
-                            peak a name and choose train type 
-                          </mat-panel-description>
-                        </mat-expansion-panel-header>
-                                            
-                          <mat-form-field>
-                            <input matInput placeholder="Name">
-                          </mat-form-field>
-                          <div class="divider"></div>
-                          <mat-form-field>
-                              <mat-select placeholder="Choose Train Type..."  [(ngModel)]="chosenTrainType" [ngModelOptions]="{standalone: true}">
-                                  <mat-option>--</mat-option>
-                                  <mat-option *ngFor="let trainType of TrainType" [value]="trainType">
-                                    
-                                      <span>{{trainType.name}}</span>
-                                
-                                    <div class="floatRight">
-                                      <img *ngIf="trainType.icon" aria-hidden [src]="trainType.icon" height="25">
-                                    </div>
-                
-                                  </mat-option>
-                                </mat-select>
-                          </mat-form-field>                                       
-
-                    </mat-expansion-panel>
-                  </mat-accordion>
-           
-            </div>
+            
             <p></p>
             <div>
-              <button mat-raised-button class="floatRight" color="primary" (click)="goForwardStepOne(stepper)" type="button">Next</button>
+              <button mat-raised-button class="floatRight" color="primary" (click)="goForwardStepTwo(stepper)" type="button">Next</button>
               <button mat-raised-button class="floatRight"  matStepperPrevious>Back</button>
             </div>
+          </form>
+        </mat-step>
+
+        <mat-step>
+          <form>
+            <ng-template matStepLabel>Create new map</ng-template>
+
+            <div class="example-full-width"> 
+               
+              <mat-form-field>
+                <input matInput placeholder="Train Name" [(ngModel)]="newMap.trainName"  [ngModelOptions]="{standalone: true}">
+              </mat-form-field>
+              <img id="img1" *ngIf="newMap.icon!==''" width="150px" height="150px" src="{{newMap.icon}}"> 
+              <div>
+                <mat-form-field style="width:15% !important">
+                    <mat-select placeholder="Targets"  [(ngModel)]="numOfTargets" [ngModelOptions]="{standalone: true}">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let number of numbers" [value]="number"> 
+                            <span>{{number}}</span>
+                        </mat-option>
+                      </mat-select>
+                </mat-form-field>    
+            
+                <div class="divider"></div> 
+            
+                <mat-form-field style="width:15% !important">
+                    <mat-select placeholder="Sensors" [(ngModel)]="numOfSensors" [ngModelOptions]="{standalone: true}">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let number of numbers" [value]="number"> 
+                            <span>{{number}}</span>
+                        </mat-option>
+                      </mat-select>
+                </mat-form-field>  
+              </div>
+             
+              <mat-form-field style="width:15% !important">
+                  <mat-select [(ngModel)]="newMap.icon" placeholder="Icon" [ngModelOptions]="{standalone: true}">
+                      <mat-option *ngFor="let icon of trainIcons" [value]="icon">
+                          <img class="example-option-img" aria-hidden [src]="icon" height="45">
+                      </mat-option>
+                  </mat-select> 
+              </mat-form-field> 
+  
+            </div>
+
+            <div>
+                <button mat-raised-button class="floatRight" color="primary" (click)="goForwardStepThree(stepper)" type="button">Next</button>
+                <button mat-raised-button class="floatRight"  matStepperPrevious>Back</button>
+            </div>
+
           </form>
         </mat-step>
 
@@ -112,7 +125,7 @@
           You are now done.
           <div>
             <button mat-raised-button class="floatRight" color="primary" (click)="close()" type="button">Start Session</button>
-            <button mat-raised-button matStepperPrevious>Back</button>
+            <button mat-raised-button (click)="goBackStepThree(stepper)">Back</button>
             <button mat-raised-button (click)="stepper.reset()">Reset</button>
           </div>
         </mat-step>

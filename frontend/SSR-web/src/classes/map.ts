@@ -2,27 +2,33 @@
 
 
 
+
+
+
 import { Item } from './item';
-import { TrainType } from 'src/enums';
+import { Sensor } from './sensor';
+import { Target } from './target';
 
 export class Map extends Item{
 
 
-  public name: string;
+  public trainName: string;
+  public icon: string;
   public screenShot: string;
-  public positions: string;
-  public trainType: Object;
-  public sizes: string;
+  public sensors;
+  public targets;
+  public width: number;
+  public length: number;
 
 
-  constructor(name: string, screenShot: string, positions: string,trainType: Object, sizes: string) {
+  constructor(trainName: string, icon: string, width: number,length: number) {
     super();
-    this.name = name;
-    this.screenShot = screenShot;
-    this.positions = positions;
-    this.trainType = trainType;
-    this.sizes = sizes;
-   
+    this.trainName = trainName;
+    this.icon = icon;
+    this.width = width;
+    this.length = length;
+    this.targets = []
+    this.sensors = []
   }
 
 

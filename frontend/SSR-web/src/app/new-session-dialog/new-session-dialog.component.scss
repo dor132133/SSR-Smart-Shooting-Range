@@ -14,6 +14,7 @@ small{
 
 .floatRight{
     float: right;
+    margin: 5px;
 }
 
 .stepTwo {
@@ -28,4 +29,14 @@ small{
 
 .example-full-width {
     width: 100%;
+  }
+
+  .numberInput{
+    width: 10%;
+    float: left;
+  }
+
+  #img1 {
+      float: right;
+      margin-right: 15%
   }
