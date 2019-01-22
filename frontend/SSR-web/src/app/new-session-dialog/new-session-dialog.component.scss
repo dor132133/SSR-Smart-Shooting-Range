@@ -2,7 +2,7 @@
 
 
 .form-field{
-    width: 50%
+    width: 30%
 }
 
 ::ng-deep .mat-horizontal-stepper-header {
@@ -31,7 +31,7 @@ small{
     width: 100%;
   }
 
-  .numberInput{
+.numberInput{
     width: 10%;
     float: left;
   }
@@ -39,4 +39,7 @@ small{
   #img1 {
       float: right;
       margin-right: 15%
+  }
+  #img2 {
+      margin-left: 15%
   }

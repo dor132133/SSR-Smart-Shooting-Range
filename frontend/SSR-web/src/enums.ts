@@ -21,4 +21,4 @@ export enum UserType {
 //     {type: "TARGETS_STAGE2", icon: 'assets/icons_trainType/gun.svg'}
 // ]
 
-export {TrainType}
+// export {TrainType}

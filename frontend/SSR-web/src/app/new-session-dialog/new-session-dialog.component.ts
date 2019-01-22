@@ -10,11 +10,11 @@ import { Warrior } from 'src/classes/warrior';
 import { Team } from 'src/classes/team';
 import { TeamsService } from '../teams.service';
 import { MatStepper } from '@angular/material/stepper';
-import {TrainType} from "src/enums"
 import { Map } from 'src/classes/map';
 import { MapService } from '../map.service';
 import { Target } from 'src/classes/target';
 import { Sensor } from 'src/classes/sensor';
+import { ErrorService } from '../error.service';
 
 
 @Component({
@@ -26,8 +26,9 @@ export class NewSessionDialogComponent implements OnInit {
 
   warriors = [];
   teams = [];
+  maps = [];
   chosenWarrior: Object
-  chosenMap: Map;
+  chosenMap: Object;
   newMap = new Map('','',0,0);
   panelOpenState = false;
   ICONS_PATH = 'assets/icons_map/';
@@ -41,9 +42,9 @@ export class NewSessionDialogComponent implements OnInit {
   numOfSensors: number
   
   constructor(private warriorsService:WarriorsService, private teamsService: TeamsService, private mapService: MapService,
-    public dialogRef: MatDialogRef<NewSessionDialogComponent>,
-    private formBuilder: FormBuilder,@Inject(MAT_DIALOG_DATA) public data: any) {
-    }
+    public dialogRef: MatDialogRef<NewSessionDialogComponent>, private errorService: ErrorService,
+    private formBuilder: FormBuilder,@Inject(MAT_DIALOG_DATA) public data: any)
+    {}
 
   ngOnInit() {
     this.getData()
@@ -56,6 +57,7 @@ export class NewSessionDialogComponent implements OnInit {
       stepper.next();
     return false
   }
+
   goForwardStepTwo(stepper: MatStepper){
     if(this.chosenMap==undefined)//undefined mean that the user choose to create a new map
       stepper.next();
@@ -67,7 +69,8 @@ export class NewSessionDialogComponent implements OnInit {
   }
 
   goForwardStepThree(stepper: MatStepper){
-    if(this.newMap)
+    if(this.newMap.trainName!=='' && this.newMap.icon!=='' &&
+     this.numOfTargets!==undefined && this.numOfSensors!==undefined)
       stepper.next();
     return false
   }
@@ -82,33 +85,45 @@ export class NewSessionDialogComponent implements OnInit {
     return false
   }
   
-  close(){
-    console.log(this.chosenWarrior)
-    console.log(this.chosenMap)
-    console.log(this.newMap)
-    console.log(this.numOfTargets)
-    console.log(this.numOfSensors)
+  close(flag: boolean){
+    // console.log(this.chosenWarrior)
+     //console.log(this.chosenMap)
+    // console.log(this.newMap)
+    //  console.log(this.numOfTargets)
+    //  console.log(this.numOfSensors)
+    if(!flag){
+      this.dialogRef.close(flag);
+      return
+    }
+
     var data;
     if(this.chosenMap!==undefined){
       data = { warrior: this.chosenWarrior,
                   map: this.chosenMap
                 }
-    }
-    else{
-      for(let i=0; i<this.numOfTargets;i++){
-        let target = new Target(i,undefined,0,0);
-        this.newMap.targets.push(target)
-      }
-      for(let i=0; i<this.numOfSensors;i++){
-        let sensor = new Sensor(i,0,0);
-        this.newMap.sensors.push(sensor)
-      }
-      data = { warrior: this.chosenWarrior,
-               map: this.newMap
-      }
+      this.dialogRef.close(data);
+      return
     }
 
-    this.dialogRef.close(data);
+    for(let i=0; i<this.numOfTargets;i++){
+      let target = new Target(i,undefined,0,0);
+      this.newMap.targets.push(target)
+    }
+    for(let i=0; i<this.numOfSensors;i++){
+      let sensor = new Sensor(i,0,0);
+      this.newMap.sensors.push(sensor)
+    }
+    this.mapService.addMap(this.newMap, (res)=>{
+      if(res.status == 200){
+        data = { warrior: this.chosenWarrior,
+          map: this.newMap
+        }
+        this.dialogRef.close(data);
+        return
+      }
+      this.errorService.openSnackBar('Error accoured while creating new map', 'Try again')
+    })
+    
   }
 
   getData(){
@@ -125,27 +140,42 @@ export class NewSessionDialogComponent implements OnInit {
           for(var j=0;j<this.teams.length; j++)
             if(this.warriors[i].team == this.teams[j].name)
               this.warriors[i].teamPic=this.teams[j].pic
+        this.mapService.getMaps((data) => {
+          this.maps = Object.values(data).filter(function(element){
+            return element['empty']==undefined
+          })
+          //console.log(this.maps)
+        })
       })
     })
   }
 
-  getWarriors(){
-    this.warriorsService.getWarriors((data) => {
-      this.warriors = Object.values(data).filter(function(element){
-        return element['empty']==undefined
-      })
-      //console.log(this.warriors)
-    })
-  }
+  // getWarriors(){
+  //   this.warriorsService.getWarriors((data) => {
+  //     this.warriors = Object.values(data).filter(function(element){
+  //       return element['empty']==undefined
+  //     })
+  //     //console.log(this.warriors)
+  //   })
+  // }
 
-  getTeams(){
-    this.teamsService.getTeams((data) => {
-      this.teams = Object.values(data).filter(function(element){
-        return element['empty']==undefined
-      })
-      //console.log(this.teams)
-    })
-  }
+  // getTeams(){
+  //   this.teamsService.getTeams((data) => {
+  //     this.teams = Object.values(data).filter(function(element){
+  //       return element['empty']==undefined
+  //     })
+  //     //console.log(this.teams)
+  //   })
+  // }
+
+  // getmaps(){
+  //   this.mapService.getMaps((data) => {
+  //     this.maps = Object.values(data).filter(function(element){
+  //       return element['empty']==undefined
+  //     })
+  //     console.log(this.maps)
+  //   })
+  // }
 
 
 }

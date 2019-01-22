@@ -3,7 +3,9 @@ import { SessionsService } from '../sessions.service';
 import { Session } from 'src/classes/session';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { NewSessionDialogComponent } from '../new-session-dialog/new-session-dialog.component';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
+import { MapService } from '../map.service';
+import { DataService } from '../data.service';
 
 
 @Component({
@@ -15,7 +17,8 @@ export class SessionsComponent implements OnInit {
 
   sessions = [];
 
-  constructor(private sessionsService: SessionsService, private dialog: MatDialog, private router: Router) { }
+  constructor(private sessionsService: SessionsService, private dataService: DataService,
+     private mapService: MapService, private dialog: MatDialog, private router: Router) { }
 
   ngOnInit() {
     this.getSessions();
@@ -44,19 +47,26 @@ export class SessionsComponent implements OnInit {
 
   dialogRef.afterClosed().subscribe(result => {
       //console.log('The dialog was closed');
-      console.log(result);
-      //console.log('close');
+      //console.log(result);
+      if(result == false)
+        return
+      this.mapService.getMapByQuery(result.map,data =>{
+        //console.log(data)
+      })
+      this.startSession(result)
     });
   }
 
-  startSession() {
-          this.router.navigate(['/session']).then( (e) => {
-            if (e) {
-              //console.log("Navigation is successful!");
-            } else {
-              console.log("Navigation has failed!");
-            }
-          });
+  startSession(data) {
+    // this.dataService.map = data.map
+    // this.dataService.warrior = data.warrior
+    this.router.navigate(['/session']).then( (e) => {
+      if (e) {
+        //console.log("Navigation is successful!");
+      } else {
+        console.log("Navigation has failed!");
+      }
+    });
   };
 
 

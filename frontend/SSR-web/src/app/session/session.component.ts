@@ -1,8 +1,15 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
 import { SsrApiService } from '../ssr-api.service';
+import { Session } from 'src/classes/session'
+import { DataService } from '../data.service';
+import { Target } from 'src/classes/target';
+import { Map } from 'src/classes/map';
+import { Warrior } from 'src/classes/warrior';
+import { JobType } from 'src/enums';
+import { Sensor } from 'src/classes/sensor';
 
 @Component({
   selector: 'app-session',
@@ -11,41 +18,29 @@ import { SsrApiService } from '../ssr-api.service';
 })
 export class SessionComponent implements OnInit {
 
-  sensors = ['01', '02', '03']
-  targets = ['01', '02', '03']
+  // sensors = ['01', '02', '03']
+  // targets = ['01', '02', '03']
+  ICONS_PATH = 'assets/icons_sr_components/'
+  session: Object
+  warrior = new Warrior('Dor', 'Ben Yehuda', 26, 'UDI','',JobType.GUID,'052-3804878') //id: "5c436e457013cf0027667ac1"
+  map = new Map('Lotar01','assets/icons_map/town-hall.svg',0,0); //id: "5c47534d11eac30022666f8c"
 
-  // example_box_css = { 
-  //     "width": "50px",
-  //     "height": "50px",
-  //     "border": "solid 1px #ccc",
-  //     "color": "rgba(0, 0, 0, 0.87)",
-  //     "cursor": "move",
-  //     "display": "inline-flex",
-  //     "justify-content": "center",
-  //     "align-items": "center",
-  //     "text-align": "center",
-  //     "background": "#fff",
-  //     "border-radius": "4px",
-  //     "margin-right":" 25px",
-  //     "position": "relative",
-  //     "z-index": "1",
-  //     "box-sizing":" border-box",
-  //     "padding": "10px",
-  //     "transition": "box-shadow 200ms cubic-bezier(0, 0, 0.2, 1)",
-  //     "box-shadow":" 0 3px 1px -2px rgba(0, 0, 0, 0.2),0 2px 2px 0 rgba(0, 0, 0, 0.14),0 1px 5px 0 rgba(0, 0, 0, 0.12)"}
-
-
-  constructor(private router: Router,private iconRegistry: MatIconRegistry,private sanitizer: DomSanitizer,private api: SsrApiService){
-    iconRegistry.addSvgIcon('wall01',sanitizer.bypassSecurityTrustResourceUrl('assets/icons_sr_components/wall01.svg'));
-    iconRegistry.addSvgIcon('wall02',sanitizer.bypassSecurityTrustResourceUrl('assets/icons_sr_components/wall02.svg'));
-    iconRegistry.addSvgIcon('wall03',sanitizer.bypassSecurityTrustResourceUrl('assets/icons_sr_components/wall03.svg'));
-    iconRegistry.addSvgIcon('wall04',sanitizer.bypassSecurityTrustResourceUrl('assets/icons_sr_components/wall04.svg'));
-    iconRegistry.addSvgIcon('wall05',sanitizer.bypassSecurityTrustResourceUrl('assets/icons_sr_components/wall05.svg'));
-    iconRegistry.addSvgIcon('wall06',sanitizer.bypassSecurityTrustResourceUrl('assets/icons_sr_components/wall06.svg'));
-    iconRegistry.addSvgIcon('sensor',sanitizer.bypassSecurityTrustResourceUrl('assets/icons_sr_components/sensor.svg'));
-    iconRegistry.addSvgIcon('target',sanitizer.bypassSecurityTrustResourceUrl('assets/icons_sr_components/target.svg'));
-    iconRegistry.addSvgIcon('warrior',sanitizer.bypassSecurityTrustResourceUrl('assets/icons_sr_components/warrior.svg'));
+  constructor(private router: Router,private dataService: DataService,
+    private iconRegistry: MatIconRegistry,private sanitizer: DomSanitizer,private api: SsrApiService){
   }
+
+  ngOnInit() {
+    this.map.sensors.push(new Sensor(0,0,0))
+    this.map.sensors.push(new Sensor(1,0,0))
+    this.map.targets.push(new Target(0,0,0,0))
+    this.map.targets.push(new Target(1,1,0,0))
+    this.initComponentsIcons()
+    // this.warrior = this.dataService.warrior;
+    // this.map = this.dataService.map
+    console.log(this.warrior)
+    console.log(this.map)
+  }
+
 
   // addComponents(component: string){
   //   console.log('click')
@@ -53,8 +48,6 @@ export class SessionComponent implements OnInit {
   //   $(".example-box").scss(this.example_box_css)
   // }
 
-  ngOnInit() {
-  }
 
   start(data: JSON){
     console.log(data)
@@ -62,9 +55,7 @@ export class SessionComponent implements OnInit {
       //this.sessions = Object.values(data);
       console.log(res)
       //callback(data);
-
-
-      
+ 
       // var controller = angular.module('SessionComponent', []);
       // module.controller('TimeCtrl', function($scope, $interval) {
       //   var tick = function() {
@@ -86,5 +77,38 @@ export class SessionComponent implements OnInit {
     });
   }
 
+  initComponentsIcons(){
+    this.iconRegistry.addSvgIcon('wall01',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'wall01.svg'));
+    this.iconRegistry.addSvgIcon('wall02',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'wall02.svg'));
+    this.iconRegistry.addSvgIcon('wall03',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'wall03.svg'));
+    this.iconRegistry.addSvgIcon('wall04',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'wall04.svg'));
+    this.iconRegistry.addSvgIcon('wall05',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'wall05.svg'));
+    this.iconRegistry.addSvgIcon('wall06',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'wall06.svg'));
+    this.iconRegistry.addSvgIcon('sensor',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'sensor.svg'));
+    this.iconRegistry.addSvgIcon('target',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'target.svg'));
+    this.iconRegistry.addSvgIcon('warrior',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'warrior.svg'));
+  }
 
 }
+
+
+
+  // example_box_css = { 
+  //     "width": "50px",
+  //     "height": "50px",
+  //     "border": "solid 1px #ccc",
+  //     "color": "rgba(0, 0, 0, 0.87)",
+  //     "cursor": "move",
+  //     "display": "inline-flex",
+  //     "justify-content": "center",
+  //     "align-items": "center",
+  //     "text-align": "center",
+  //     "background": "#fff",
+  //     "border-radius": "4px",
+  //     "margin-right":" 25px",
+  //     "position": "relative",
+  //     "z-index": "1",
+  //     "box-sizing":" border-box",
+  //     "padding": "10px",
+  //     "transition": "box-shadow 200ms cubic-bezier(0, 0, 0.2, 1)",
+  //     "box-shadow":" 0 3px 1px -2px rgba(0, 0, 0, 0.2),0 2px 2px 0 rgba(0, 0, 0, 0.14),0 1px 5px 0 rgba(0, 0, 0, 0.12)"}

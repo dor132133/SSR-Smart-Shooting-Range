@@ -37,29 +37,22 @@
          </form> 
         </mat-step>
 
-
         <mat-step>
           <form>
             <ng-template matStepLabel>Pick up map</ng-template>
 
-            <div class="example-container">
-              <mat-form-field class="form-field">
-                  <mat-select placeholder="Assign a map..."  [(ngModel)]="choosenMap" [ngModelOptions]="{standalone: true}">
-                    <mat-option>--</mat-option>
-                    <mat-option *ngFor="let map of maps" [value]="map">
-                      
-                        <span>{{map.trainName}}</span>
-                  
-                      <div class="mapScreenShot">
-                        <img *ngIf="map.icon" aria-hidden [src]="map.icon" height="25">
-                      </div>
-
-                    </mat-option>
-                  </mat-select>
-                  <!-- <mat-error *ngIf="myControl.hasError('required')">Please choose a warrior</mat-error> -->
-                  <mat-hint style="color:red;" *ngIf="chosenMap==undefined">Please choose a map</mat-hint>
-              </mat-form-field>
-            </div>
+            
+            <mat-form-field class="form-field">
+                <mat-select placeholder="Assign a map..."  [(ngModel)]="chosenMap" [ngModelOptions]="{standalone: true}">
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let map of maps" [value]="map">
+                      <img class="example-option-img" aria-hidden [src]="map.icon" height="35">
+                      <span>  {{map.trainName}}</span>
+                  </mat-option>
+                </mat-select>
+                <mat-hint style="color:red;" *ngIf="chosenMap==undefined">Please choose a map</mat-hint>
+            </mat-form-field>
+            <img id="img2" *ngIf="chosenMap!==undefined" width="150px" height="200px" src="{{chosenMap.icon}}">
             
             <p></p>
             <div>
@@ -77,8 +70,11 @@
                
               <mat-form-field>
                 <input matInput placeholder="Train Name" [(ngModel)]="newMap.trainName"  [ngModelOptions]="{standalone: true}">
+                <mat-hint style="color:red;" *ngIf="newMap.trainName==''">Please name the train</mat-hint>
               </mat-form-field>
+              
               <img id="img1" *ngIf="newMap.icon!==''" width="150px" height="150px" src="{{newMap.icon}}"> 
+              
               <div>
                 <mat-form-field style="width:15% !important">
                     <mat-select placeholder="Targets"  [(ngModel)]="numOfTargets" [ngModelOptions]="{standalone: true}">
@@ -87,6 +83,7 @@
                             <span>{{number}}</span>
                         </mat-option>
                       </mat-select>
+                      <mat-hint style="color:red;" *ngIf="numOfTargets==undefined">How many targets?</mat-hint>
                 </mat-form-field>    
             
                 <div class="divider"></div> 
@@ -98,6 +95,7 @@
                             <span>{{number}}</span>
                         </mat-option>
                       </mat-select>
+                      <mat-hint style="color:red;" *ngIf="numOfSensors==undefined">How many sensors?</mat-hint>
                 </mat-form-field>  
               </div>
              
@@ -107,6 +105,7 @@
                           <img class="example-option-img" aria-hidden [src]="icon" height="45">
                       </mat-option>
                   </mat-select> 
+                  <mat-hint style="color:red;" *ngIf="newMap.icon==''">Please pick an icon</mat-hint>
               </mat-form-field> 
   
             </div>
@@ -117,14 +116,15 @@
             </div>
 
           </form>
-        </mat-step>
+        </mat-step> 
 
 
         <mat-step>
+
           <ng-template matStepLabel>Done</ng-template>
           You are now done.
           <div>
-            <button mat-raised-button class="floatRight" color="primary" (click)="close()" type="button">Start Session</button>
+            <button mat-raised-button class="floatRight" color="primary" (click)="close(true)" type="button">Start Session</button>
             <button mat-raised-button (click)="goBackStepThree(stepper)">Back</button>
             <button mat-raised-button (click)="stepper.reset()">Reset</button>
           </div>
@@ -136,7 +136,7 @@
 </div>
 
   <div mat-dialog-actions>
-    <button mat-button (click)="close()">Cancle</button>
+    <button mat-button (click)="close(false)">Cancle</button>
   <!-- <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> -->
 
 

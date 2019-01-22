@@ -53,7 +53,7 @@ export class MapService {
     }
     var query = JSON.stringify(doc)
     var _this=this;
-    console.log(query)
+    //console.log(query)
     this.mongoDB.addDocument(JSON.parse(query)).subscribe(
       res => console.log('HTTP response', res),
       err => {

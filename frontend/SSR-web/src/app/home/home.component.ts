@@ -5,7 +5,7 @@ import { Session } from 'src/classes/session';
 import { SessionsService } from '../sessions.service';
 import { Warrior } from 'src/classes/warrior';
 import { Map } from 'src/classes/map';
-import { TrainType, JobType } from 'src/enums';
+import { JobType } from 'src/enums';
 import { WarriorsService } from '../warriors.service';
 
 @Component({
