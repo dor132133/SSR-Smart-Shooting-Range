@@ -1,24 +1,37 @@
 
 
+<!-- inject data to child component -->
+<!-- 
+        <project-content>
+            <div class='element'></div>
+          </project-content> -->
+
 
 
 <h3>Start Session</h3>
 
 <div class="example-boundary">
 
-    
-    <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall01"></mat-icon></div>
-    <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall01"></mat-icon></div>
-    <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall02"></mat-icon></div>
-    <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall02"></mat-icon></div>
-    <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall03"></mat-icon></div>
-    <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall04"></mat-icon></div>
-    <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall05"></mat-icon></div>
-    <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall06"></mat-icon></div>
+    <ng-container *ngFor="let wall of walls">
+        <app-element [name]="wall.name" [icon]=wall.icon [positionX]=wall.positionX [positionY]=wall.positionY></app-element>
+    </ng-container>
+
+    <!-- <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall01"></mat-icon></div> -->
+    <!-- <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall01"></mat-icon></div> -->
+    <!-- <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall02"></mat-icon></div> -->
+    <!-- <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall02"></mat-icon></div> -->
+    <!-- <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall03"></mat-icon></div> -->
+    <!-- <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall04"></mat-icon></div> -->
+    <!-- <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall05"></mat-icon></div> -->
+    <!-- <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall06"></mat-icon></div> -->
     <!-- <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="sensor"></mat-icon><h6>{{sensors[0]}}</h6></div> -->
     <!-- <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="sensor"></mat-icon><h6>{{sensors[1]}}</h6></div> -->
     <!-- <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="sensor"></mat-icon><h6>{{sensors[2]}}</h6></div> -->
-    <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="warrior"></mat-icon></div> 
+         
+   
+    <!-- <div class="warriorElement" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="warrior"></mat-icon></div>  -->
+
+
     <!-- <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="target"></mat-icon><h6>{{targets[0]}}</h6></div> -->
     <!-- <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="target"></mat-icon><h6>{{targets[1]}}</h6></div> -->
     <!-- <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="target"></mat-icon><h6>{{targets[2]}}</h6></div> -->
@@ -29,7 +42,8 @@
 <mat-card class="example-card">
     <mat-card-actions>
          <button mat-stroked-button (click)="exit()">Exit</button>
-        <button mat-raised-button id="start" color="primary" (click)="start({'session' : '001'})">Start</button>
+        <!-- <button mat-raised-button id="start" color="primary" (click)="start({'session' : '001'})">Start</button> -->
+        <button mat-raised-button id="start" color="primary" (click)="gogo({'session' : '001'})">Go!</button>
         <div ng-controller='TimeCtrl'><p>{{ clock | date:'HH:mm:ss'}}</p></div>
     </mat-card-actions>
 </mat-card>

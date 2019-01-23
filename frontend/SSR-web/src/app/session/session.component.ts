@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
@@ -10,20 +10,30 @@ import { Map } from 'src/classes/map';
 import { Warrior } from 'src/classes/warrior';
 import { JobType } from 'src/enums';
 import { Sensor } from 'src/classes/sensor';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-session',
   templateUrl: './session.component.html',
-  styleUrls: ['./session.component.scss']
+  styleUrls: ['./session.component.scss'],
+  animations:[]
 })
 export class SessionComponent implements OnInit {
 
-  // sensors = ['01', '02', '03']
-  // targets = ['01', '02', '03']
+  @Output() iconElement: string
+  @Output() positionXElement: string
+  @Output() positionYElement: string
+
+
   ICONS_PATH = 'assets/icons_sr_components/'
   session: Object
   warrior = new Warrior('Dor', 'Ben Yehuda', 26, 'UDI','',JobType.GUID,'052-3804878') //id: "5c436e457013cf0027667ac1"
   map = new Map('Lotar01','assets/icons_map/town-hall.svg',0,0); //id: "5c47534d11eac30022666f8c"
+  walls = [
+           {name: 'wall01',icon: this.ICONS_PATH + 'wall01.svg', positionX: '300px', positionY: '500px'},
+          //  {name: 'wall02',icon: this.ICONS_PATH + 'wall02.svg', positionX: '50px', positionY: '50px'},
+          //  {name: 'wall03',icon: this.ICONS_PATH + 'wall03.svg', positionX: '50px', positionY: '50px'},
+          ]
 
   constructor(private router: Router,private dataService: DataService,
     private iconRegistry: MatIconRegistry,private sanitizer: DomSanitizer,private api: SsrApiService){
@@ -34,13 +44,22 @@ export class SessionComponent implements OnInit {
     this.map.sensors.push(new Sensor(1,0,0))
     this.map.targets.push(new Target(0,0,0,0))
     this.map.targets.push(new Target(1,1,0,0))
-    this.initComponentsIcons()
+    this.initElementsIcons()
     // this.warrior = this.dataService.warrior;
     // this.map = this.dataService.map
-    console.log(this.warrior)
+    console.log(this.warrior) 
     console.log(this.map)
   }
 
+
+  gogo(){
+    // $('.warriorElement').css("background-image", "url(assets/icons_sr_components/warrior.svg)")
+    $(".warriorElement").animate({
+      left: '200px'
+    }, 'slow');
+    //$('.warriorElement').style({ opacity: 0, transform: 'rotateX(-90deg) translateY(150px) translateZ(50px)' })
+    console.log('warrior: ', $(".warriorElement").translate3d(0, 0, ''))
+  }
 
   // addComponents(component: string){
   //   console.log('click')
@@ -77,7 +96,7 @@ export class SessionComponent implements OnInit {
     });
   }
 
-  initComponentsIcons(){
+  initElementsIcons(){
     this.iconRegistry.addSvgIcon('wall01',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'wall01.svg'));
     this.iconRegistry.addSvgIcon('wall02',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'wall02.svg'));
     this.iconRegistry.addSvgIcon('wall03',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'wall03.svg'));
