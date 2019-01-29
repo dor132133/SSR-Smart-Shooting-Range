@@ -7,6 +7,8 @@ export class Target extends Item{
 
 
     public id: number;
+    public name: string;
+    public icon: string;
     public sernsorTrigger: number;
     public positionX: number;
     public positionY: number;

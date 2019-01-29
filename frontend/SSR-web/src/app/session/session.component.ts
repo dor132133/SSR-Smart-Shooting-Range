@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, Output } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Output, ViewChildren } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
@@ -10,7 +10,9 @@ import { Map } from 'src/classes/map';
 import { Warrior } from 'src/classes/warrior';
 import { JobType } from 'src/enums';
 import { Sensor } from 'src/classes/sensor';
-import * as $ from 'jquery';
+import {OverlayModule, Overlay, OverlayConfig, OverlayRef} from '@angular/cdk/overlay';
+import { DragDropModule } from '@angular/cdk/drag-drop'
+import { Wall } from 'src/classes/wall';
 
 @Component({
   selector: 'app-session',
@@ -20,52 +22,69 @@ import * as $ from 'jquery';
 })
 export class SessionComponent implements OnInit {
 
-  @Output() iconElement: string
-  @Output() positionXElement: string
-  @Output() positionYElement: string
-
-
-  ICONS_PATH = 'assets/icons_sr_components/'
+  style_flag = false;
+  ICONS_PATH = 'assets/icons_elements/'
   session: Object
   warrior = new Warrior('Dor', 'Ben Yehuda', 26, 'UDI','',JobType.GUID,'052-3804878') //id: "5c436e457013cf0027667ac1"
   map = new Map('Lotar01','assets/icons_map/town-hall.svg',0,0); //id: "5c47534d11eac30022666f8c"
   walls = [
-           {name: 'wall01',icon: this.ICONS_PATH + 'wall01.svg', positionX: '300px', positionY: '500px'},
-          //  {name: 'wall02',icon: this.ICONS_PATH + 'wall02.svg', positionX: '50px', positionY: '50px'},
-          //  {name: 'wall03',icon: this.ICONS_PATH + 'wall03.svg', positionX: '50px', positionY: '50px'},
+    new Wall('00','wall00',this.ICONS_PATH + 'wall00.svg', undefined,undefined),
+    new Wall('00','wall00',this.ICONS_PATH + 'wall00.svg', undefined,undefined),
+    new Wall('01','wall01',this.ICONS_PATH + 'wall01.svg', undefined,undefined),
+    new Wall('01','wall01',this.ICONS_PATH + 'wall01.svg', undefined,undefined),
+    new Wall('02','wall02',this.ICONS_PATH + 'wall02.svg', undefined,undefined),
+    new Wall('02','wall02',this.ICONS_PATH + 'wall02.svg', undefined,undefined),
+    new Wall('03','wall03',this.ICONS_PATH + 'wall03.svg', undefined,undefined),
+    new Wall('03','wall03',this.ICONS_PATH + 'wall03.svg', undefined,undefined),
+    new Wall('04','wall04',this.ICONS_PATH + 'wall04.svg', undefined,undefined),
+    new Wall('04','wall04',this.ICONS_PATH + 'wall04.svg', undefined,undefined),
+    new Wall('05','wall05',this.ICONS_PATH + 'wall05.svg', undefined,undefined),
+    new Wall('05','wall05',this.ICONS_PATH + 'wall05.svg', undefined,undefined)
           ]
-
-  constructor(private router: Router,private dataService: DataService,
+  
+  constructor(private router: Router,private dataService: DataService,public overlay: Overlay,
     private iconRegistry: MatIconRegistry,private sanitizer: DomSanitizer,private api: SsrApiService){
   }
 
   ngOnInit() {
-    this.map.sensors.push(new Sensor(0,0,0))
-    this.map.sensors.push(new Sensor(1,0,0))
-    this.map.targets.push(new Target(0,0,0,0))
-    this.map.targets.push(new Target(1,1,0,0))
-    this.initElementsIcons()
     // this.warrior = this.dataService.warrior;
     // this.map = this.dataService.map
+    this.map.walls = this.walls
+    for(let i=0;i<2;i++){
+      let sensor = new Sensor(i,0,0)
+      sensor.icon = this.ICONS_PATH + 'sensor.svg'
+      sensor.name = 'sensor'
+      this.map.sensors.push(sensor)
+      let target = new Target(i,i,0,0)
+      target.icon = this.ICONS_PATH + 'target.svg'
+      target.name = 'target'
+      this.map.targets.push(target)
+    }
+    this.warrior.icon = this.ICONS_PATH + 'warrior.svg';
     console.log(this.warrior) 
     console.log(this.map)
   }
 
 
   gogo(){
-    // $('.warriorElement').css("background-image", "url(assets/icons_sr_components/warrior.svg)")
-    $(".warriorElement").animate({
-      left: '200px'
-    }, 'slow');
-    //$('.warriorElement').style({ opacity: 0, transform: 'rotateX(-90deg) translateY(150px) translateZ(50px)' })
-    console.log('warrior: ', $(".warriorElement").translate3d(0, 0, ''))
-  }
 
-  // addComponents(component: string){
-  //   console.log('click')
-  //   $(".example-boundary").append($('<div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="wall01"></mat-icon></div>'))
-  //   $(".example-box").scss(this.example_box_css)
-  // }
+    let elements = document.querySelectorAll('.app-element')
+    console.log(elements)
+
+    // var elementPosition = document.querySelector('.app-element').getBoundingClientRect()
+    //var parentPosition = document.querySelector('.border-reset').getBoundingClientRect()
+    //var parent = document.querySelector('.border-reset')
+    
+    // console.log(elementPosition)
+    // console.log(parentPosition)
+
+    // let positionX = elementPosition.left - parentPosition.left
+    // let positionY = elementPosition.top - parentPosition.top
+
+    // console.log(positionX)
+    // console.log(positionY)
+   // console.log(parent.getBoundingClientRect())
+  }
 
 
   start(data: JSON){
@@ -75,14 +94,6 @@ export class SessionComponent implements OnInit {
       console.log(res)
       //callback(data);
  
-      // var controller = angular.module('SessionComponent', []);
-      // module.controller('TimeCtrl', function($scope, $interval) {
-      //   var tick = function() {
-      //     $scope.clock = Date.now();
-      //   }
-      //   tick();
-      //   $interval(tick, 1000);
-      // });
    })
   }
 
@@ -96,38 +107,6 @@ export class SessionComponent implements OnInit {
     });
   }
 
-  initElementsIcons(){
-    this.iconRegistry.addSvgIcon('wall01',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'wall01.svg'));
-    this.iconRegistry.addSvgIcon('wall02',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'wall02.svg'));
-    this.iconRegistry.addSvgIcon('wall03',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'wall03.svg'));
-    this.iconRegistry.addSvgIcon('wall04',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'wall04.svg'));
-    this.iconRegistry.addSvgIcon('wall05',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'wall05.svg'));
-    this.iconRegistry.addSvgIcon('wall06',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'wall06.svg'));
-    this.iconRegistry.addSvgIcon('sensor',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'sensor.svg'));
-    this.iconRegistry.addSvgIcon('target',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'target.svg'));
-    this.iconRegistry.addSvgIcon('warrior',this.sanitizer.bypassSecurityTrustResourceUrl(this.ICONS_PATH + 'warrior.svg'));
-  }
-
 }
 
 
-
-  // example_box_css = { 
-  //     "width": "50px",
-  //     "height": "50px",
-  //     "border": "solid 1px #ccc",
-  //     "color": "rgba(0, 0, 0, 0.87)",
-  //     "cursor": "move",
-  //     "display": "inline-flex",
-  //     "justify-content": "center",
-  //     "align-items": "center",
-  //     "text-align": "center",
-  //     "background": "#fff",
-  //     "border-radius": "4px",
-  //     "margin-right":" 25px",
-  //     "position": "relative",
-  //     "z-index": "1",
-  //     "box-sizing":" border-box",
-  //     "padding": "10px",
-  //     "transition": "box-shadow 200ms cubic-bezier(0, 0, 0.2, 1)",
-  //     "box-shadow":" 0 3px 1px -2px rgba(0, 0, 0, 0.2),0 2px 2px 0 rgba(0, 0, 0, 0.14),0 1px 5px 0 rgba(0, 0, 0, 0.12)"}

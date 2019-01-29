@@ -20,6 +20,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NewWarriorDialogComponent } from './new-warrior-dialog/new-warrior-dialog.component';
 import { NewTeamDialogComponent } from './new-team-dialog/new-team-dialog.component';
 import { ElementComponent } from './element/element.component';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { ElementComponent } from './element/element.component';
     NewSessionDialogComponent,
     NewWarriorDialogComponent,
     NewTeamDialogComponent,
-    ElementComponent
+    ElementComponent,
   ],
   imports: [
     BrowserModule,

@@ -32,6 +32,7 @@ export class NewSessionDialogComponent implements OnInit {
   newMap = new Map('','',0,0);
   panelOpenState = false;
   ICONS_PATH = 'assets/icons_map/';
+  ICONS_ELEMENTS = 'assets/icons_elements/'
   trainIcons = [
     this.ICONS_PATH + 'city-hall.svg', this.ICONS_PATH + 'town-hall.svg',this.ICONS_PATH + 'route.svg',
     this.ICONS_PATH + 'route2.svg', this.ICONS_PATH + 'running.svg', this.ICONS_PATH + 'target.svg',
@@ -107,10 +108,12 @@ export class NewSessionDialogComponent implements OnInit {
 
     for(let i=0; i<this.numOfTargets;i++){
       let target = new Target(i,undefined,0,0);
+      target.icon = this.ICONS_ELEMENTS + 'target.svg'
       this.newMap.targets.push(target)
     }
     for(let i=0; i<this.numOfSensors;i++){
       let sensor = new Sensor(i,0,0);
+      sensor.icon = this.ICONS_ELEMENTS + 'sensor.svg'
       this.newMap.sensors.push(sensor)
     }
     this.mapService.addMap(this.newMap, (res)=>{

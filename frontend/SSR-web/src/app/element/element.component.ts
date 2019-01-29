@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
+import {OverlayModule} from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-element',
@@ -13,20 +14,13 @@ export class ElementComponent implements OnInit {
   @Input() icon: string
   @Input() positionX: string
   @Input() positionY: string
-  @Input() backgroungColor: string
 
   constructor(private iconRegistry: MatIconRegistry,private sanitizer: DomSanitizer) { 
-    iconRegistry.addSvgIcon(name,sanitizer.bypassSecurityTrustResourceUrl(this.icon));
+    
   }
 
   ngOnInit() {
+    this.iconRegistry.addSvgIcon(this.name,this.sanitizer.bypassSecurityTrustResourceUrl(this.icon));
   }
-//[ngStyle]="{'transform': 'translate(' + positionX + 'px, ' + positionY + 'px)'}"
-  setPositions() {
-    let styles = {
-      'transform': 'translate(' + this.positionX +'px, ' + this.positionX + 'px)'
-    };
-    return styles;
-  }
-
+  
 }

@@ -102,11 +102,12 @@ export class CollectionsComponent implements OnInit {
   }
 
   addTeam(team: Team){
-    var _this=this;
+    //var _this=this;
     this.showSpinner = true;
     this.teamsService.addTeam(team, (res) => {
-      if(res.status == 200)
-        _this.getTeams()
+      if(res.status == 200){
+        this.getTeams()
+      }
     this.showSpinner = false;
     })
   }

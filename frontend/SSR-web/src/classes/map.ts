@@ -17,6 +17,7 @@ export class Map extends Item{
   public screenShot: string;
   public sensors;
   public targets;
+  public walls;
   public width: number;
   public length: number;
 

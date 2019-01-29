@@ -5,6 +5,8 @@ export class Sensor extends Item{
 
 
     public id: number;
+    public name: string;
+    public icon: string
     public positionX: number;
     public positionY: number;
     public crossed: boolean;

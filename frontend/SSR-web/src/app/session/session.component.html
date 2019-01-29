@@ -11,31 +11,26 @@
 <h3>Start Session</h3>
 
 <div class="example-boundary">
+<!-- IF THERE ARE POSITIONx AND POSITIONy then use them with position: ABSOLUTE!!, otherwise position:RELATIVE!!! -->
+    <div class="border-reset">
+            <ng-container *ngFor="let wall of walls">
+            <app-element class="wall-element" id={{wall.id}} [name]="wall.name" cdkDragBoundary=".example-boundary" cdkDrag
+            [ngStyle]="{'transform': 'translate3d(' + wall.positionX + ',' + wall.positionY + ', 0 '}"
+                [icon]=wall.icon [positionX]=wall.positionX [positionY]=wall.positionY></app-element>
+            </ng-container>
+        <ng-container *ngFor="let target of map.targets">
+                <app-element class="sr-element" id={{target.id}} [name]="target.name" cdkDragBoundary=".example-boundary"
+                cdkDrag [ngStyle]="{'transform': 'translate3d(' + target.positionX + ',' + target.positionY + ', 0 '}"
+                    [icon]=target.icon [positionX]=target.positionX [positionY]=target.positionY></app-element>
+        </ng-container>
+        <ng-container *ngFor="let sensor of map.sensors">
+                <app-element class="sr-element" id={{sensor.id}} [name]="sensor.name" cdkDragBoundary=".example-boundary"
+                cdkDrag [ngStyle]="{'transform': 'translate3d(' + sensor.positionX + ',' + sensor.positionY + ', 0 '}"
+                    [icon]=sensor.icon [positionX]=sensor.positionX [positionY]=sensor.positionY></app-element>
+        </ng-container>
+    </div>
 
-    <ng-container *ngFor="let wall of walls">
-        <app-element [name]="wall.name" [icon]=wall.icon [positionX]=wall.positionX [positionY]=wall.positionY></app-element>
-    </ng-container>
-
-    <!-- <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall01"></mat-icon></div> -->
-    <!-- <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall01"></mat-icon></div> -->
-    <!-- <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall02"></mat-icon></div> -->
-    <!-- <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall02"></mat-icon></div> -->
-    <!-- <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall03"></mat-icon></div> -->
-    <!-- <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall04"></mat-icon></div> -->
-    <!-- <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall05"></mat-icon></div> -->
-    <!-- <div class="example-wall-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="wall06"></mat-icon></div> -->
-    <!-- <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="sensor"></mat-icon><h6>{{sensors[0]}}</h6></div> -->
-    <!-- <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="sensor"></mat-icon><h6>{{sensors[1]}}</h6></div> -->
-    <!-- <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="sensor"></mat-icon><h6>{{sensors[2]}}</h6></div> -->
-         
-   
-    <!-- <div class="warriorElement" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon class="wall_icon" svgIcon="warrior"></mat-icon></div>  -->
-
-
-    <!-- <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="target"></mat-icon><h6>{{targets[0]}}</h6></div> -->
-    <!-- <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="target"></mat-icon><h6>{{targets[1]}}</h6></div> -->
-    <!-- <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag><mat-icon svgIcon="target"></mat-icon><h6>{{targets[2]}}</h6></div> -->
-   
+    
 </div>
 
 <!-- <button mat-raised-button (click)="addComponents()">addComponent</button> -->
@@ -47,4 +42,3 @@
         <div ng-controller='TimeCtrl'><p>{{ clock | date:'HH:mm:ss'}}</p></div>
     </mat-card-actions>
 </mat-card>
-
