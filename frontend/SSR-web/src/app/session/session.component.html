@@ -15,10 +15,10 @@
     <div class="border-reset">
             <ng-container *ngFor="let wall of walls">
             <app-element class="wall-element" id={{wall.id}} [name]="wall.name" cdkDragBoundary=".example-boundary" cdkDrag
-            [ngStyle]="{'transform': 'translate3d(' + wall.positionX + ',' + wall.positionY + ', 0 '}"
+            [ngStyle]="wall.positionX == undefined? {'position': 'relative'} : {'position': 'absolute','transform': 'translate3d(' + wall.positionX + ',' + wall.positionY + ', 0 '}"
                 [icon]=wall.icon [positionX]=wall.positionX [positionY]=wall.positionY></app-element>
             </ng-container>
-        <ng-container *ngFor="let target of map.targets">
+        <!-- <ng-container *ngFor="let target of map.targets">
                 <app-element class="sr-element" id={{target.id}} [name]="target.name" cdkDragBoundary=".example-boundary"
                 cdkDrag [ngStyle]="{'transform': 'translate3d(' + target.positionX + ',' + target.positionY + ', 0 '}"
                     [icon]=target.icon [positionX]=target.positionX [positionY]=target.positionY></app-element>
@@ -27,7 +27,7 @@
                 <app-element class="sr-element" id={{sensor.id}} [name]="sensor.name" cdkDragBoundary=".example-boundary"
                 cdkDrag [ngStyle]="{'transform': 'translate3d(' + sensor.positionX + ',' + sensor.positionY + ', 0 '}"
                     [icon]=sensor.icon [positionX]=sensor.positionX [positionY]=sensor.positionY></app-element>
-        </ng-container>
+        </ng-container> -->
     </div>
 
     

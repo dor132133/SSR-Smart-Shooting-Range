@@ -29,7 +29,7 @@ export class SessionComponent implements OnInit {
   map = new Map('Lotar01','assets/icons_map/town-hall.svg',0,0); //id: "5c47534d11eac30022666f8c"
   walls = [
     new Wall('00','wall00',this.ICONS_PATH + 'wall00.svg', undefined,undefined),
-    new Wall('00','wall00',this.ICONS_PATH + 'wall00.svg', undefined,undefined),
+    new Wall('00','wall00',this.ICONS_PATH + 'wall00.svg', '200px','200px'),
     new Wall('01','wall01',this.ICONS_PATH + 'wall01.svg', undefined,undefined),
     new Wall('01','wall01',this.ICONS_PATH + 'wall01.svg', undefined,undefined),
     new Wall('02','wall02',this.ICONS_PATH + 'wall02.svg', undefined,undefined),
@@ -66,10 +66,10 @@ export class SessionComponent implements OnInit {
   }
 
 
-  gogo(){
+  gogo(session){
 
     let elements = document.querySelectorAll('.app-element')
-    console.log(elements)
+    console.log(this.walls)
 
     // var elementPosition = document.querySelector('.app-element').getBoundingClientRect()
     //var parentPosition = document.querySelector('.border-reset').getBoundingClientRect()
