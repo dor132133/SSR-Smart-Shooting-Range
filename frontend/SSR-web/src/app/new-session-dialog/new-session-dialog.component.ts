@@ -15,6 +15,7 @@ import { MapService } from '../map.service';
 import { Target } from 'src/classes/target';
 import { Sensor } from 'src/classes/sensor';
 import { ErrorService } from '../error.service';
+import { Wall } from 'src/classes/wall';
 
 
 @Component({
@@ -41,6 +42,7 @@ export class NewSessionDialogComponent implements OnInit {
   numbers = [1,2,3,4,5,6]
   numOfTargets: number
   numOfSensors: number
+  numOfWalls = 6;
   
   constructor(private warriorsService:WarriorsService, private teamsService: TeamsService, private mapService: MapService,
     public dialogRef: MatDialogRef<NewSessionDialogComponent>, private errorService: ErrorService,
@@ -106,16 +108,23 @@ export class NewSessionDialogComponent implements OnInit {
       return
     }
 
+    for(let i=0,j=0; i<this.numOfWalls;i++,j+=2){
+      this.newMap.walls.push(new Wall('0'+j,'wall0'+i,this.ICONS_ELEMENTS + 'wall0'+i+'.svg'))
+      this.newMap.walls.push(new Wall('0'+(j+1),'wall0'+i,this.ICONS_ELEMENTS + 'wall0'+i+'.svg'))
+    }
+
     for(let i=0; i<this.numOfTargets;i++){
-      let target = new Target(i,undefined,0,0);
+      let target = new Target(i,undefined,undefined,undefined);
       target.icon = this.ICONS_ELEMENTS + 'target.svg'
       this.newMap.targets.push(target)
     }
+
     for(let i=0; i<this.numOfSensors;i++){
-      let sensor = new Sensor(i,0,0);
+      let sensor = new Sensor(i,undefined,undefined);
       sensor.icon = this.ICONS_ELEMENTS + 'sensor.svg'
       this.newMap.sensors.push(sensor)
     }
+
     this.mapService.addMap(this.newMap, (res)=>{
       if(res.status == 200){
         data = { warrior: this.chosenWarrior,
@@ -125,8 +134,8 @@ export class NewSessionDialogComponent implements OnInit {
         return
       }
       this.errorService.openSnackBar('Error accoured while creating new map', 'Try again')
-    })
-    
+    }) 
+
   }
 
   getData(){
@@ -151,34 +160,7 @@ export class NewSessionDialogComponent implements OnInit {
         })
       })
     })
+  
   }
-
-  // getWarriors(){
-  //   this.warriorsService.getWarriors((data) => {
-  //     this.warriors = Object.values(data).filter(function(element){
-  //       return element['empty']==undefined
-  //     })
-  //     //console.log(this.warriors)
-  //   })
-  // }
-
-  // getTeams(){
-  //   this.teamsService.getTeams((data) => {
-  //     this.teams = Object.values(data).filter(function(element){
-  //       return element['empty']==undefined
-  //     })
-  //     //console.log(this.teams)
-  //   })
-  // }
-
-  // getmaps(){
-  //   this.mapService.getMaps((data) => {
-  //     this.maps = Object.values(data).filter(function(element){
-  //       return element['empty']==undefined
-  //     })
-  //     console.log(this.maps)
-  //   })
-  // }
-
 
 }

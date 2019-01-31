@@ -45,7 +45,7 @@ export class SessionsComponent implements OnInit {
             //data: {name: 'New Session', animal: this.animal} //pass data into the dialog
     });
 
-  dialogRef.afterClosed().subscribe(result => {
+  dialogRef.afterClosed().subscribe(result => { 
       //console.log('The dialog was closed');
       //console.log(result);
       if(result == false)
@@ -58,8 +58,8 @@ export class SessionsComponent implements OnInit {
   }
 
   startSession(data) {
-    // this.dataService.map = data.map
-    // this.dataService.warrior = data.warrior
+    this.dataService.map = data.map
+    this.dataService.warrior = data.warrior
     this.router.navigate(['/session']).then( (e) => {
       if (e) {
         //console.log("Navigation is successful!");

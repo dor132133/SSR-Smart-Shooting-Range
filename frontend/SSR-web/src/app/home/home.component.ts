@@ -77,9 +77,9 @@ export class HomeComponent implements OnInit {
   } 
 
   DeleteDocumentButton(){
-    var query = JSON.stringify({ collection : "users",
+    var query = JSON.stringify({ collection : "maps",
                        data: {
-                         firstname: "Itzik"
+                        trainName: "abcd"
                         }
                 })
     this.mondoDB.deleteDocument(JSON.parse(query)).subscribe(res =>{

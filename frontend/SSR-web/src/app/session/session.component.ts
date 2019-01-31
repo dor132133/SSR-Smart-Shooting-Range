@@ -24,66 +24,71 @@ export class SessionComponent implements OnInit {
 
   style_flag = false;
   ICONS_PATH = 'assets/icons_elements/'
+  warriorIcon = this.ICONS_PATH + 'warrior.svg';
+  warriorIconName = 'warrior';
+  sensorIconName = 'sensor';
+  targetIconName = 'target';
   session: Object
-  warrior = new Warrior('Dor', 'Ben Yehuda', 26, 'UDI','',JobType.GUID,'052-3804878') //id: "5c436e457013cf0027667ac1"
-  map = new Map('Lotar01','assets/icons_map/town-hall.svg',0,0); //id: "5c47534d11eac30022666f8c"
-  walls = [
-    new Wall('00','wall00',this.ICONS_PATH + 'wall00.svg', undefined,undefined),
-    new Wall('00','wall00',this.ICONS_PATH + 'wall00.svg', '200px','200px'),
-    new Wall('01','wall01',this.ICONS_PATH + 'wall01.svg', undefined,undefined),
-    new Wall('01','wall01',this.ICONS_PATH + 'wall01.svg', undefined,undefined),
-    new Wall('02','wall02',this.ICONS_PATH + 'wall02.svg', undefined,undefined),
-    new Wall('02','wall02',this.ICONS_PATH + 'wall02.svg', undefined,undefined),
-    new Wall('03','wall03',this.ICONS_PATH + 'wall03.svg', undefined,undefined),
-    new Wall('03','wall03',this.ICONS_PATH + 'wall03.svg', undefined,undefined),
-    new Wall('04','wall04',this.ICONS_PATH + 'wall04.svg', undefined,undefined),
-    new Wall('04','wall04',this.ICONS_PATH + 'wall04.svg', undefined,undefined),
-    new Wall('05','wall05',this.ICONS_PATH + 'wall05.svg', undefined,undefined),
-    new Wall('05','wall05',this.ICONS_PATH + 'wall05.svg', undefined,undefined)
-          ]
-  
+  warrior: Warrior
+  map: Map
+
   constructor(private router: Router,private dataService: DataService,public overlay: Overlay,
     private iconRegistry: MatIconRegistry,private sanitizer: DomSanitizer,private api: SsrApiService){
   }
 
   ngOnInit() {
-    // this.warrior = this.dataService.warrior;
-    // this.map = this.dataService.map
-    this.map.walls = this.walls
-    for(let i=0;i<2;i++){
-      let sensor = new Sensor(i,0,0)
-      sensor.icon = this.ICONS_PATH + 'sensor.svg'
-      sensor.name = 'sensor'
-      this.map.sensors.push(sensor)
-      let target = new Target(i,i,0,0)
-      target.icon = this.ICONS_PATH + 'target.svg'
-      target.name = 'target'
-      this.map.targets.push(target)
-    }
-    this.warrior.icon = this.ICONS_PATH + 'warrior.svg';
+    this.warrior = <Warrior>this.dataService.warrior;
+    this.map = <Map>this.dataService.map
     console.log(this.warrior) 
     console.log(this.map)
   }
 
-
   gogo(session){
+    let wallsElements = document.querySelectorAll('.wall-element')
+    let targetElements = document.querySelectorAll('.target-element')
+    let sensorElements = document.querySelectorAll('.sensor-element')
+    var parentPosition = document.querySelector('.border-reset').getBoundingClientRect();
+    console.log('Px: ' + (parentPosition.left) + ' Py:' + (parentPosition.top))
 
-    let elements = document.querySelectorAll('.app-element')
-    console.log(this.walls)
+    wallsElements.forEach(element =>{
+       for(let i=0;i<this.map.walls.length;i++){
+          if(this.map.walls[i].id == element.id){
+            let tmpX = element.getBoundingClientRect().left
+            let tmpY = element.getBoundingClientRect().top
+            console.log(element.id + ':  x: ' + (tmpX) + ' y: ' + (tmpY))
+            this.map.walls[i].positionY = tmpY
+            //this.map.walls[i].positionX = tmpX - parentPosition.left
+            break;
+          } 
+       }
+    })
 
-    // var elementPosition = document.querySelector('.app-element').getBoundingClientRect()
-    //var parentPosition = document.querySelector('.border-reset').getBoundingClientRect()
-    //var parent = document.querySelector('.border-reset')
-    
-    // console.log(elementPosition)
-    // console.log(parentPosition)
+  //   targetElements.forEach(element =>{
+  //     for(let i=0;i<this.map.targets.length;i++){
+  //        if(this.map.targets[i].id == element.id){
+  //          let tmpX = element.getBoundingClientRect().left
+  //          let tmpY = element.getBoundingClientRect().top
+  //          console.log('elemX: ' + tmpX  + ' , ' + 'elemY: ' + tmpY)
+  //          this.map.targets[i].positionX = tmpX
+  //          this.map.targets[i].positionY = tmpY
+  //          break;
+  //        } 
+  //     }
+  //  })
 
-    // let positionX = elementPosition.left - parentPosition.left
-    // let positionY = elementPosition.top - parentPosition.top
-
-    // console.log(positionX)
-    // console.log(positionY)
-   // console.log(parent.getBoundingClientRect())
+//    sensorElements.forEach(element =>{
+//     for(let i=0;i<this.map.sensors.length;i++){
+//        if(this.map.sensors[i].id == element.id){
+//          let tmpX = element.getBoundingClientRect().left
+//          let tmpY = element.getBoundingClientRect().top
+//           console.log('elemX: ' + tmpX  + ' , ' + 'elemY: ' + tmpY)
+//           this.map.sensors[i].positionX = tmpX
+//           this.map.sensors[i].positionY = tmpY
+//          break;
+//        } 
+//     }
+//  })
+  
   }
 
 

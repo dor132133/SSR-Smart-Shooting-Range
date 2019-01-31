@@ -30,6 +30,7 @@ export class Map extends Item{
     this.length = length;
     this.targets = []
     this.sensors = []
+    this.walls = []
   }
 
 

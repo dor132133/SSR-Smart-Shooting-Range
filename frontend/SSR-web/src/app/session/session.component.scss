@@ -6,9 +6,9 @@
 }
 
 .wall-element{
+  width: 60px;
+  height: 60px;
   position: absolute;
-  width: 70px;
-  height: 70px;
   color: rgba(0, 0, 0, 0.87);
   cursor: move;
   display: inline-flex;
@@ -22,7 +22,7 @@
   padding: 0;
 }
 
-.sr-element{
+.target-element, .sensor-element{
   position: absolute;
   width: 30px;
   height: 30px;
@@ -39,7 +39,35 @@
   padding: 0;
 }
 
+.warrior-element{
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  color: rgba(0, 0, 0, 0.87);
+  cursor: move;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: rgba(206, 205, 205, 0);
+  border-radius: 4px;
+  z-index: 1;
+  box-sizing: border-box;
+  padding: 0;
+  top: 40%;
+  float: left;
+  left: 0px;
+}
 
+.sub-boundary {
+  max-width: 120px;
+  height: 400px;
+  width: 100%;
+  border: dotted #ccc 2px;
+  float: right;
+  z-index: 1;
+  background-color: #979797
+}
 
 .example-boundary {
   max-width: 950px;

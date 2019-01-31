@@ -11,13 +11,13 @@ export class Wall extends Item{
   public icon: string;
 
 
-  constructor(id: string ,name: string,icon: string, positionX: string, positionY: string) {
+  constructor(id: string ,name: string,icon: string) {
     super();
     this.id = id;
     this.name = name;
     this.icon = icon;
-    this.positionX = positionX;
-    this.positionY = positionY;
+    this.positionX = undefined;
+    this.positionY = undefined;
   }
 
 }

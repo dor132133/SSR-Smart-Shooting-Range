@@ -13,21 +13,32 @@
 <div class="example-boundary">
 <!-- IF THERE ARE POSITIONx AND POSITIONy then use them with position: ABSOLUTE!!, otherwise position:RELATIVE!!! -->
     <div class="border-reset">
-            <ng-container *ngFor="let wall of walls">
-            <app-element class="wall-element" id={{wall.id}} [name]="wall.name" cdkDragBoundary=".example-boundary" cdkDrag
-            [ngStyle]="wall.positionX == undefined? {'position': 'relative'} : {'position': 'absolute','transform': 'translate3d(' + wall.positionX + ',' + wall.positionY + ', 0 '}"
-                [icon]=wall.icon [positionX]=wall.positionX [positionY]=wall.positionY></app-element>
+        <div class="sub-boundary">
+            <ng-container *ngFor="let wall of map.walls">
+                <app-element *ngIf="wall.positionX == undefined && wall.positionY == undefined" class="wall-element" id={{wall.id}} [name]="wall.name" cdkDragBoundary=".example-boundary" cdkDrag
+                [ngStyle]="{'position': 'relative'}"
+                    [icon]=wall.icon [positionX]=wall.positionX [positionY]=wall.positionY></app-element>
             </ng-container>
-        <!-- <ng-container *ngFor="let target of map.targets">
-                <app-element class="sr-element" id={{target.id}} [name]="target.name" cdkDragBoundary=".example-boundary"
-                cdkDrag [ngStyle]="{'transform': 'translate3d(' + target.positionX + ',' + target.positionY + ', 0 '}"
+        </div>
+        <ng-container *ngFor="let wall of map.walls">
+                <app-element *ngIf="wall.positionX !== undefined " class="wall-element" id={{wall.id}} [name]="wall.name" cdkDragBoundary=".example-boundary" cdkDrag
+                [ngStyle]="{'top': wall.positionY +'px' , 'left': wall.positionX +'px'}"
+                    [icon]=wall.icon [positionX]=wall.positionX [positionY]=wall.positionY></app-element>
+        </ng-container>
+        <ng-container *ngFor="let target of map.targets">
+                <app-element class="target-element" id={{target.id}} [name]=targetIconName cdkDragBoundary=".example-boundary"
+                cdkDrag [ngStyle]=" target.positionX == undefined? {'position': 'relative'} : {'top': target.positionY +'px', 'left': target.positionX +'px'}"
                     [icon]=target.icon [positionX]=target.positionX [positionY]=target.positionY></app-element>
         </ng-container>
         <ng-container *ngFor="let sensor of map.sensors">
-                <app-element class="sr-element" id={{sensor.id}} [name]="sensor.name" cdkDragBoundary=".example-boundary"
-                cdkDrag [ngStyle]="{'transform': 'translate3d(' + sensor.positionX + ',' + sensor.positionY + ', 0 '}"
+                <app-element class="sensor-element" id={{sensor.id}} [name]=sensorIconName cdkDragBoundary=".example-boundary"
+                cdkDrag [ngStyle]="sensor.positionX == undefined? {'position': 'relative'} : {'top': sensor.positionY +'px', 'left': sensor.positionX +'px'}"
                     [icon]=sensor.icon [positionX]=sensor.positionX [positionY]=sensor.positionY></app-element>
-        </ng-container> -->
+        </ng-container>
+        <ng-container>
+            <app-element class="warrior-element" [icon]=warriorIcon [name]=warriorIconName cdkDragBoundary=".example-boundary"
+            cdkDrag [positionX]=warrior.positionX [positionY]=warrior.positionY></app-element>
+        </ng-container>
     </div>
 
     
