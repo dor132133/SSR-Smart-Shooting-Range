@@ -14,15 +14,15 @@ export class ElementComponent implements OnInit {
 
   @Input() name: string
   @Input() icon: string
-  @Input() id: string
+  @Input() elemId: string
   @Input() sernsorTrigger: number
-  elemId: String
+
   constructor(private iconRegistry: MatIconRegistry,private sanitizer: DomSanitizer, private dataService: DataService) { 
     
   }
 
   ngOnInit() {
-    this.elemId = new String(this.id)
+    
     this.iconRegistry.addSvgIcon(this.name,this.sanitizer.bypassSecurityTrustResourceUrl(this.icon));
     if(this.name !=='target' && this.name !== 'sensor')
       this.elemId = ''

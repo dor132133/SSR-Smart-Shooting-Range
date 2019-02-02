@@ -16,17 +16,17 @@
             </ng-container>
         </div> 
         <ng-container *ngFor="let wall of map.walls">
-                <app-element *ngIf="wall.positionX !== undefined " class="boundary-wall-element" [name]="wall.name" 
-                cdkDragBoundary=".example-boundary" id={{wall.id}} cdkDrag 
+                <app-element *ngIf="wall.positionX !== undefined " id={{wall.id}} class="boundary-wall-element" [name]="wall.name" 
+                cdkDragBoundary=".example-boundary" cdkDrag 
                 [ngStyle]="{'top': wall.positionY + 'px', 'left': wall.positionX + 'px'}" [icon]=wall.icon ></app-element>
         </ng-container>
         <ng-container *ngFor="let target of map.targets">
-                <app-element class="target-element" id={{target.id}} [name]=targetIconName cdkDragBoundary=".example-boundary"
+                <app-element class="target-element" id={{target.id}} [elemId]=target.id [name]=targetIconName cdkDragBoundary=".example-boundary"
                  [ngStyle]=" target.positionX == undefined? {'position': 'relative'} : {'top': target.positionY +'px', 'left': target.positionX +'px'}"
                 [icon]=target.icon cdkDrag (click)="openBottomSheet(target)" [sernsorTrigger]=target.sernsorTrigger></app-element>
         </ng-container>
         <ng-container *ngFor="let sensor of map.sensors">
-                <app-element class="sensor-element" id={{sensor.id}} [name]=sensorIconName cdkDragBoundary=".example-boundary"
+                <app-element class="sensor-element" id={{sensor.id}} [elemId]=sensor.id [name]=sensorIconName cdkDragBoundary=".example-boundary"
                  [ngStyle]="sensor.positionX == undefined? {'position': 'relative'} : {'top': sensor.positionY +'px', 'left': sensor.positionX +'px'}"
                  [icon]=sensor.icon cdkDrag></app-element>
         </ng-container>

@@ -37,7 +37,7 @@ export class SessionComponent implements OnInit {
 
   constructor(private router: Router,private dataService: DataService, private mapService: MapService,
     private errorService: ErrorService,private bottomSheet: MatBottomSheet,
-    private iconRegistry: MatIconRegistry,private sanitizer: DomSanitizer,private api: SsrApiService){
+    private iconRegistry: MatIconRegistry,private sanitizer: DomSanitizer,private apiService: SsrApiService){
   }
 
   ngOnInit() {
@@ -50,7 +50,6 @@ export class SessionComponent implements OnInit {
   setMovedElement(nodeElements){
     let exist;
     for (let i = 0; nodeElements[i]; i++) {
-      console.log("elemID: ",nodeElements[i].id)
       if((nodeElements[i] as HTMLElement).style.transform !== ""){//if moved
         exist = false;
         for(let j=0; this.movedWalls[j]; j++)
@@ -64,11 +63,6 @@ export class SessionComponent implements OnInit {
         
     }
     return nodeElements
-  }
-
-  test(){
-    this.setMovedElement(document.querySelectorAll('.boundary-wall-element'))
-    this.setMovedElement(document.querySelectorAll('.sub-boundary-wall-element'))
   }
 
   gogo(){
@@ -94,32 +88,33 @@ export class SessionComponent implements OnInit {
         }
     })
 
-    // targetElements.forEach(element =>{
-    //   for(let i=0;i<this.map.targets.length;i++){
-    //       if(this.map.targets[i].id == element.id){
-    //         let tmpX = element.getBoundingClientRect().left
-    //         let tmpY = element.getBoundingClientRect().top
-    //         console.log('target' + element.id + ':  x: ' + (tmpX - parentPosition.left)+ ' y: ' + (tmpY - parentPosition.top))
-    //         this.map.targets[i].positionX = tmpX - parentPosition.left
-    //         this.map.targets[i].positionY = tmpY - parentPosition.top
-    //         break;
-    //       } 
-    //   }
-    // })
+    targetElements.forEach(element =>{
+      for(let i=0;i<this.map.targets.length;i++){
+          if(this.map.targets[i].id == element.id){
+            let tmpX = element.getBoundingClientRect().left
+            let tmpY = element.getBoundingClientRect().top
+            console.log('target' + element.id + ':  x: ' + (tmpX - parentPosition.left)+ ' y: ' + (tmpY - parentPosition.top))
+            this.map.targets[i].positionX = tmpX - parentPosition.left
+            this.map.targets[i].positionY = tmpY - parentPosition.top
+            break;
+          } 
+      }
+    })
 
-    // sensorElements.forEach(element =>{
-    //     for(let i=0;i<this.map.sensors.length;i++){
-    //       if(this.map.sensors[i].id == element.id){
-    //         console.log('element.id: ',element.id)
-    //         let tmpX = element.getBoundingClientRect().left
-    //         let tmpY = element.getBoundingClientRect().top
-    //           console.log('sensor' + element + ':  x: ' + (tmpX - parentPosition.left)+ ' y: ' + (tmpY - parentPosition.top))
-    //           this.map.sensors[i].positionX = tmpX - parentPosition.left
-    //           this.map.sensors[i].positionY = tmpY - parentPosition.top
-    //         break;
-    //       } 
-    //   }
-    // })
+    sensorElements.forEach(element =>{
+        for(let i=0;i<this.map.sensors.length;i++){
+          if(this.map.sensors[i].id == element.id){
+            console.log('element.id: ',element.id)
+            let tmpX = element.getBoundingClientRect().left
+            let tmpY = element.getBoundingClientRect().top
+              console.log('sensor' + element + ':  x: ' + (tmpX - parentPosition.left)+ ' y: ' + (tmpY - parentPosition.top))
+              this.map.sensors[i].positionX = tmpX - parentPosition.left
+              this.map.sensors[i].positionY = tmpY - parentPosition.top
+            break;
+          } 
+      }
+    })
+
     //console.log(this.map)
     this.mapService.updateMap(<Map>this.dataService.map,this.map, (res)=>{
       if(res.status == 200){
@@ -133,7 +128,7 @@ export class SessionComponent implements OnInit {
 
   start(data: JSON){
     console.log(data)
-    this.api.startSession(data).subscribe(res => {
+    this.apiService.startSession(data).subscribe(res => {
       //this.sessions = Object.values(data);
       console.log(res)
       //callback(data);

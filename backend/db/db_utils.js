@@ -293,7 +293,7 @@ function updateDocument(req,res){
         if(err){
             res.status(500).end(error);
             return;
-        }
+        }           
         var db = mongo.db(SSR_DB);
         db.listCollections({name: doc.collection}).next(function(err, collinfo) {
             if (!collinfo) {//if collection exist
