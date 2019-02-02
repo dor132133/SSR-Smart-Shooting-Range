@@ -1,43 +1,38 @@
 
 
-<!-- inject data to child component -->
-<!-- 
-        <project-content>
-            <div class='element'></div>
-          </project-content> -->
+ 
+<h3>{{map.trainName}}</h3>
+<h4>Warrior: {{warrior.firstname}} {{warrior.lastname}}</h4>
 
-
-
-<h3>Start Session</h3>
 
 <div class="example-boundary">
 <!-- IF THERE ARE POSITIONx AND POSITIONy then use them with position: ABSOLUTE!!, otherwise position:RELATIVE!!! -->
     <div class="border-reset">
         <div class="sub-boundary">
             <ng-container *ngFor="let wall of map.walls">
-                <app-element *ngIf="wall.positionX == undefined && wall.positionY == undefined" class="wall-element" id={{wall.id}} [name]="wall.name" cdkDragBoundary=".example-boundary" cdkDrag
-                [ngStyle]="{'position': 'relative'}"
-                    [icon]=wall.icon [positionX]=wall.positionX [positionY]=wall.positionY></app-element>
+                <app-element *ngIf="wall.positionX == undefined && wall.positionY == undefined"
+                 class="sub-boundary-wall-element" id={{wall.id}} [name]="wall.name" cdkDragBoundary=".example-boundary" cdkDrag
+                [ngStyle]="{'position': 'relative'}" [icon]=wall.icon></app-element>
             </ng-container>
-        </div>
+        </div> 
         <ng-container *ngFor="let wall of map.walls">
-                <app-element *ngIf="wall.positionX !== undefined " class="wall-element" id={{wall.id}} [name]="wall.name" cdkDragBoundary=".example-boundary" cdkDrag
-                [ngStyle]="{'top': wall.positionY +'px' , 'left': wall.positionX +'px'}"
-                    [icon]=wall.icon [positionX]=wall.positionX [positionY]=wall.positionY></app-element>
+                <app-element *ngIf="wall.positionX !== undefined " class="boundary-wall-element" [name]="wall.name" 
+                cdkDragBoundary=".example-boundary" id={{wall.id}} cdkDrag 
+                [ngStyle]="{'top': wall.positionY + 'px', 'left': wall.positionX + 'px'}" [icon]=wall.icon ></app-element>
         </ng-container>
         <ng-container *ngFor="let target of map.targets">
                 <app-element class="target-element" id={{target.id}} [name]=targetIconName cdkDragBoundary=".example-boundary"
-                cdkDrag [ngStyle]=" target.positionX == undefined? {'position': 'relative'} : {'top': target.positionY +'px', 'left': target.positionX +'px'}"
-                    [icon]=target.icon [positionX]=target.positionX [positionY]=target.positionY></app-element>
+                 [ngStyle]=" target.positionX == undefined? {'position': 'relative'} : {'top': target.positionY +'px', 'left': target.positionX +'px'}"
+                [icon]=target.icon cdkDrag (click)="openBottomSheet(target)" [sernsorTrigger]=target.sernsorTrigger></app-element>
         </ng-container>
         <ng-container *ngFor="let sensor of map.sensors">
                 <app-element class="sensor-element" id={{sensor.id}} [name]=sensorIconName cdkDragBoundary=".example-boundary"
-                cdkDrag [ngStyle]="sensor.positionX == undefined? {'position': 'relative'} : {'top': sensor.positionY +'px', 'left': sensor.positionX +'px'}"
-                    [icon]=sensor.icon [positionX]=sensor.positionX [positionY]=sensor.positionY></app-element>
+                 [ngStyle]="sensor.positionX == undefined? {'position': 'relative'} : {'top': sensor.positionY +'px', 'left': sensor.positionX +'px'}"
+                 [icon]=sensor.icon cdkDrag></app-element>
         </ng-container>
         <ng-container>
-            <app-element class="warrior-element" [icon]=warriorIcon [name]=warriorIconName cdkDragBoundary=".example-boundary"
-            cdkDrag [positionX]=warrior.positionX [positionY]=warrior.positionY></app-element>
+            <app-element class="warrior-element" [icon]=warriorIcon [name]=warriorIconName
+             cdkDragBoundary=".example-boundary" cdkDrag></app-element>
         </ng-container>
     </div>
 
@@ -47,9 +42,11 @@
 <!-- <button mat-raised-button (click)="addComponents()">addComponent</button> -->
 <mat-card class="example-card">
     <mat-card-actions>
-         <button mat-stroked-button (click)="exit()">Exit</button>
         <!-- <button mat-raised-button id="start" color="primary" (click)="start({'session' : '001'})">Start</button> -->
-        <button mat-raised-button id="start" color="primary" (click)="gogo({'session' : '001'})">Go!</button>
+        <button mat-raised-button id="start" color="primary" (click)="gogo()">Go!</button>
+        <button mat-stroked-button (click)="exit()">Exit</button>
+        <button mat-stroked-button (click)="test()">Test</button>
+        <button mat-stroked-button (click)="reset()">Reset Map</button>
         <div ng-controller='TimeCtrl'><p>{{ clock | date:'HH:mm:ss'}}</p></div>
     </mat-card-actions>
 </mat-card>

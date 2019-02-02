@@ -10,16 +10,16 @@ export class Session extends Item{
   public date: Date;
   public pic: string;
   public warriorId: string;
-  public times: Array<Shot>;
+  public time: string;
 
 
-  constructor(mapId: string, date: Date,warriorId: string, pic: string, times: Array<Shot>) {
+  constructor(mapId: string, date: Date,warriorId: string, pic: string, time: string) {
     super();
   
     this.mapId = mapId;
     this.date = date;
     this.warriorId = warriorId;
-    this.times = times;
+    this.time = time;
     this.pic = pic;
   }
 

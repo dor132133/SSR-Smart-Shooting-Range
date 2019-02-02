@@ -1,0 +1,18 @@
+
+
+
+
+<h4>Config Target #{{chosenTarget.id}}</h4>
+<mat-form-field>
+    <mat-select [(ngModel)]="trigerBySensor" placeholder="Triger by sensor number...">
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let sensor of sensors" [value]="sensor">
+            Sensor #0{{sensor.id}}
+        </mat-option>
+    </mat-select> 
+    <mat-hint style="color:red;" *ngIf="trigerBySensor==undefined">Please choose a trigger sensor</mat-hint>
+</mat-form-field>
+
+
+<button mat-raised-button (click)="cancle()">cancle</button>
+<button mat-raised-button color="primary" (click)="set()">set</button>

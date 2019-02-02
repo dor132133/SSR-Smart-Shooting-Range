@@ -114,7 +114,7 @@ export class NewSessionDialogComponent implements OnInit {
     }
 
     for(let i=0; i<this.numOfTargets;i++){
-      let target = new Target(i,undefined,undefined,undefined);
+      let target = new Target(i,undefined,undefined);
       target.icon = this.ICONS_ELEMENTS + 'target.svg'
       this.newMap.targets.push(target)
     }

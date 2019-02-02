@@ -2,5 +2,5 @@
 
 
     <mat-icon class="element" svgIcon="{{name}}">
- 
-
+    <div class="elemId"
+    [ngStyle]=" name == 'target' && sernsorTrigger !== undefined ? {'color': '#1be900'} : {'color': '#000000'}">{{elemId}}</div>

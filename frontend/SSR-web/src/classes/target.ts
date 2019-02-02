@@ -16,10 +16,9 @@ export class Target extends Item{
     //need to add shot/coordinates of shot/ Mikbatz...
   
   
-    constructor(id: number, sernsorTrigger: number, positionX: number,positionY: number) {
+    constructor(id: number, positionX: number,positionY: number) {
       super();
       this.id = id;
-      this.sernsorTrigger = sernsorTrigger;
       this.positionX = positionX;
       this.positionY = positionY;
       this.shooted = false;

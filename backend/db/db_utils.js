@@ -306,12 +306,12 @@ function updateDocument(req,res){
                 doc.data.origin._id = ObjectId(doc.data.origin._id)
                 doc.data.new._id = ObjectId(doc.data.new._id)
             }
-            db.collection(doc.collection).find(doc.data.origin).toArray(function(er, result) {
+            db.collection(doc.collection).findOne(doc.data.origin, function(er, result) {
                 if (er) {
                     res.status(500).end(er);
                     return;
                 }
-                if(result.length == 0){//if document doesn't exist
+                if(result == null){//if document doesn't exist
                     console.log('Cannot update, document does not exist')
                     res.status(409).end('Conflict error: document does not exist');
                     mongo.close();

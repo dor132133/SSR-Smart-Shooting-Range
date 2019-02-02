@@ -21,6 +21,8 @@ import { NewWarriorDialogComponent } from './new-warrior-dialog/new-warrior-dial
 import { NewTeamDialogComponent } from './new-team-dialog/new-team-dialog.component';
 import { ElementComponent } from './element/element.component';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { TargetConfigureSheetComponent } from './target-configure-sheet/target-configure-sheet.component';
+import { MatBottomSheet, MatBottomSheetModule, MatBottomSheetRef } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
     NewWarriorDialogComponent,
     NewTeamDialogComponent,
     ElementComponent,
+    TargetConfigureSheetComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,12 +50,13 @@ import { OverlayModule } from '@angular/cdk/overlay';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule ,
-    DragDropModule
+    DragDropModule,
   ],
   entryComponents:[
     NewSessionDialogComponent,
     NewWarriorDialogComponent,
-    NewTeamDialogComponent
+    NewTeamDialogComponent,
+    TargetConfigureSheetComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
