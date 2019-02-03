@@ -44,9 +44,12 @@
     <mat-card-actions>
         <!-- <button mat-raised-button id="start" color="primary" (click)="start({'session' : '001'})">Start</button> -->
         <button mat-raised-button id="start" color="primary" (click)="gogo()">Go!</button>
+        <div class="time">{{stopWatch.currentTimeString}}</div>
         <button mat-stroked-button (click)="exit()">Exit</button>
-        <button mat-stroked-button (click)="test()">Test</button>
-        <button mat-stroked-button (click)="reset()">Reset Map</button>
-        <div ng-controller='TimeCtrl'><p>{{ clock | date:'HH:mm:ss'}}</p></div>
+        <button mat-stroked-button (click)="stopWatch.startTimer()">{{stopWatch.startText}}</button>
+        <button mat-stroked-button (click)="stopWatch.clearTimer()">Clear</button>
+        
+        <!-- <button mat-stroked-button (click)="reset()">Reset Map</button> -->
+ 
     </mat-card-actions>
 </mat-card>

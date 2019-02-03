@@ -15,6 +15,7 @@ import { Wall } from 'src/classes/wall';
 import { MapService } from '../map.service';
 import { ErrorService } from '../error.service';
 import { TargetConfigureSheetComponent } from '../target-configure-sheet/target-configure-sheet.component';
+import { StopwatchService } from '../stopwatch.service';
 
 @Component({
   selector: 'app-session',
@@ -36,7 +37,7 @@ export class SessionComponent implements OnInit {
   movedWalls: Array<HTMLElement> = []
 
   constructor(private router: Router,private dataService: DataService, private mapService: MapService,
-    private errorService: ErrorService,private bottomSheet: MatBottomSheet,
+    private errorService: ErrorService,private bottomSheet: MatBottomSheet,private stopWatch: StopwatchService,
     private iconRegistry: MatIconRegistry,private sanitizer: DomSanitizer,private apiService: SsrApiService){
   }
 

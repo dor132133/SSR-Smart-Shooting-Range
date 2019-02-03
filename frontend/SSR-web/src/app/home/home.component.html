@@ -15,7 +15,8 @@
 
 
 
-<button mat-raised-button (click)="timerApplication()">Start Timer</button>
-<div class="time">{{time}}</div>
+<button mat-raised-button (click)="stopWatch.startTimer()">{{stopWatch.startText}}</button>
+<button mat-raised-button (click)="stopWatch.clearTimer()">Clear</button>
+<div class="time">{{stopWatch.currentTimeString}}</div>
 
 

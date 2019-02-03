@@ -8,6 +8,8 @@ import { Map } from 'src/classes/map';
 import { JobType } from 'src/enums';
 import { WarriorsService } from '../warriors.service';
 import { SsrApiService } from '../ssr-api.service';
+import { interval } from 'rxjs';
+import { StopwatchService } from '../stopwatch.service';
 
 @Component({
   selector: 'app-home',
@@ -19,13 +21,24 @@ export class HomeComponent implements OnInit {
   warriors: Object;
   users: Object;
   sessions: Object;
-  time: string;
 
   constructor(private mondoDB: MongoService, private apiService: SsrApiService,
-     private sessionsService: SessionsService, private warriorsService: WarriorsService) { }
+     private sessionsService: SessionsService, private warriorsService: WarriorsService,
+     private stopWatch: StopwatchService) 
+     { }
 
   ngOnInit() {
+    
+  }
 
+  startSession(){
+    let data
+    console.log(data)
+      this.apiService.startSession(data).subscribe(res => {
+        //this.sessions = Object.values(data);
+        console.log(res)
+        //callback(data);
+     })
   }
 
 
@@ -90,14 +103,5 @@ export class HomeComponent implements OnInit {
                          
   }
 
-  timerApplication(){
-    let data
-    console.log(data)
-    this.apiService.startSession(data).subscribe(res => {
-      //this.sessions = Object.values(data);
-      console.log(res)
-      //callback(data);
-   })
-  }
 
 }

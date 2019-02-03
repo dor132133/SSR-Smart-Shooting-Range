@@ -89,6 +89,7 @@
   text-decoration:none;
   border: none;
   outline: none;
+  float: left;
 }
 
 .example-card {
@@ -112,4 +113,12 @@ h4{
   margin-top: -30px;
   width: 100%;
   text-align: right;
+}
+
+.time{
+  width: 110px;
+  height: 50%;
+  font-size: 23px;
+  float: left;
+  margin-left: 10%;
 }
