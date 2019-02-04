@@ -42,7 +42,7 @@ export class TeamsService {
     },err=> {
       _this.errorService.httpErrorHandler(err);
     })              
-
+ 
   }
 
   addTeam(team: Team ,callback: (res) => void){
@@ -54,10 +54,19 @@ export class TeamsService {
     //console.log(query)
     var _this=this;
     this.mongoDB.addDocument(JSON.parse(query)).subscribe(
-      res => console.log('HTTP response', res),
+      res => {
+        console.log('HTTP response', res)
+      },
       err => {
-        _this.errorService.httpErrorHandler(err);
-        callback(err)
+        let message:string = _this.errorService.httpErrorHandler(err);
+        let teamId:string
+        if(message.indexOf('_id')!==-1){
+          teamId=message.substring(message.indexOf('_id')+5)
+          err.teamId = teamId
+          callback(err)
+        }
+        else
+          callback(err)
       }); 
   }
 

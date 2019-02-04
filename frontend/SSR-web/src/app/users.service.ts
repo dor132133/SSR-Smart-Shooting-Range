@@ -31,8 +31,15 @@ export class UsersService {
   this.mondoDB.addDocument(JSON.parse(query)).subscribe(
     res => console.log('HTTP response', res),
     err => {
-      _this.errorService.httpErrorHandler(err);
-      callback(err)
+      let message:string = _this.errorService.httpErrorHandler(err);
+      let userId:string
+      if(message.indexOf('_id')!==-1){
+        userId=message.substring(message.indexOf('_id')+5)
+        err.userId = userId
+        callback(err)
+      }
+      else
+        callback(err)
     }); 
 }
 

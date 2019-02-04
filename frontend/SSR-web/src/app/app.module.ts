@@ -23,6 +23,7 @@ import { ElementComponent } from './element/element.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { TargetConfigureSheetComponent } from './target-configure-sheet/target-configure-sheet.component';
 import { MatBottomSheet, MatBottomSheetModule, MatBottomSheetRef } from '@angular/material';
+import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { MatBottomSheet, MatBottomSheetModule, MatBottomSheetRef } from '@angula
     NewTeamDialogComponent,
     ElementComponent,
     TargetConfigureSheetComponent,
+    MessageDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +58,8 @@ import { MatBottomSheet, MatBottomSheetModule, MatBottomSheetRef } from '@angula
     NewSessionDialogComponent,
     NewWarriorDialogComponent,
     NewTeamDialogComponent,
-    TargetConfigureSheetComponent
+    TargetConfigureSheetComponent,
+    MessageDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

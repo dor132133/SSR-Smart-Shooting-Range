@@ -106,7 +106,9 @@ export class CollectionsComponent implements OnInit {
     this.showSpinner = true;
     this.teamsService.addTeam(team, (res) => {
       if(res.status == 200){
+        console.log(res.teamId)
         this.getTeams()
+        this.errorService.openSnackBar('New Team added!','Success') 
       }
     this.showSpinner = false;
     })
@@ -117,8 +119,11 @@ export class CollectionsComponent implements OnInit {
     var _this=this;
     this.showSpinner = true;
     this.usersService.addUser(user, (res) => {
-      if(res.status == 200)
+      if(res.status == 200){
+        console.log(res.userId)
         _this.getUsers()
+        this.errorService.openSnackBar('New User added!','Success') 
+      }
     this.showSpinner = false;
     })
   }
@@ -128,6 +133,7 @@ export class CollectionsComponent implements OnInit {
     this.showSpinner = true;
     this.warriorsService.addWarrior(warrior, (res) => {
       if(res.status == 200){
+        console.log(res.warriorId)
         _this.getWarriors()
         this.errorService.openSnackBar('New Warrior added!','Success') 
       }

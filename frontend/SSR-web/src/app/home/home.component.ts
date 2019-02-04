@@ -31,15 +31,15 @@ export class HomeComponent implements OnInit {
     
   }
 
-  startSession(){
-    let data
-    console.log(data)
-      this.apiService.startSession(data).subscribe(res => {
-        //this.sessions = Object.values(data);
-        console.log(res)
-        //callback(data);
-     })
-  }
+  // startSession(){
+  //   let data
+  //   console.log(data)
+  //     this.apiService.startSession(data).subscribe(res => {
+  //       //this.sessions = Object.values(data);
+  //       console.log(res)
+  //       //callback(data);
+  //    })
+  // }
 
 
   updateWarriorButton(){
@@ -70,12 +70,12 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  addDocumentButton(){
-    let session = new Session('mapId',new Date, 'warriorId','','');
-    this.sessionsService.addSession(session, (res) =>{
-      console.log(res)
-    })
-  }
+  // addDocumentButton(){
+  //   let session = new Session('mapId',new Date, 'warriorId','','');
+  //   this.sessionsService.addSession(session, (res) =>{
+  //     console.log(res)
+  //   })
+  // }
 
   //Administrator users only
   addCollectionButton(name: string){
@@ -92,9 +92,9 @@ export class HomeComponent implements OnInit {
   } 
 
   DeleteDocumentButton(){
-    var query = JSON.stringify({ collection : "maps",
+    var query = JSON.stringify({ collection : "teams",
                        data: {
-                        trainName: "Lotar02"
+                        name: "ABC"
                         }
                 })
     this.mondoDB.deleteDocument(JSON.parse(query)).subscribe(res =>{

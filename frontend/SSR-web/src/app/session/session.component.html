@@ -39,17 +39,18 @@
     
 </div>
 
-<!-- <button mat-raised-button (click)="addComponents()">addComponent</button> -->
+
 <mat-card class="example-card">
     <mat-card-actions>
-        <!-- <button mat-raised-button id="start" color="primary" (click)="start({'session' : '001'})">Start</button> -->
-        <button mat-raised-button id="start" color="primary" (click)="gogo()">Go!</button>
-        <div class="time">{{stopWatch.currentTimeString}}</div>
-        <button mat-stroked-button (click)="exit()">Exit</button>
-        <button mat-stroked-button (click)="stopWatch.startTimer()">{{stopWatch.startText}}</button>
-        <button mat-stroked-button (click)="stopWatch.clearTimer()">Clear</button>
         
-        <!-- <button mat-stroked-button (click)="reset()">Reset Map</button> -->
+        <button mat-raised-button color="accent" (click)="start()">{{stopWatch.startText}}</button>
+        <div class="time">{{stopWatch.currentTimeString}}</div>
+        <button mat-raised-button class="finishButton" *ngIf="startFlag==true" color="primary" (click)="finish()">Finish</button>
+        <button mat-stroked-button (click)="exit()">Exit</button>
+        <button mat-stroked-button *ngIf="startFlag==false" (click)="resetMap()">Reset Map</button>
+        <button mat-stroked-button *ngIf="startFlag==true" (click)="stopWatch.clearTimer()">Clear</button>
+        
+        
  
     </mat-card-actions>
 </mat-card>

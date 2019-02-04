@@ -79,11 +79,11 @@ function getDocument(req,res){
         }
         var db = mongo.db(SSR_DB);
         //console.log(query.data._id)
-        if(query.data._id !== undefined){//fix comparing string to ObjectId string
+        if(query.data._id !== undefined && (query.data._id.length == 24 || query.data._id.length == 12)){//fix comparing string to ObjectId string
             query.data._id = ObjectId(query.data._id)
         }
         db.collection(query.collection).findOne(query.data, function(err, result) {
-            if (err) {
+            if (err || result == null) {
                 res.status(404).end('Error: 404 Not Found, '+ err);
                 return;
             }
@@ -123,7 +123,7 @@ function addDocument(req,res){
             db.collection(doc.collection).find(doc.data).toArray(function(er, result) {
                 if (er) {
                     res.status(500).end(er);
-                    return;
+                    return;    
                 }
                 if(result.length !== 0){//if document already exist
                     console.log('Cannot create, document already exist')
@@ -131,15 +131,16 @@ function addDocument(req,res){
                     mongo.close();
                     return;
                 }
-                db.collection(doc.collection).insertOne(doc.data, function(error) {
+                db.collection(doc.collection).insertOne(doc.data, function(error,document) {
                     if (error) {
                         res.status(400).end('Error: 400 Bad Request, '+ error);
                         mongo.close();
                         return;
                     }
                     console.log("1 document inserted to " + doc.collection);
+                    console.log(document.ops[0])
                     mongo.close(); 
-                    res.end('Document added successfully to ' + doc.collection);
+                    res.end('Document added successfully to ' + doc.collection + ' _id: ' + document.ops[0]._id);
                 });
             }); 
         })

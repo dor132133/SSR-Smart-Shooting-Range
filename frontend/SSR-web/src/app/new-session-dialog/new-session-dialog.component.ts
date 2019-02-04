@@ -98,7 +98,7 @@ export class NewSessionDialogComponent implements OnInit {
       this.dialogRef.close(flag);
       return
     }
-
+    
     var data;
     if(this.chosenMap!==undefined){
       data = { warrior: this.chosenWarrior,
@@ -127,6 +127,7 @@ export class NewSessionDialogComponent implements OnInit {
 
     this.mapService.addMap(this.newMap, (res)=>{
       if(res.status == 200){
+        this.newMap._id = res.mapId;
         data = { warrior: this.chosenWarrior,
           map: this.newMap
         }

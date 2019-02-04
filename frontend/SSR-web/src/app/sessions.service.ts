@@ -43,8 +43,15 @@ export class SessionsService {
     this.mondoDB.addDocument(JSON.parse(query)).subscribe(
       res => console.log('HTTP response', res),
       err => {
-        _this.errorService.httpErrorHandler(err);
-        callback(err)
+        let message:string = _this.errorService.httpErrorHandler(err);
+        let sessionId:string
+        if(message.indexOf('_id')!==-1){
+          sessionId=message.substring(message.indexOf('_id')+5)
+          err.sessionId = sessionId
+          callback(err)
+        }
+        else
+          callback(err)
       }); 
   }
 

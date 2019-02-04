@@ -57,8 +57,15 @@ export class MapService {
     this.mongoDB.addDocument(JSON.parse(query)).subscribe(
       res => console.log('HTTP response', res),
       err => {
-        _this.errorService.httpErrorHandler(err);
-        callback(err)
+        let message:string = _this.errorService.httpErrorHandler(err);
+        let mapId:string
+        if(message.indexOf('_id')!==-1){
+          mapId=message.substring(message.indexOf('_id')+5)
+          err.mapId = mapId
+          callback(err)
+        }
+        else
+          callback(err)
       }); 
   }
 

@@ -11,7 +11,7 @@ import { Target } from './target';
 
 export class Map extends Item{
 
-
+  public _id: string
   public trainName: string;
   public icon: string;
   public screenShot: string;

@@ -8,8 +8,9 @@
 
 
 $my-app-primary: mat-palette($mat-red, A700, 600, A100);
-$my-app-accent:  mat-palette($mat-grey, 500, 900);
+$my-app-accent:  mat-palette($mat-green, 600);
 $my-app-warn:    mat-palette($mat-grey,50, 50, 50);
+
 $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
 @include angular-material-theme($my-app-theme);
 

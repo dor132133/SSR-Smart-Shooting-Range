@@ -58,10 +58,19 @@ export class WarriorsService {
     var _this=this;
     console.log(query)
     this.mongoDB.addDocument(JSON.parse(query)).subscribe(
-      res => console.log('HTTP response', res),
+      res => {
+        console.log('HTTP response', res)
+      },
       err => {
-        _this.errorService.httpErrorHandler(err);
-        callback(err)
+        let message:string = _this.errorService.httpErrorHandler(err);
+        let warriorId:string
+        if(message.indexOf('_id')!==-1){
+          warriorId=message.substring(message.indexOf('_id')+5)
+          err.warriorId = warriorId
+          callback(err)
+        }
+        else
+          callback(err)
       }); 
   }
 

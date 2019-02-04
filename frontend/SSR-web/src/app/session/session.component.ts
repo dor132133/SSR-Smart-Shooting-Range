@@ -16,6 +16,7 @@ import { MapService } from '../map.service';
 import { ErrorService } from '../error.service';
 import { TargetConfigureSheetComponent } from '../target-configure-sheet/target-configure-sheet.component';
 import { StopwatchService } from '../stopwatch.service';
+import { SessionsService } from '../sessions.service';
 
 @Component({
   selector: 'app-session',
@@ -31,12 +32,16 @@ export class SessionComponent implements OnInit {
   warriorIconName = 'warrior';
   sensorIconName = 'sensor';
   targetIconName = 'target';
-  session: Object
+  session: Session
   warrior: Warrior
   map: Map
   movedWalls: Array<HTMLElement> = []
+  startFlag: boolean = false
+  showSpinner: boolean = false;
+  screenShot;
 
   constructor(private router: Router,private dataService: DataService, private mapService: MapService,
+    private sessionService: SessionsService,
     private errorService: ErrorService,private bottomSheet: MatBottomSheet,private stopWatch: StopwatchService,
     private iconRegistry: MatIconRegistry,private sanitizer: DomSanitizer,private apiService: SsrApiService){
   }
@@ -44,6 +49,7 @@ export class SessionComponent implements OnInit {
   ngOnInit() {
     this.warrior = <Warrior>this.dataService.warrior;
     this.map = JSON.parse(JSON.stringify(this.dataService.map))//copy object, instead of two pointers of one object.
+    //this.screenShot = getScreenShot
     console.log(this.warrior) 
     console.log(this.map)
   }
@@ -66,7 +72,7 @@ export class SessionComponent implements OnInit {
     return nodeElements
   }
 
-  gogo(){
+  saveElementsPositions(callback: (res) => void){
     
     this.setMovedElement(document.querySelectorAll('.boundary-wall-element'))
     this.setMovedElement(document.querySelectorAll('.sub-boundary-wall-element'))
@@ -119,42 +125,88 @@ export class SessionComponent implements OnInit {
     //console.log(this.map)
     this.mapService.updateMap(<Map>this.dataService.map,this.map, (res)=>{
       if(res.status == 200){
-        this.exit()
+        callback(true)
         return
       }
       this.errorService.openSnackBar('Error accoured while updating the map', 'Try again')
+      callback(false)
     })
     
   }
 
-  start(data: JSON){
-    console.log(data)
-    this.apiService.startSession(data).subscribe(res => {
-      //this.sessions = Object.values(data);
-      console.log(res)
-      //callback(data);
- 
-   })
+  finish(){
+    if(this.stopWatch.startText == 'Stop')
+      this.stopWatch.startTimer()
+    //ssrAPI.pause()
+    this.errorService.openMessage('Finish Session','Are you sure?',(choice) => {
+      if(choice == false){
+        //ssrAPI.resume
+        this.stopWatch.startTimer()
+        return
+      }
+      //ssrAPI.stop()
+      this.saveElementsPositions((res)=>{
+        if(res == false)
+          return
+        this.session = new Session(this.map._id,Date.now(),this.warrior._id,this.screenShot,this.stopWatch.currentTimeString)
+        console.log(this.session)
+        this.sessionService.addSession(this.session, (res)=>{
+          if(res.status == 200){
+            console.log(res.sessionId)
+            this.errorService.openSnackBar('New Session added!','Success') 
+            this.showSpinner = false;
+            this.exit()
+          }
+        
+        })
+      })
+    })
   }
 
-  reset(){
-    this.map.walls.forEach(element =>{
-      element.positionX=undefined
-      element.positionY=undefined
+
+  start(){
+    if(!this.startFlag){
+      this.showSpinner = true;
+      this.startFlag = true;
+      let message = JSON.parse(JSON.stringify({start: 'start'}))
+      this.apiService.startSession(message, (res) => {
+        if(res.status == 200){
+          this.showSpinner = false;
+          this.stopWatch.startTimer();  
+        }
+      })
+    }
+    else{
+      this.stopWatch.startTimer(); 
+      //ssrAPI.pause/resume
+    }
+
+  }
+
+  resetMap(){
+    this.errorService.openMessage('Reset map positions','Are you sure?',(choice) => {
+      if(choice == false)
+        return
+      this.map.walls.forEach(element =>{
+        element.positionX=undefined
+        element.positionY=undefined
+      })
+      this.map.targets.forEach(element =>{
+        element.positionX=undefined
+        element.positionY=undefined
+      })
+      this.map.sensors.forEach(element =>{
+        element.positionX=undefined
+        element.positionY=undefined
+      })
     })
-    this.map.targets.forEach(element =>{
-      element.positionX=undefined
-      element.positionY=undefined
-    })
-    this.map.sensors.forEach(element =>{
-      element.positionX=undefined
-      element.positionY=undefined
-    })
+
   }
 
   exit(){
     this.router.navigate(['/sessions']).then( (e) => {
       if (e) {
+        this.stopWatch.clearTimer()
         //console.log("Navigation is successful!");
       } else {
         console.log("Navigation has failed!");
