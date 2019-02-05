@@ -6,6 +6,9 @@ import { NewSessionDialogComponent } from '../new-session-dialog/new-session-dia
 import { Router, NavigationExtras } from '@angular/router';
 import { MapService } from '../map.service';
 import { DataService } from '../data.service';
+import { WarriorsService } from '../warriors.service';
+import { Map } from 'src/classes/map';
+import { Warrior } from 'src/classes/warrior';
 
 
 @Component({
@@ -17,7 +20,7 @@ export class SessionsComponent implements OnInit {
 
   sessions = [];
 
-  constructor(private sessionsService: SessionsService, private dataService: DataService,
+  constructor(private sessionsService: SessionsService, private dataService: DataService, private warriorService: WarriorsService,
      private mapService: MapService, private dialog: MatDialog, private router: Router) { }
 
   ngOnInit() {
@@ -25,21 +28,30 @@ export class SessionsComponent implements OnInit {
   }
 
   getSessions(){
+    this.sessions = [];
     this.sessionsService.getSessions((data) => {
-      this.sessions = Object.values(data);
+      data = Object.values(data).filter(function(element){
+        return element['empty']==undefined
+      })
+      data.forEach((element)=>{
+        let session = (element as Session)
+        this.mapService.getMapById(session.mapId, map =>{
+          this.warriorService.getWarriorById(session.warriorId, warrior => {
+            let mySession = {
+              date: new Date((element as Session).date).toUTCString(),
+              time: (element as Session).time,
+              map: map as Map,
+              warrior: warrior as Warrior
+            }
+            this.sessions.push(mySession)
+          })
+        })
+        
+      })
     })
   }
 
-  addSession(){
-    let session = new Session('mapId',new Date, 'warriorId','','');
-    var _this = this
-    this.sessionsService.addSession(session, (res) => {
-      if(res.status == 200)
-        _this.getSessions()
-    })
-  }
-
-  openDialog(): void {
+  openNewSessionDialog(): void {
     const dialogRef = this.dialog.open(NewSessionDialogComponent, {
       width: '1500px',
             //data: {name: 'New Session', animal: this.animal} //pass data into the dialog
@@ -69,5 +81,8 @@ export class SessionsComponent implements OnInit {
     });
   };
 
+  openSessionDialog(): void {
+    console.log('clicked')
+  }
 
 }
