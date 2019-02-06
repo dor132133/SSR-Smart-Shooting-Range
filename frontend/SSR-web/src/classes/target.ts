@@ -2,6 +2,7 @@
 
 
 import { Item } from './item';
+import { Shot } from './shot';
 
 export class Target extends Item{
 
@@ -13,6 +14,7 @@ export class Target extends Item{
     public positionX: number;
     public positionY: number;
     public shooted: boolean;
+    public shots: Array<Shot>;
     //need to add shot/coordinates of shot/ Mikbatz...
   
   
@@ -22,6 +24,7 @@ export class Target extends Item{
       this.positionX = positionX;
       this.positionY = positionY;
       this.shooted = false;
+      this.shots = [];
     }
 
     

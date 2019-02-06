@@ -24,6 +24,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { TargetConfigureSheetComponent } from './target-configure-sheet/target-configure-sheet.component';
 import { MatBottomSheet, MatBottomSheetModule, MatBottomSheetRef } from '@angular/material';
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
+import { SessionReportDialogComponent } from './session-report-dialog/session-report-dialog.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { MessageDialogComponent } from './message-dialog/message-dialog.componen
     ElementComponent,
     TargetConfigureSheetComponent,
     MessageDialogComponent,
+    SessionReportDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,7 +61,8 @@ import { MessageDialogComponent } from './message-dialog/message-dialog.componen
     NewWarriorDialogComponent,
     NewTeamDialogComponent,
     TargetConfigureSheetComponent,
-    MessageDialogComponent
+    MessageDialogComponent,
+    SessionReportDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -51,8 +51,6 @@ export class NewSessionDialogComponent implements OnInit {
 
   ngOnInit() {
     this.getData()
-    // this.getWarriors();
-    // this.getTeams();
   }
 
   goForwardStepOne(stepper: MatStepper){

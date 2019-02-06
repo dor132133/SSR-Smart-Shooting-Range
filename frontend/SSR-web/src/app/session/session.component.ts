@@ -39,6 +39,7 @@ export class SessionComponent implements OnInit {
   startFlag: boolean = false
   showSpinner: boolean = false;
   screenShot;
+  date = Date.now()
 
   constructor(private router: Router,private dataService: DataService, private mapService: MapService,
     private sessionService: SessionsService,
@@ -87,7 +88,7 @@ export class SessionComponent implements OnInit {
           if(this.map.walls[i].id == element.id){
             let tmpX = element.getBoundingClientRect().left
             let tmpY = element.getBoundingClientRect().top
-            console.log('wall' + element.id + ':  x: ' + (tmpX - parentPosition.left)+ ' y: ' + (tmpY - parentPosition.top))
+            //console.log('wall' + element.id + ':  x: ' + (tmpX - parentPosition.left)+ ' y: ' + (tmpY - parentPosition.top))
             this.map.walls[i].positionX = tmpX - parentPosition.left
             this.map.walls[i].positionY = tmpY - parentPosition.top
             break;
@@ -100,7 +101,7 @@ export class SessionComponent implements OnInit {
           if(this.map.targets[i].id == element.id){
             let tmpX = element.getBoundingClientRect().left
             let tmpY = element.getBoundingClientRect().top
-            console.log('target' + element.id + ':  x: ' + (tmpX - parentPosition.left)+ ' y: ' + (tmpY - parentPosition.top))
+            //console.log('target' + element.id + ':  x: ' + (tmpX - parentPosition.left)+ ' y: ' + (tmpY - parentPosition.top))
             this.map.targets[i].positionX = tmpX - parentPosition.left
             this.map.targets[i].positionY = tmpY - parentPosition.top
             break;
@@ -111,10 +112,9 @@ export class SessionComponent implements OnInit {
     sensorElements.forEach(element =>{
         for(let i=0;i<this.map.sensors.length;i++){
           if(this.map.sensors[i].id == element.id){
-            console.log('element.id: ',element.id)
             let tmpX = element.getBoundingClientRect().left
             let tmpY = element.getBoundingClientRect().top
-              console.log('sensor' + element + ':  x: ' + (tmpX - parentPosition.left)+ ' y: ' + (tmpY - parentPosition.top))
+              //console.log('sensor' + element + ':  x: ' + (tmpX - parentPosition.left)+ ' y: ' + (tmpY - parentPosition.top))
               this.map.sensors[i].positionX = tmpX - parentPosition.left
               this.map.sensors[i].positionY = tmpY - parentPosition.top
             break;
@@ -148,7 +148,7 @@ export class SessionComponent implements OnInit {
       this.saveElementsPositions((res)=>{
         if(res == false)
           return
-        this.session = new Session(this.map._id,Date.now(),this.warrior._id,this.screenShot,this.stopWatch.currentTimeString)
+        this.session = new Session(this.map._id,this.date,this.warrior._id,this.screenShot,this.stopWatch.currentTimeString)
         console.log(this.session)
         this.sessionService.addSession(this.session, (res)=>{
           if(res.status == 200){

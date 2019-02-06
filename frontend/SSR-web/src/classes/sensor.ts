@@ -9,7 +9,8 @@ export class Sensor extends Item{
     public icon: string
     public positionX: number;
     public positionY: number;
-    public crossed: boolean;
+    public isCrossed: boolean;
+    public crossTime: number;
     //need to add shot/coordinates of shot/ Mikbatz...
   
   
@@ -18,7 +19,7 @@ export class Sensor extends Item{
       this.id = id;
       this.positionX = positionX;
       this.positionY = positionY;
-      this.crossed = false;
+      this.isCrossed = false;
     }
 
     

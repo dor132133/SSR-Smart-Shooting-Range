@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { SessionsService } from '../sessions.service';
 import { Session } from 'src/classes/session';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { NewSessionDialogComponent } from '../new-session-dialog/new-session-dialog.component';
 import { Router, NavigationExtras } from '@angular/router';
 import { MapService } from '../map.service';
@@ -9,6 +9,8 @@ import { DataService } from '../data.service';
 import { WarriorsService } from '../warriors.service';
 import { Map } from 'src/classes/map';
 import { Warrior } from 'src/classes/warrior';
+import { ErrorService } from '../error.service';
+import { SessionReportDialogComponent } from '../session-report-dialog/session-report-dialog.component';
 
 
 @Component({
@@ -39,7 +41,7 @@ export class SessionsComponent implements OnInit {
           this.warriorService.getWarriorById(session.warriorId, warrior => {
             let mySession = {
               date: new Date((element as Session).date).toUTCString(),
-              time: (element as Session).time,
+              totalTime: (element as Session).totalTime,
               map: map as Map,
               warrior: warrior as Warrior
             }
@@ -81,8 +83,19 @@ export class SessionsComponent implements OnInit {
     });
   };
 
-  openSessionDialog(): void {
-    console.log('clicked')
+  openSessionReportDialog(session): void {
+    console.log('session clicked')
+    const dialogRef = this.dialog.open(SessionReportDialogComponent, {
+      width: '1500px',
+            data: {session: session} //pass data into the dialog
+    });
+
+  dialogRef.afterClosed().subscribe(result => { 
+      
+      console.log(result);
+      if(result == false)
+        return
+    });
   }
 
 }

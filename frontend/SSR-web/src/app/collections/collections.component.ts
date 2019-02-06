@@ -142,8 +142,13 @@ export class CollectionsComponent implements OnInit {
   }
 
 
+  openWarriorDialog(warrior){
+    console.log('warrior ' + warrior.firstname + ' ' + warrior.lastname + ' clicked')
+  }
 
-
+  openTeamDialog(team){
+    console.log('team ' + team.name + ' clicked')
+  }
 
 
 

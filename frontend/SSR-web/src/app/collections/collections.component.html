@@ -15,11 +15,13 @@
             <mat-card-content  [style.overflow]="'auto'" [style.height.px]="'300'">
         
                 <mat-list *ngIf="warriors">
-                  <mat-list-item *ngFor="let warrior of warriors"> 
-                    <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
-                    <h4 mat-line>{{warrior.firstname}} {{warrior.lastname}}</h4>
-                    <p mat-line> {{warrior.team}}</p>
-                     rate: {{warrior.rate}}
+                  <mat-list-item (click)='openWarriorDialog(warrior)' *ngFor="let warrior of warriors"> 
+                    <img src="assets/icons_general/target2.svg" alt="Smiley face" height="42" width="42">
+                    <div class="textLine">
+                      <h3 mat-line>{{warrior.firstname}} {{warrior.lastname}}</h3>
+                      <div class="warrior-rate">rate: {{warrior.rate}}</div>
+                      <h4 mat-line> {{warrior.team}} Team</h4>   
+                    </div>
                     <mat-divider></mat-divider>
                   </mat-list-item>
                 </mat-list>
@@ -45,11 +47,13 @@
             <mat-card-content  [style.overflow]="'auto'" [style.height.px]="'300'">
                 <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
                 <mat-list *ngIf="teams">
-                  <mat-list-item *ngFor="let team of teams"> 
-                      <!-- <img src="{{team.pic}}" alt="Smiley face" height="42" width="42"> -->
-                    <h4 mat-line>{{team.name}}</h4>
-                    <p mat-line> {{team.numOfMems}} members</p>
-                     Rate: {{team.rate}}
+                  <mat-list-item (click)='openTeamDialog(team)' *ngFor="let team of teams"> 
+                    <img src="{{team.pic}}" alt="Smiley face" height="42" width="42">
+                    <div class="textLine">
+                      <h3 mat-line class="name" mat-line>{{team.name}}</h3>
+                      <h4  mat-line class="team-rate">Rate: {{team.rate}}</h4>
+                      <div mat-line class="members"> {{team.numOfMems}} members</div>
+                    </div>
                     <mat-divider></mat-divider>
                   </mat-list-item>
                 </mat-list>

@@ -1,8 +1,6 @@
 
 
 
-<!-- <div layout="row" layout-margin layout-wrap layout-align="center center"> -->
-
 <mat-card class="sessions-card">
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
@@ -14,7 +12,7 @@
     <mat-card-content  [style.overflow]="'auto'" [style.height.px]="'300'">
 
         <mat-list *ngIf="sessions">
-          <mat-list-item (click)="openSessionDialog()" *ngFor="let session of sessions"> 
+          <mat-list-item (click)="openSessionReportDialog(session)" *ngFor="let session of sessions"> 
             <img class="mapIcon" aria-hidden [src]="session.map.icon">
             <div class="textLine">
              <h3>{{session.map.trainName}}</h3>
@@ -23,7 +21,7 @@
              <div mat-line class="team">{{session.warrior.team}} Team</div>
             
              <div class="date" float="right"> {{session.date}}</div>
-             <div class="time" >{{session.time}}</div>
+             <div class="totalTime" >Total time: {{session.totalTime}}</div>
             </div>
             
             <mat-divider></mat-divider>
@@ -42,4 +40,3 @@
   </mat-card>
 
 
-<!-- </div> -->
