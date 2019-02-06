@@ -10,10 +10,13 @@ import { ErrorService } from '../error.service';
 })
 export class SessionReportDialogComponent implements OnInit {
 
+  session
+
   constructor(public dialogRef: MatDialogRef<SessionsComponent>, private errorService: ErrorService,
   @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
+    this.session = this.data.session;
   }
 
 

@@ -20,11 +20,11 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NewWarriorDialogComponent } from './new-warrior-dialog/new-warrior-dialog.component';
 import { NewTeamDialogComponent } from './new-team-dialog/new-team-dialog.component';
 import { ElementComponent } from './element/element.component';
-import { OverlayModule } from '@angular/cdk/overlay';
 import { TargetConfigureSheetComponent } from './target-configure-sheet/target-configure-sheet.component';
-import { MatBottomSheet, MatBottomSheetModule, MatBottomSheetRef } from '@angular/material';
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 import { SessionReportDialogComponent } from './session-report-dialog/session-report-dialog.component';
+import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -44,6 +44,7 @@ import { SessionReportDialogComponent } from './session-report-dialog/session-re
     TargetConfigureSheetComponent,
     MessageDialogComponent,
     SessionReportDialogComponent,
+    SpinnerDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -62,9 +63,14 @@ import { SessionReportDialogComponent } from './session-report-dialog/session-re
     NewTeamDialogComponent,
     TargetConfigureSheetComponent,
     MessageDialogComponent,
-    SessionReportDialogComponent
+    SessionReportDialogComponent,
+    SpinnerDialogComponent
   ],
-  providers: [],
+  providers: [
+      { provide: MatDialogRef, useValue: {} },
+      { provide: SpinnerDialogComponent, useValue: {} }
+    //  { provide: MAT_DIALOG_DATA, useValue: [] }
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

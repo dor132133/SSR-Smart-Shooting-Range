@@ -12,16 +12,65 @@ export class SsrApiService {
 
   constructor(private http: HttpClient, private errorService: ErrorService) { }
 
+  readySession(callback: (data) => void){
+    var _this = this
+    this.http.get(environment.API_URL + 'ready-session/').subscribe(
+      res => {
+        callback(res)
+      },
+      err => {
+        _this.errorService.httpErrorHandler(err);
+        callback(err)
+    })  
+  }
 
-startSession(message : JSON, callback: (data) => void){
-  var _this = this
-  this.http.post(environment.API_URL + 'start-session/', message).subscribe(
-    res => console.log('HTTP response', res),
-    err => {
-      _this.errorService.httpErrorHandler(err);
-      callback(err)
-  })  
-}
+  startSession(callback: (data) => void){
+    var _this = this
+    this.http.get(environment.API_URL + 'start-session/').subscribe(
+      res => {
+        callback(res)
+      },
+      err => {
+        _this.errorService.httpErrorHandler(err);
+        callback(err)
+    })  
+  }
+
+  pauseSession(callback: (data) => void){
+    var _this = this
+    this.http.get(environment.API_URL + 'pause-session/').subscribe(
+      res =>{
+        callback(res)
+      },
+      err => {
+        _this.errorService.httpErrorHandler(err);
+        callback(err)
+    })  
+  }
+
+  resumeSession(callback: (data) => void){
+    var _this = this
+    this.http.get(environment.API_URL + 'resume-session/').subscribe(
+      res => {
+        callback(res)
+      },
+      err => {
+        _this.errorService.httpErrorHandler(err);
+        callback(err)
+    })  
+  }
+
+  endSession(callback: (data) => void){
+    var _this = this
+    this.http.get(environment.API_URL + 'end-session/').subscribe(
+      res => {
+        callback(res)
+      },
+      err => {
+        _this.errorService.httpErrorHandler(err);
+        callback(err)
+    })  
+  }
 
 
 
