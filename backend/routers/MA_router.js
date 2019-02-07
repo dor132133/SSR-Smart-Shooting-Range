@@ -8,5 +8,6 @@ router.get('/start-session',maAPI.startSession);
 router.get('/pause-session',maAPI.pauseSession);
 router.get('/resume-session',maAPI.resumeSession);
 router.get('/end-session',maAPI.endSession);
+//router.get('/web-socket',maAPI.openMAWebSocket);
 
 module.exports = router;

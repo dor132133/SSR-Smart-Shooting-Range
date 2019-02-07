@@ -31,6 +31,11 @@ export class HomeComponent implements OnInit {
     
   }
 
+  openWebSocket(){
+    this.apiService.createWebSocketConnection();
+  }
+
+
   // startSession(){
   //   let data
   //   console.log(data)

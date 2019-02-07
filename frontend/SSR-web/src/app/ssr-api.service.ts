@@ -12,6 +12,24 @@ export class SsrApiService {
 
   constructor(private http: HttpClient, private errorService: ErrorService) { }
 
+
+  createWebSocketConnection(){
+    const url = 'ws://localhost:8082'
+    const ws = new WebSocket(url)
+    ws.onopen = () => {
+      console.log('webSocket connecting successfully!')
+      ws.send('hey')
+    }
+    ws.onerror = error => {
+      console.log('WebSocket error: ', error)
+    }
+    
+    ws.onmessage = (message) => {
+      console.log(message)
+    }
+  
+  }
+
   readySession(callback: (data) => void){
     var _this = this
     this.http.get(environment.API_URL + 'ready-session/').subscribe(

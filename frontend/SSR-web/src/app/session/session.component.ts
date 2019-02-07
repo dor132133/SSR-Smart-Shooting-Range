@@ -65,6 +65,7 @@ export class SessionComponent implements OnInit {
       this.resume();
   }
 
+  //Connecting to server and ESP...
   ready(){
     this.errorService.spinnerOn('Connecting to server and ESP...');
     this.apiService.readySession(res => {
@@ -73,6 +74,7 @@ export class SessionComponent implements OnInit {
         setTimeout(function(){
           _this.errorService.spinnerOff()
         }, 2000)
+      
       }
     })
   }
