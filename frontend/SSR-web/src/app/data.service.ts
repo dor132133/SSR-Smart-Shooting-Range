@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +11,13 @@ export class DataService {
   public targets: Object
   public chosenTarget: Object
   public trigerBySensor: Object
+  public spinnerCloseEvent: EventEmitter<boolean> = new EventEmitter();
 
   constructor() { }
 
-
+  spinnerClose(){
+    this.spinnerCloseEvent.emit(true)
+  }
 
 
 }

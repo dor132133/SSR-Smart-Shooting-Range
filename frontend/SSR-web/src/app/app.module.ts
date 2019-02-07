@@ -25,6 +25,7 @@ import { MessageDialogComponent } from './message-dialog/message-dialog.componen
 import { SessionReportDialogComponent } from './session-report-dialog/session-report-dialog.component';
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ErrorService } from './error.service';
 
 @NgModule({
   declarations: [
@@ -66,11 +67,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
     SessionReportDialogComponent,
     SpinnerDialogComponent
   ],
-  providers: [
-      { provide: MatDialogRef, useValue: {} },
-      { provide: SpinnerDialogComponent, useValue: {} }
-    //  { provide: MAT_DIALOG_DATA, useValue: [] }
-    ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

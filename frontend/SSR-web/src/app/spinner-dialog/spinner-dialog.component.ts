@@ -1,9 +1,11 @@
 
 
 
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Input, EventEmitter } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { ErrorService } from '../error.service';
+import { Subscription } from 'rxjs';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-spinner-dialog',
@@ -13,18 +15,27 @@ import { ErrorService } from '../error.service';
 export class SpinnerDialogComponent implements OnInit {
 
   message: string
-  constructor(public dialogRef: MatDialogRef<ErrorService>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  subscription: any;
+
+
+  constructor(public dialogRef: MatDialogRef<ErrorService>,
+     @Inject(MAT_DIALOG_DATA) public data: any, private dataService: DataService) { }
 
   ngOnInit() {
     this.message = this.data.message;
-    var _this = this;
-    // setTimeout(function(){
-    //   _this.close()
-    // }, 2000)
+    this.subscription = this.dataService.spinnerCloseEvent.subscribe(() => {
+      //console.log('spinner-dialog-subscription')
+      this.close()
+    });
   }
 
   close(){
-    this.dialogRef.close();
+    let _this = this
+    _this.dialogRef.close();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

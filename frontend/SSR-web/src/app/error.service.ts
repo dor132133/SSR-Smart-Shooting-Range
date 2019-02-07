@@ -1,19 +1,19 @@
 
 
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material';
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ErrorService {
+export class ErrorService{
 
-
-  constructor(public snackBar: MatSnackBar, public dialog: MatDialog) { 
+  constructor(public snackBar: MatSnackBar, public dialog: MatDialog, private dataService: DataService) { 
   }
 
   httpErrorHandler(err: HttpErrorResponse){
@@ -55,7 +55,8 @@ export class ErrorService {
   }
 
   spinnerOff(){
-  //  this.dialogRef.close()
+    //using third part for emiting - dataservice
+    this.dataService.spinnerClose();
   }
 
 }

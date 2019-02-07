@@ -72,34 +72,50 @@ export class SessionComponent implements OnInit {
         var _this = this;
         setTimeout(function(){
           _this.errorService.spinnerOff()
-        }, 3000)
+        }, 2000)
       }
     })
   }
 
   start() {
+    this.errorService.spinnerOn('Starting session...');
     this.apiService.startSession(res => {
       //console.log(res)
       if (res.status == 200) {
-        this.stopWatch.startTimer();
+        var _this = this;
+        setTimeout(function(){
+          _this.errorService.spinnerOff()
+          _this.stopWatch.startTimer();
+        }, 1000)
+        
       }
     })
   }
 
   pause() {
+    this.errorService.spinnerOn('Pausing session...');
     this.apiService.pauseSession(res => {
       //console.log(res)
       if (res.status == 200) {
-        this.stopWatch.startTimer();
+        var _this = this;
+        setTimeout(function(){
+          _this.errorService.spinnerOff()
+          _this.stopWatch.startTimer();
+        }, 100)
       }
     })
   }
 
   resume() {
+    this.errorService.spinnerOn('Resuming session...');
     this.apiService.resumeSession(res => {
       //console.log(res)
       if (res.status == 200) {
-        this.stopWatch.startTimer();
+        var _this = this;
+        setTimeout(function(){
+          _this.errorService.spinnerOff()
+          _this.stopWatch.startTimer();
+        }, 500)
       }
     })
   }
