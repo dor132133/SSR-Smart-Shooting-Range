@@ -282,10 +282,15 @@ export class SessionComponent implements OnInit {
     this.dataService.chosenTarget = chosenTarget
     const bottomSheetRef = this.bottomSheet.open(TargetConfigureSheetComponent);
     bottomSheetRef.afterDismissed().subscribe(() => {
-      if (this.dataService.trigerBySensor !== undefined) {
-        chosenTarget.sernsorTrigger = (this.dataService.trigerBySensor as Sensor).id;
-        let massege = 'Targer #' + chosenTarget.id + ' trigger by sensor #' + (this.dataService.trigerBySensor as Sensor).id;
+      if (this.dataService.trigerBySensorId !== undefined && this.dataService.trigerActionTime !== undefined && this.dataService.trigerResponseTime !== undefined) {
+        chosenTarget.sernsorTrigger = this.dataService.trigerBySensorId;
+        chosenTarget.actionTime = this.dataService.trigerActionTime;
+        chosenTarget.responseTime = this.dataService.trigerResponseTime;
+        let massege = 'Targer #' + chosenTarget.id + ' trigger by sensor #' + this.dataService.trigerBySensorId;
         console.log(massege);
+        console.log('Response time: ' + chosenTarget.responseTime + 'seconds')
+        console.log('Action time: ' + chosenTarget.actionTime + 'seconds')
+        console.log(this.map)
         this.errorService.openSnackBar(massege, '')
       }
       else {

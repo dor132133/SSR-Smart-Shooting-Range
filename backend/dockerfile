@@ -1,7 +1,8 @@
 # Define the docker hub image
+# This image comes with Node.js and NPM already installed
 FROM node:latest
 
-# Create app directory
+# Create app directory to hold the application code inside the image
 RUN mkdir /app
 WORKDIR /app
 

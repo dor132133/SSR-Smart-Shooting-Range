@@ -10,7 +10,9 @@ export class DataService {
   public sensors: Object
   public targets: Object
   public chosenTarget: Object
-  public trigerBySensor: Object
+  public trigerBySensorId: number
+  public trigerResponseTime: number
+  public trigerActionTime: number
   public spinnerCloseEvent: EventEmitter<boolean> = new EventEmitter();
 
   constructor() { }

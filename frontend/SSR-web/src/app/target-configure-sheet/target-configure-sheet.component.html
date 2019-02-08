@@ -13,6 +13,27 @@
     <mat-hint style="color:red;" *ngIf="trigerBySensor==undefined">Please choose a trigger sensor</mat-hint>
 </mat-form-field>
 
+<div class="spacer"></div>
+
+<mat-form-field class="time">
+    <mat-select [(ngModel)]="responseTime" placeholder="Response time...">
+        <mat-option *ngFor="let responseTime of responseTimes" [value]="responseTime">
+            {{responseTime}} sec
+        </mat-option>
+    </mat-select> 
+    <mat-hint style="color:red;" *ngIf="responseTime==undefined">Pick response time</mat-hint>
+</mat-form-field>
+
+<div class="spacer"></div>
+
+<mat-form-field class="time">
+    <mat-select [(ngModel)]="actionTime" placeholder="Action time...">
+        <mat-option *ngFor="let actionTime of actionTimes" [value]="actionTime">
+            {{actionTime}} sec
+        </mat-option>
+    </mat-select> 
+    <mat-hint style="color:red;" *ngIf="actionTime==undefined">Pick action time</mat-hint>
+</mat-form-field>
 
 <button mat-raised-button (click)="cancle()">cancle</button>
 <button mat-raised-button color="primary" (click)="set()">set</button>
