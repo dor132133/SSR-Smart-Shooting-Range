@@ -50,7 +50,7 @@ export class SessionComponent implements OnInit {
     //this.screenShot = getScreenShot
     console.log(this.warrior)
     console.log(this.map)
-    this.ready()
+    this.connect()
   }
 
   startPauseResumeButton() {
@@ -65,8 +65,9 @@ export class SessionComponent implements OnInit {
       this.resume();
   }
 
-  //Connecting to server and ESP...
-  ready(){
+  //Connecting and sending the session data to ESP...
+  connect(){
+    let mySessionData: JSON = this.createSessionJsonData();
     this.errorService.spinnerOn('Connecting to server and ESP...');
     this.apiService.readySession(res => {
       if (res.status == 200) {
@@ -290,7 +291,7 @@ export class SessionComponent implements OnInit {
         console.log(massege);
         console.log('Response time: ' + chosenTarget.responseTime + 'seconds')
         console.log('Action time: ' + chosenTarget.actionTime + 'seconds')
-        console.log(this.map)
+        //console.log(this.map)
         this.errorService.openSnackBar(massege, '')
       }
       else {
@@ -298,6 +299,13 @@ export class SessionComponent implements OnInit {
         console.log('Target does not configure')
       }
     });
+  }
+
+  createSessionJsonData(): JSON{
+    let sessionData = JSON.parse(JSON.stringify({
+      session: 5
+    }))
+    return sessionData;
   }
 
 }
