@@ -43,7 +43,9 @@ export class SessionsComponent implements OnInit {
               date: new Date((element as Session).date).toUTCString(),
               totalTime: (element as Session).totalTime,
               map: map as Map,
-              warrior: warrior as Warrior
+              warrior: warrior as Warrior,
+              sensorsEventsFlow: (element as Session).sensorsEventsFlow,
+              targetsEventsFlow: (element as Session).targetsEventsFlow
             }
             this.sessions.push(mySession)
           })

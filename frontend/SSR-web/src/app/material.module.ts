@@ -5,19 +5,19 @@ import { MatButtonModule, MatToolbarModule, MatInputModule,
      MatProgressSpinnerModule, MatCardModule, MatTabsModule,
      MatListModule,MatDialogModule,MatStepperModule,MatAutocompleteModule,
      MatSelectModule,MatIconModule,MatSnackBarModule,MatExpansionModule,
-     MatBottomSheetModule} from '@angular/material'
+     MatBottomSheetModule,MatTableModule} from '@angular/material'
 @NgModule({
     imports: [MatButtonModule, MatToolbarModule,MatInputModule,
                MatProgressSpinnerModule, MatCardModule, MatTabsModule,
                MatListModule,MatDialogModule,MatStepperModule,MatAutocompleteModule,
                MatSelectModule,MatIconModule,MatSnackBarModule,MatExpansionModule,
-               MatBottomSheetModule],
+               MatBottomSheetModule,MatTableModule],
                
     exports: [MatButtonModule, MatToolbarModule,MatInputModule,
                MatProgressSpinnerModule, MatCardModule, MatTabsModule,
                MatListModule,MatDialogModule,MatStepperModule,MatAutocompleteModule,
                MatSelectModule, MatIconModule,MatSnackBarModule,MatExpansionModule,
-               MatBottomSheetModule]
+               MatBottomSheetModule,MatTableModule]
 })
 
 export class MaterialModule {}

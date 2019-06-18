@@ -37,6 +37,8 @@ export class SessionComponent implements OnInit {
   showSpinner: boolean = false;
   screenShot;
   date = Date.now()
+  sensorsEventsFlow = []
+  targetsEventsFlow = []
 
   constructor(private router: Router, private dataService: DataService, private mapService: MapService,
     private sessionService: SessionsService,
@@ -51,6 +53,32 @@ export class SessionComponent implements OnInit {
     console.log(this.warrior)
     console.log(this.map)
     this.connect()
+
+
+    this.sensorsEventsFlow.push({eventGapTime:'2.54',sensorId: this.map.sensors[0].id,crossTime:this.map.sensors[0].crossTime})
+    this.sensorsEventsFlow.push({eventGapTime:'4.56',sensorId: this.map.sensors[1].id,crossTime:this.map.sensors[1].crossTime})
+    this.sensorsEventsFlow.push({eventGapTime:'9.21',sensorId: this.map.sensors[2].id,crossTime:this.map.sensors[2].crossTime})
+
+
+    
+    this.targetsEventsFlow.push({
+      eventGapTime:'3.21',
+      targetId: this.map.targets[0].id,
+      time: '3:21',
+      coords: {radius: 5, degree: 40}
+    })
+    this.targetsEventsFlow.push({
+      eventGapTime:'5.21',
+      targetId: this.map.targets[1].id,
+      time: '8.42',
+      coords: {radius: 5, degree: 40}
+    })
+    this.targetsEventsFlow.push({
+      eventGapTime:'11.51',
+      targetId: this.map.targets[2].id,
+      time: '19.93',
+      coords: {radius: 5, degree: 40}
+    })
   }
 
   startPauseResumeButton() {
@@ -153,6 +181,8 @@ export class SessionComponent implements OnInit {
           } 
             
           this.session = new Session(this.map._id, this.date, this.warrior._id, this.screenShot, this.stopWatch.currentTimeString)
+          this.session.sensorsEventsFlow = this.sensorsEventsFlow;
+          this.session.targetsEventsFlow = this.targetsEventsFlow;
           console.log(this.session)
           this.sessionService.addSession(this.session, (res) => {
             if (res.status == 200) {

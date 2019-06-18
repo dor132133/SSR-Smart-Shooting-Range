@@ -2,4 +2,58 @@
 
 
 
- <h1 class="totalTime" >Total time: {{session.totalTime}}</h1>
+ <!-- <h1 class="totalTime" >Total time: {{session.totalTime}}</h1> -->
+ 
+ <img class='mapIcon' width="70px" height="70px" src="{{map.icon}}"> 
+ <h2>{{map.trainName}}</h2>
+
+ <h1 class='date' mat-dialog-title>Date: {{session.date}}</h1>
+ <h1 class='warrior' mat-dialog-title>Warrior: {{warrior.firstname}} {{warrior.lastname}} </h1>
+
+<div mat-dialog-content>
+      
+
+        <table mat-table [dataSource]="sensorsTableContent" class="mat-elevation-z8">
+
+            <!-- Event Column -->
+            <ng-container matColumnDef="eventGapTime">
+                    <th mat-header-cell *matHeaderCellDef> Events </th>
+                    <td mat-cell *matCellDef="let element"> {{element.eventGapTime}} </td>
+                </ng-container>
+                
+                <!-- ID Column -->
+                <ng-container matColumnDef="sensorId">
+                    <th mat-header-cell *matHeaderCellDef> Sensor ID </th>
+                    <td mat-cell *matCellDef="let element"> {{element.sensorId}} </td>
+                </ng-container>
+                
+                <!-- Time Column -->
+                <ng-container matColumnDef="crossTime">
+                    <th mat-header-cell *matHeaderCellDef> Cross Time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.crossTime}} </td>
+                </ng-container>
+
+                
+                <tr mat-header-row *matHeaderRowDef="sensorsTableColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: sensorsTableColumns;"></tr>
+            </table>
+
+
+
+
+
+
+
+
+
+
+
+
+</div> 
+
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="close()">Close</button>
+</div> 
+
+
+<!-- <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> --> 

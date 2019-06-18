@@ -10,7 +10,7 @@ export class Sensor extends Item{
     public positionX: number;
     public positionY: number;
     public isCrossed: boolean;
-    public crossTime: number;
+    public crossTime: string;
     //need to add shot/coordinates of shot/ Mikbatz...
   
   
@@ -20,6 +20,7 @@ export class Sensor extends Item{
       this.positionX = positionX;
       this.positionY = positionY;
       this.isCrossed = false;
+      this.crossTime = '00:00:00'
     }
 
     
