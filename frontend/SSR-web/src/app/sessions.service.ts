@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { MongoService } from './mongo.service';
 import { Session } from '../classes/session'
 import { ErrorService } from './error.service';
+import { Warrior } from 'src/classes/warrior';
 
 
 @Injectable({
@@ -20,6 +21,15 @@ export class SessionsService {
 
   getSessions(callback: (data) => void) {
      return this.mondoDB.getCollection('sessions').subscribe(data => {
+       this.sessions = Object.values(data);
+       //console.log(this.sessions)
+       callback(data);
+    })
+  }
+
+  getSessionsByWarrior(warrior: Warrior, callback: (data) => void) {
+     var query = JSON.parse(JSON.stringify({collection:'sessions', data:{warriorId: warrior._id}}))
+     return this.mondoDB.getDocumentsByQuery(query).subscribe(data => {
        this.sessions = Object.values(data);
        //console.log(this.sessions)
        callback(data);

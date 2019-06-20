@@ -59,7 +59,7 @@ function getCollection(req,res){
 }
 
  /*
- *return: list of document-JSON objects matching to query,
+ *return: first found document-JSON objects matching to query,
  *        sending through request's body.
  *params: JSON query POST request's body.
  *        JSON structure:{collection: "name", data:{field1:"value",field2:"value"...}}
@@ -90,6 +90,43 @@ function getDocument(req,res){
             console.log(result);
             mongo.close();
             res.end(JSON.stringify(result),'Document find successfully');
+          });
+      }); 
+}
+
+ /*
+ *return: list of document-JSON objects matching to query,
+ *        sending through request's body.
+ *params: JSON query POST request's body.
+ *        JSON structure:{collection: "name", data:{field1:"value",field2:"value"...}}
+ */
+function getDocuments(req,res){
+    var query = req.body;
+    console.log(query);
+    if(typeof(query.collection) != 'string' || typeof(query.data) != 'object'){
+        res.status(400).end('Error: 400 Bad Request');
+        console.log('Error: 400 Bad Request');
+        return;
+    }
+    MongoClient.connect(url,{useNewUrlParser:true},function(err, mongo) {
+        if(err){
+            res.status(500).end(err);
+            return;
+        }
+        var db = mongo.db(SSR_DB);
+        //console.log(query.data._id)
+        if(query.data._id !== undefined && (query.data._id.length == 24 || query.data._id.length == 12)){//fix comparing string to ObjectId string
+            query.data._id = ObjectId(query.data._id)
+        }
+        console.log('query: ',query.data)
+        db.collection(query.collection).find(query.data).toArray(function(err, result) {
+            if (err || result == null) {
+                res.status(404).end('Error: 404 Not Found, '+ err);
+                return;
+            }
+            console.log(result);
+            mongo.close();
+            res.end(JSON.stringify(result),'Documents successfully find');
           });
       }); 
 }
@@ -339,6 +376,7 @@ function updateCollection (req,res){}
 
 module.exports = {
     getDocument : getDocument,
+    getDocuments: getDocuments,
     getCollection : getCollection,
     getCollections : getCollections,
     addDocument : addDocument,

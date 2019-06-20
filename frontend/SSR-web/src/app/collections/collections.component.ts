@@ -11,6 +11,7 @@ import { UserType, JobType } from 'src/enums';
 import { MatDialog } from '@angular/material';
 import { NewWarriorDialogComponent } from '../new-warrior-dialog/new-warrior-dialog.component';
 import { NewTeamDialogComponent } from '../new-team-dialog/new-team-dialog.component';
+import { WarriorReportDialogComponent } from '../warrior-report-dialog/warrior-report-dialog.component';
 
 @Component({
   selector: 'app-collections',
@@ -142,8 +143,19 @@ export class CollectionsComponent implements OnInit {
   }
 
 
-  openWarriorDialog(warrior){
-    console.log('warrior ' + warrior.firstname + ' ' + warrior.lastname + ' clicked')
+  openWarriorReportDialog(warrior){
+   // console.log('warrior ' + warrior.firstname + ' ' + warrior.lastname + ' clicked')
+    const dialogRef = this.dialog.open(WarriorReportDialogComponent, {
+      width: '1500px',
+            data: {warrior: warrior} //pass data into the dialog
+    });
+
+  dialogRef.afterClosed().subscribe(result => { 
+      
+      //console.log(result);
+      if(result == false)
+        return
+    });
   }
 
   openTeamDialog(team){

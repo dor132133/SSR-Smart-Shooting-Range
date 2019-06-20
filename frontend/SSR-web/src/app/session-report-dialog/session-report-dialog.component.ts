@@ -1,9 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SessionsComponent } from '../sessions/sessions.component';
-import { ErrorService } from '../error.service';
-import { MapService } from '../map.service';
-import { Session } from 'src/classes/session';
+import { Target } from 'src/classes/target';
 
 @Component({
   selector: 'app-session-report-dialog',
@@ -15,13 +13,16 @@ export class SessionReportDialogComponent implements OnInit {
   session
   map
   warrior
+  sensorsTableColumns:string[] = ['eventGapTime', 'sensorId', 'crossTime']
+  targetsShotsTableColumns: string[] = ['eventGapTime', 'targetId', 'time', 'coords']
+  densityTargetsColumns: string[] = ['targetId', 'density']
   sensorsTableContent
-  sensorsTableColumns = ['Events', 'Sensor ID', 'Cross Time']
-  targetsShotsTableColumns = ['Events', 'Target ID', 'Hit Time', 'Coords']
   targetsShotsTableContent
+  densityTargetsContent = []
+ 
 
 
-  constructor(public dialogRef: MatDialogRef<SessionsComponent>, private errorService: ErrorService, private mapService: MapService,
+  constructor(public dialogRef: MatDialogRef<SessionsComponent>,
   @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
@@ -33,9 +34,19 @@ export class SessionReportDialogComponent implements OnInit {
     console.log('session: ',this.session)
     console.log('map: ',this.map)
     console.log('warrior: ',this.warrior)
-
+    this.densityCalc()
   }
 
+  //not ready yet! 
+  densityCalc(){ 
+    this.map.targets.forEach(target => {
+      (target as Target).shots.forEach(shot => {
+          //calc density
+          //(target as Target).density = myDensity
+          this.densityTargetsContent.push({targetId: (target as Target).id, density: 5 })
+      })
+    })
+  }
 
   close(flag: boolean){
     let data;

@@ -26,6 +26,7 @@ import { SessionReportDialogComponent } from './session-report-dialog/session-re
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ErrorService } from './error.service';
+import { WarriorReportDialogComponent } from './warrior-report-dialog/warrior-report-dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { ErrorService } from './error.service';
     TargetConfigureSheetComponent,
     MessageDialogComponent,
     SessionReportDialogComponent,
-    SpinnerDialogComponent
+    SpinnerDialogComponent,
+    WarriorReportDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +67,8 @@ import { ErrorService } from './error.service';
     TargetConfigureSheetComponent,
     MessageDialogComponent,
     SessionReportDialogComponent,
-    SpinnerDialogComponent
+    SpinnerDialogComponent,
+    WarriorReportDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

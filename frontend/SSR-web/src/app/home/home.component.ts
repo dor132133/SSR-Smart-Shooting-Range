@@ -35,6 +35,24 @@ export class HomeComponent implements OnInit {
     this.apiService.createWebSocketConnection();
   }
 
+  //sensitive method
+  recreateAllCollections(){
+    this.deleteCollectionButton('warriors')
+    this.deleteCollectionButton('sessions')
+    this.deleteCollectionButton('teams')
+    this.deleteCollectionButton('maps')
+
+    this.addCollectionButton('warriors')
+    this.addCollectionButton('sessions')
+    this.addCollectionButton('teams')
+    this.addCollectionButton('maps')  
+    //this.deleteCollectionButton('users')
+  }
+
+  recreatSessionsCollectionButton(){
+    this.deleteCollectionButton('sessions')
+    this.addCollectionButton('sessions')
+  }
 
   // startSession(){
   //   let data

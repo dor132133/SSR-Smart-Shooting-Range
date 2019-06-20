@@ -26,6 +26,10 @@ export class MongoService {
     return this.http.post(environment.mongoDB_URL + 'document/', query);
   }
 
+  getDocumentsByQuery(query : JSON){//query format: {collection:value, data:{doc query}}
+    return this.http.post(environment.mongoDB_URL + 'documents/', query);
+  }
+
   addDocument(document: JSON){//doc format: {collection:value, data:{doc attributes}}
     return this.http.post(environment.mongoDB_URL + 'add/document', document);
   }

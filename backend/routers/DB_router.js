@@ -8,6 +8,7 @@ var db = require('../db/db_utils');
 router.get('/collections',db.getCollections);
 router.get('/collection/:coll',db.getCollection);
 router.post('/document',db.getDocument);
+router.post('/documents',db.getDocuments);
 router.post('/add/document',db.addDocument);
 router.post('/add/collection',db.addCollection);
 router.put('/delete/document',db.deleteDocument);

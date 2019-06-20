@@ -15,6 +15,7 @@ export class Target extends Item{
     public positionY: number;
     public shooted: boolean;
     public shots: Array<Shot>;
+    public density: number;
     public responseTime: number; //time gap from triggered to action
     public actionTime: number; //time gap from action to stop
     //need to add shot/coordinates of shot/ Mikbatz...
@@ -27,6 +28,7 @@ export class Target extends Item{
       this.positionY = positionY;
       this.shooted = false;
       this.shots = [];
+      this.density = 0;
     }
 
     

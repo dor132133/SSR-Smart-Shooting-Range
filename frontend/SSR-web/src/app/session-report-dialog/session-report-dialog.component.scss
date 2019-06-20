@@ -19,3 +19,27 @@
 table {
     width: 100%;
   }
+
+.sensorsTable{
+    width: 45%;
+    float: left;
+ }
+.targetsTable{
+    width: 45%;
+    float: right;
+ }
+
+ .mat-dialog-content{
+     width: 100%
+ }
+
+ .density {
+     width: 30%;
+     float: left;
+ }
+
+ .totalTime{
+    float: right;
+    margin-top: 10%;
+    width: 50%;
+ }

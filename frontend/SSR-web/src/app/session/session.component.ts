@@ -55,9 +55,9 @@ export class SessionComponent implements OnInit {
     this.connect()
 
 
-    this.sensorsEventsFlow.push({eventGapTime:'2.54',sensorId: this.map.sensors[0].id,crossTime:this.map.sensors[0].crossTime})
-    this.sensorsEventsFlow.push({eventGapTime:'4.56',sensorId: this.map.sensors[1].id,crossTime:this.map.sensors[1].crossTime})
-    this.sensorsEventsFlow.push({eventGapTime:'9.21',sensorId: this.map.sensors[2].id,crossTime:this.map.sensors[2].crossTime})
+    this.sensorsEventsFlow.push({eventGapTime:'2.54',sensorId: this.map.sensors[0].id,crossTime: '2:54'})
+    this.sensorsEventsFlow.push({eventGapTime:'4.56',sensorId: this.map.sensors[1].id,crossTime: '7:10'})
+    this.sensorsEventsFlow.push({eventGapTime:'9.21',sensorId: this.map.sensors[2].id,crossTime: '6:32'})
 
 
     
@@ -65,20 +65,30 @@ export class SessionComponent implements OnInit {
       eventGapTime:'3.21',
       targetId: this.map.targets[0].id,
       time: '3:21',
-      coords: {radius: 5, degree: 40}
+      coords: JSON.stringify({radius: 5, degree: 40})
     })
+
+    this.map.targets[0].shots.push({time :'3:21',coordinates: JSON.stringify({radius: 5, degree: 40})})
+
     this.targetsEventsFlow.push({
       eventGapTime:'5.21',
       targetId: this.map.targets[1].id,
-      time: '8.42',
-      coords: {radius: 5, degree: 40}
+      time: '8:42',
+      coords: JSON.stringify({radius: 5, degree: 40})
     })
+
+    this.map.targets[1].shots.push({time :'8:42',coordinates: JSON.stringify({radius: 2, degree: 170})})
+
     this.targetsEventsFlow.push({
       eventGapTime:'11.51',
       targetId: this.map.targets[2].id,
-      time: '19.93',
-      coords: {radius: 5, degree: 40}
+      time: '19:93',
+      coords: JSON.stringify({radius: 5, degree: 40})
     })
+
+
+    this.map.targets[2].shots.push({time :'19:93',coordinates: JSON.stringify({radius: 1, degree: 270})})
+
   }
 
   startPauseResumeButton() {
@@ -182,6 +192,7 @@ export class SessionComponent implements OnInit {
             
           this.session = new Session(this.map._id, this.date, this.warrior._id, this.screenShot, this.stopWatch.currentTimeString)
           this.session.sensorsEventsFlow = this.sensorsEventsFlow;
+          console.log('tragetsFlow: ', this.targetsEventsFlow)
           this.session.targetsEventsFlow = this.targetsEventsFlow;
           console.log(this.session)
           this.sessionService.addSession(this.session, (res) => {
@@ -337,6 +348,7 @@ export class SessionComponent implements OnInit {
     }))
     return sessionData;
   }
+  
 
 }
 

@@ -1,6 +1,6 @@
 
 
-
+ 
 function readySession(req,res){
     console.log('ESP is ready to rumble!');
     res.status(200).end('ESP is ready to rumble!...');
