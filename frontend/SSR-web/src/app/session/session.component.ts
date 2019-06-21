@@ -39,6 +39,7 @@ export class SessionComponent implements OnInit {
   date = Date.now()
   sensorsEventsFlow = []
   targetsEventsFlow = []
+  sessionScore: number
 
   constructor(private router: Router, private dataService: DataService, private mapService: MapService,
     private sessionService: SessionsService,
@@ -190,11 +191,11 @@ export class SessionComponent implements OnInit {
             return
           } 
             
-          this.session = new Session(this.map._id, this.date, this.warrior._id, this.screenShot, this.stopWatch.currentTimeString)
+          this.session = new Session(this.map._id, this.date, this.warrior._id, this.screenShot, this.stopWatch.currentTimeString,this.sessionScore)
           this.session.sensorsEventsFlow = this.sensorsEventsFlow;
-          console.log('tragetsFlow: ', this.targetsEventsFlow)
+          //console.log('tragetsFlow: ', this.targetsEventsFlow)
           this.session.targetsEventsFlow = this.targetsEventsFlow;
-          console.log(this.session)
+          //console.log(this.session)
           this.sessionService.addSession(this.session, (res) => {
             if (res.status == 200) {
               //console.log(res.sessionId)

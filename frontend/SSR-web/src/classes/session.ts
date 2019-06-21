@@ -11,11 +11,12 @@ export class Session extends Item{
   public pic: string;
   public warriorId: string;
   public totalTime: string;
+  public score: number;
   public sensorsEventsFlow
   public targetsEventsFlow
 
 
-  constructor(mapId: string, date: number,warriorId: string, pic: string, totalTime: string) {
+  constructor(mapId: string, date: number,warriorId: string, pic: string, totalTime: string,score: number) {
     super();
   
     this.mapId = mapId;
@@ -25,6 +26,7 @@ export class Session extends Item{
     this.pic = pic;
     this.sensorsEventsFlow = []
     this.targetsEventsFlow = []
+    this.score = score;
   }
 
 

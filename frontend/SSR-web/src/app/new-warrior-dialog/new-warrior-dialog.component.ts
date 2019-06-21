@@ -16,7 +16,7 @@ import { ErrorService } from '../error.service';
 export class NewWarriorDialogComponent implements OnInit {
 
   areaNumbers = ['02','03','04','08','050','052','053','054','057','058']
-  newWarrior = new Warrior('','',null,'','',null,'');
+  newWarrior = new Warrior('','',null,'','assets/icons_general/target3.svg',null,'');
   teams = []
   jobType = [JobType.GUEST, JobType.GUID, JobType.OTHER]
   myAreaPhoneNumber = ''

@@ -7,6 +7,9 @@ import { MongoService } from './mongo.service';
 import { Session } from '../classes/session'
 import { ErrorService } from './error.service';
 import { Warrior } from 'src/classes/warrior';
+import { Map } from 'src/classes/map';
+import { MapService } from './map.service';
+import { WarriorsService } from './warriors.service';
 
 
 @Injectable({
@@ -16,7 +19,7 @@ export class SessionsService {
 
   sessions = [];
 
-  constructor(private mondoDB: MongoService,private errorService: ErrorService) {
+  constructor(private mondoDB: MongoService,private errorService: ErrorService, private mapService: MapService, private warriorService: WarriorsService) {
   }
 
   getSessions(callback: (data) => void) {
@@ -24,6 +27,30 @@ export class SessionsService {
        this.sessions = Object.values(data);
        //console.log(this.sessions)
        callback(data);
+    })
+  }
+
+  sessionsToListing(sessions,callback: (data) => void){
+    var mySessions = [];
+    let processItems = 0
+    sessions.forEach((element)=>{
+        let session = (element as Session)
+        this.mapService.getMapById(session.mapId, map =>{
+          this.warriorService.getWarriorById(session.warriorId, warrior => {
+            let mySession = {
+              date: new Date((element as Session).date).toUTCString(),
+              totalTime: (element as Session).totalTime,
+              map: map as Map,
+              warrior: warrior as Warrior,
+              sensorsEventsFlow: (element as Session).sensorsEventsFlow,
+              targetsEventsFlow: (element as Session).targetsEventsFlow
+            }
+              mySessions.push(mySession)
+              processItems++;
+              if(processItems == mySessions.length)
+                callback(mySessions);
+          })
+        })
     })
   }
 

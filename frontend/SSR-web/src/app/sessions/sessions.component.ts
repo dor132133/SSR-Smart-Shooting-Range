@@ -26,34 +26,49 @@ export class SessionsComponent implements OnInit {
      private mapService: MapService, private dialog: MatDialog, private router: Router) { }
 
   ngOnInit() {
-    this.getSessions();
+    this.getSessionsReadyForListing();
   }
 
-  getSessions(){
-    this.sessions = [];
+  getSessionsReadyForListing(){
     this.sessionsService.getSessions((data) => {
-      data = Object.values(data).filter(function(element){
-        return element['empty']==undefined
-      })
-      data.forEach((element)=>{
-        let session = (element as Session)
-        this.mapService.getMapById(session.mapId, map =>{
-          this.warriorService.getWarriorById(session.warriorId, warrior => {
-            let mySession = {
-              date: new Date((element as Session).date).toUTCString(),
-              totalTime: (element as Session).totalTime,
-              map: map as Map,
-              warrior: warrior as Warrior,
-              sensorsEventsFlow: (element as Session).sensorsEventsFlow,
-              targetsEventsFlow: (element as Session).targetsEventsFlow
-            }
-            this.sessions.push(mySession)
-          })
+        data = Object.values(data).filter(function(element){
+          return element['empty']==undefined
         })
-        
-      })
+        //console.log(data)
+        this.sessionsService.sessionsToListing(data,sessions=>{
+          //console.log(sessions)
+          this.sessions=sessions
+        })
     })
+
   }
+
+  //depricated - moved to sessionsService as sessionsToListing
+  // getSessions(){
+  //   this.sessions = [];
+  //   this.sessionsService.getSessions((data) => {
+  //     data = Object.values(data).filter(function(element){
+  //       return element['empty']==undefined
+  //     })
+  //     data.forEach((element)=>{
+  //       let session = (element as Session)
+  //       this.mapService.getMapById(session.mapId, map =>{
+  //         this.warriorService.getWarriorById(session.warriorId, warrior => {
+  //           let mySession = {
+  //             date: new Date((element as Session).date).toUTCString(),
+  //             totalTime: (element as Session).totalTime,
+  //             map: map as Map,
+  //             warrior: warrior as Warrior,
+  //             sensorsEventsFlow: (element as Session).sensorsEventsFlow,
+  //             targetsEventsFlow: (element as Session).targetsEventsFlow
+  //           }
+  //           this.sessions.push(mySession)
+  //         })
+  //       })
+        
+  //     })
+  //   })
+  // }
 
   openNewSessionDialog(): void {
     const dialogRef = this.dialog.open(NewSessionDialogComponent, {

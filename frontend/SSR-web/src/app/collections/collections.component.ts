@@ -37,7 +37,7 @@ export class CollectionsComponent implements OnInit {
   openNewTeamDialog(): void {
     const dialogRef = this.dialog.open(NewTeamDialogComponent, {
       width: '1500px',
-            //data: {name: 'New Session', animal: this.animal} //pass data into the dialog
+      data: {teams: this.teams} //pass data into the dialog
     });
 
   dialogRef.afterClosed().subscribe(result => {

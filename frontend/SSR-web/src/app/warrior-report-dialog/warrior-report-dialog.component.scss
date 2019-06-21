@@ -1,0 +1,52 @@
+
+
+
+.warriorIcon {
+    float: right;
+    margin-right: 5%;
+    margin-bottom: 10px;
+}
+
+.team{
+    float: left;
+    margin-right: 3%;
+}
+
+
+.warriorSessions{
+    float: right;
+    width: 60%;
+}
+
+.mapIcon{
+    float: left;
+    height: 40px;
+    padding-right: inherit;
+  }
+
+
+.warriorSessionDate{
+    float: right;
+    margin-left: 5%;
+}
+  
+.trainName{
+    margin: 0;
+    display:inline;  
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    color: rgb(204, 4, 4)
+  }
+
+
+  .mat-list-base .mat-list-item, .mat-list-base .mat-list-option{
+    height: 80px;
+  }
+  .mat-list-base .mat-list-item .mat-line{
+    margin: 0;
+  }
+  
+
+  .score{
+      float: right;
+      margin-left: 5%;
+  }

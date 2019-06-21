@@ -15,14 +15,13 @@
           <mat-list-item (click)="openSessionReportDialog(session)" *ngFor="let session of sessions"> 
             <img class="mapIcon" aria-hidden [src]="session.map.icon">
             <div class="textLine">
-             <h3>{{session.map.trainName}}</h3>
-             <h4 float="right"> {{session.warrior.firstname}} {{session.warrior.lastname}}</h4>
-             <br>
-             <div mat-line class="team">{{session.warrior.team}} Team</div>
-            
-             <div class="date"> {{session.date}}</div>
+              <h3>{{session.map.trainName}}</h3>
+              <h4 float="right"> {{session.warrior.firstname}} {{session.warrior.lastname}}</h4>
+              <br>
+              <div mat-line class="team">{{session.warrior.team}} Team</div>
+              <div mat-line class="score">Session Score: {{session.rate}}</div>
+              <div class="date"> {{session.date}}</div>
             </div>
-            
             <mat-divider></mat-divider>
           </mat-list-item>
         </mat-list>

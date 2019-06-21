@@ -13,6 +13,8 @@ import { environment } from 'src/environments/environment';
 })
 export class NewTeamDialogComponent implements OnInit {
 
+
+  teams
   icons = [environment.TEAMS_ICONS+'not-applicable.svg',environment.TEAMS_ICONS+'bullet.svg',
   environment.TEAMS_ICONS+'gun3.svg',environment.TEAMS_ICONS+'gun4.svg',environment.TEAMS_ICONS+'gun5.svg',
   environment.TEAMS_ICONS+'shooter.svg',environment.TEAMS_ICONS+'shooter2.svg',environment.TEAMS_ICONS+'sniper.svg',
@@ -26,7 +28,7 @@ export class NewTeamDialogComponent implements OnInit {
      }
 
   ngOnInit() {
-
+    this.teams = this.data.teams
   }
 
   checkFields(){
@@ -36,7 +38,10 @@ export class NewTeamDialogComponent implements OnInit {
     return false}
     if(this.newTeam.description.replace(' ','') == ''){this.errorService.openSnackBar('Please Enter description','Error')
     return false}
-    
+    if(this.teams.some(team=>{
+      return (team as Team).name == this.newTeam.name
+    })){this.errorService.openSnackBar('Team name already used','Error')
+      return false}
     return true
   }
 

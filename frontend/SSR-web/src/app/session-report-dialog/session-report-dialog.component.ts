@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SessionsComponent } from '../sessions/sessions.component';
 import { Target } from 'src/classes/target';
+import { WarriorReportDialogComponent } from '../warrior-report-dialog/warrior-report-dialog.component';
 
 @Component({
   selector: 'app-session-report-dialog',
@@ -22,7 +23,7 @@ export class SessionReportDialogComponent implements OnInit {
  
 
 
-  constructor(public dialogRef: MatDialogRef<SessionsComponent>,
+  constructor(public dialogRef: MatDialogRef<SessionsComponent, WarriorReportDialogComponent>,
   @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
