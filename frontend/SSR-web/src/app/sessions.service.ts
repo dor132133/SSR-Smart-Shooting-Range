@@ -43,7 +43,8 @@ export class SessionsService {
               map: map as Map,
               warrior: warrior as Warrior,
               sensorsEventsFlow: (element as Session).sensorsEventsFlow,
-              targetsEventsFlow: (element as Session).targetsEventsFlow
+              targetsEventsFlow: (element as Session).targetsEventsFlow,
+              score: (element as Session).score
             }
               mySessions.push(mySession)
               processItems++;

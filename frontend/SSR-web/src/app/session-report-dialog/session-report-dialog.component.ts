@@ -52,7 +52,7 @@ export class SessionReportDialogComponent implements OnInit {
   close(flag: boolean){
     let data;
     if(!flag){
-      this.dialogRef.close(flag);
+      this.dialogRef.close();
       return
     }
     this.dialogRef.close(data);

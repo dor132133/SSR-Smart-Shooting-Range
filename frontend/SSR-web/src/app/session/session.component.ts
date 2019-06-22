@@ -60,7 +60,7 @@ export class SessionComponent implements OnInit {
     this.sensorsEventsFlow.push({eventGapTime:'4.56',sensorId: this.map.sensors[1].id,crossTime: '7:10'})
     this.sensorsEventsFlow.push({eventGapTime:'9.21',sensorId: this.map.sensors[2].id,crossTime: '6:32'})
 
-
+    this.sessionScore = 7.6;
     
     this.targetsEventsFlow.push({
       eventGapTime:'3.21',
