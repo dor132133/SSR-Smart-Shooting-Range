@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class StopwatchService {
-
+ 
   counter: number;
   timerRef;
   running: boolean = false;
@@ -57,7 +57,7 @@ export class StopwatchService {
     let minutes = pretty_time_string(this.minutes);
 
     if( this.timeOut!==undefined && this.minutes == this.timeOut)//timeOut in minutes
-     this.clearTimer()
+      this.clearTimer()
 
     this.currentTimeString = minutes + ":" + seconds + ":" + millis;
 

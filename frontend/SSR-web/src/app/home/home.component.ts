@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { MongoService } from '../mongo.service';
 import { User } from 'src/classes/user'
@@ -10,6 +11,11 @@ import { WarriorsService } from '../warriors.service';
 import { SsrApiService } from '../ssr-api.service';
 import { interval } from 'rxjs';
 import { StopwatchService } from '../stopwatch.service';
+import { ErrorService } from '../error.service';
+import { Observable } from 'rxjs';
+import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+
 
 @Component({
   selector: 'app-home',
@@ -21,14 +27,39 @@ export class HomeComponent implements OnInit {
   warriors: Object;
   users: Object;
   sessions: Object;
+  webSocket: WebSocketSubject<Message>;
 
   constructor(private mondoDB: MongoService, private apiService: SsrApiService,
      private sessionsService: SessionsService, private warriorsService: WarriorsService,
-     private stopWatch: StopwatchService) 
-     { }
+     private stopWatch: StopwatchService, public errorService: ErrorService) 
+     { 
+      
+     }
 
   ngOnInit() {
-    
+
+  }
+
+      
+  connect2(){
+    this.webSocket = WebSocketSubject.create('ws://192.168.1.40');
+    this.apiService.createWebSocketConnection(webSocket)
+  }
+
+
+
+  connect1(){
+    this.errorService.spinnerOn('Connecting to server and ESP...');
+    this.apiService.readySession(res => {
+      if (res.status == 200) {
+        var _this = this;
+        setTimeout(function(){
+          this.espConnectionFlag=true;
+          console.log('connected')
+          _this.errorService.spinnerOff()
+        }, 2000)
+      }
+    })
   }
 
   openWebSocket(){
@@ -65,33 +96,33 @@ export class HomeComponent implements OnInit {
   // }
 
 
-  updateWarriorButton(){
-    this.warriorsService.getWarriorById('5c427cf576b68700434170cc',(warrior) => {
-      var newWarrior = <Warrior>JSON.parse(JSON.stringify(warrior));
-      newWarrior.firstname = 'Dude'
-      console.log(warrior)
-      console.log(newWarrior)
-      this.warriorsService.updateWarrior(warrior,newWarrior, (data)=> {
-        console.log(data)
-      })
-    })
-  }
+  // updateWarriorButton(){
+  //   this.warriorsService.getWarriorById('5c427cf576b68700434170cc',(warrior) => {
+  //     var newWarrior = <Warrior>JSON.parse(JSON.stringify(warrior));
+  //     newWarrior.firstname = 'Dude'
+  //     console.log(warrior)
+  //     console.log(newWarrior)
+  //     this.warriorsService.updateWarrior(warrior,newWarrior, (data)=> {
+  //       console.log(data)
+  //     })
+  //   })
+  // }
 
-  getWarriorByQuery(){
-    var query = JSON.stringify({  collection : "warriors",
-                                  data: {firstname : "Dor"}
-                               })
-    this.mondoDB.getDocument(JSON.parse(query)).subscribe(res => console.log(res))
-  }
+  // getWarriorByQuery(){
+  //   var query = JSON.stringify({  collection : "warriors",
+  //                                 data: {firstname : "Dor"}
+  //                              })
+  //   this.mondoDB.getDocument(JSON.parse(query)).subscribe(res => console.log(res))
+  // }
 
-  showCollectionButton(name: string){
-    this.mondoDB.getCollection(name).subscribe(data =>{
-      console.log(data)
-      //data.data return the object as an array
-      this.sessions = Object.values(data).slice(1);//slice the empty doc (that creates automaticlly)
-      console.log(this.sessions)
-    })
-  }
+  // showCollectionButton(name: string){
+  //   this.mondoDB.getCollection(name).subscribe(data =>{
+  //     console.log(data)
+  //     //data.data return the object as an array
+  //     this.sessions = Object.values(data).slice(1);//slice the empty doc (that creates automaticlly)
+  //     console.log(this.sessions)
+  //   })
+  // }
 
   // addDocumentButton(){
   //   let session = new Session('mapId',new Date, 'warriorId','','');
@@ -101,28 +132,28 @@ export class HomeComponent implements OnInit {
   // }
 
   //Administrator users only
-  addCollectionButton(name: string){
-     var schema = JSON.parse('{}');
-     this.mondoDB.addCollection(name, schema).subscribe(res =>{
-       console.log(res)
-     })
-   } 
+  // addCollectionButton(name: string){
+  //    var schema = JSON.parse('{}');
+  //    this.mondoDB.addCollection(name, schema).subscribe(res =>{
+  //      console.log(res)
+  //    })
+  //  } 
 
-  deleteCollectionButton(name: string){
-    this.mondoDB.deleteCollection(name).subscribe(res =>{
-      console.log(res)
-    });
-  } 
+  // deleteCollectionButton(name: string){
+  //   this.mondoDB.deleteCollection(name).subscribe(res =>{
+  //     console.log(res)
+  //   });
+  // } 
 
-  DeleteDocumentButton(){
-    var query = JSON.stringify({ collection : "teams",
-                       data: {
-                        name: "ABC"
-                        }
-                })
-    this.mondoDB.deleteDocument(JSON.parse(query)).subscribe(res =>{
-      console.log(res)
-    })   
+  // DeleteDocumentButton(){
+  //   var query = JSON.stringify({ collection : "teams",
+  //                      data: {
+  //                       name: "ABC"
+  //                       }
+  //               })
+  //   this.mondoDB.deleteDocument(JSON.parse(query)).subscribe(res =>{
+  //     console.log(res)
+  //   })   
                          
   }
 

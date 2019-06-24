@@ -35,6 +35,7 @@ export class SessionComponent implements OnInit {
   movedWalls: Array<HTMLElement> = []
   startFlag: boolean = false
   showSpinner: boolean = false;
+  espConnectionFlag: boolean = false;
   screenShot;
   date = Date.now()
   sensorsEventsFlow = []
@@ -53,14 +54,16 @@ export class SessionComponent implements OnInit {
     //this.screenShot = getScreenShot
     console.log(this.warrior)
     console.log(this.map)
-    this.connect()
 
 
     this.sensorsEventsFlow.push({eventGapTime:'2.54',sensorId: this.map.sensors[0].id,crossTime: '2:54'})
     this.sensorsEventsFlow.push({eventGapTime:'4.56',sensorId: this.map.sensors[1].id,crossTime: '7:10'})
     this.sensorsEventsFlow.push({eventGapTime:'9.21',sensorId: this.map.sensors[2].id,crossTime: '6:32'})
 
-    this.sessionScore = 7.6;
+
+    var score=Math.random() * (10 - 0) + 0
+    score = parseFloat(score.toFixed(2));
+    this.sessionScore = score
     
     this.targetsEventsFlow.push({
       eventGapTime:'3.21',
@@ -93,6 +96,10 @@ export class SessionComponent implements OnInit {
   }
 
   startPauseResumeButton() {
+    if(!this.espConnectionFlag){
+      this.errorService.openSnackBar('Esp not connected', '')
+      return
+    }
     if (!this.startFlag) {
       this.startFlag = true;
       this.start()
@@ -112,9 +119,10 @@ export class SessionComponent implements OnInit {
       if (res.status == 200) {
         var _this = this;
         setTimeout(function(){
+          this.espConnectionFlag=true;
+          console.log('connected')
           _this.errorService.spinnerOff()
         }, 2000)
-      
       }
     })
   }
