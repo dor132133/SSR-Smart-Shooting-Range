@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry, MatBottomSheet } from '@angular/material';
-import { SsrApiService } from '../ssr-api.service';
+import { WebSocketService } from '../websocket.service';
 import { Session } from 'src/classes/session'
 import { DataService } from '../data.service';
 import { Target } from 'src/classes/target';
@@ -45,7 +45,7 @@ export class SessionComponent implements OnInit {
   constructor(private router: Router, private dataService: DataService, private mapService: MapService,
     private sessionService: SessionsService,
     private errorService: ErrorService, private bottomSheet: MatBottomSheet, private stopWatch: StopwatchService,
-    private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, private apiService: SsrApiService) {
+    private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, private webSocket: WebSocketService) {
   }
 
   ngOnInit() {
@@ -95,6 +95,10 @@ export class SessionComponent implements OnInit {
 
   }
 
+  temp(){
+    console.log('Work') 
+  }
+
   startPauseResumeButton() {
     if(!this.espConnectionFlag){
       this.errorService.openSnackBar('Esp not connected', '')
@@ -115,7 +119,7 @@ export class SessionComponent implements OnInit {
   connect(){
     let mySessionData: JSON = this.createSessionJsonData();
     this.errorService.spinnerOn('Connecting to server and ESP...');
-    this.apiService.readySession(res => {
+    this.webSocket.readySession(res => {
       if (res.status == 200) {
         var _this = this;
         setTimeout(function(){
@@ -129,7 +133,7 @@ export class SessionComponent implements OnInit {
 
   start() {
     this.errorService.spinnerOn('Starting session...');
-    this.apiService.startSession(res => {
+    this.webSocket.startSession(res => {
       //console.log(res)
       if (res.status == 200) {
         var _this = this;
@@ -144,7 +148,7 @@ export class SessionComponent implements OnInit {
 
   pause() {
     this.errorService.spinnerOn('Pausing session...');
-    this.apiService.pauseSession(res => {
+    this.webSocket.pauseSession(res => {
       //console.log(res)
       if (res.status == 200) {
         var _this = this;
@@ -158,7 +162,7 @@ export class SessionComponent implements OnInit {
 
   resume() {
     this.errorService.spinnerOn('Resuming session...');
-    this.apiService.resumeSession(res => {
+    this.webSocket.resumeSession(res => {
       //console.log(res)
       if (res.status == 200) {
         var _this = this;
@@ -173,7 +177,7 @@ export class SessionComponent implements OnInit {
   finish() {
     //if clock running => pause:
     if (this.stopWatch.startText == 'Stop')
-      this.apiService.pauseSession(res => {
+      this.webSocket.pauseSession(res => {
         //console.log(res)
         if (res.status == 200)
           this.stopWatch.startTimer()
@@ -187,7 +191,7 @@ export class SessionComponent implements OnInit {
         return
       
       //choice == true => finish!
-      this.apiService.endSession(res => {
+      this.webSocket.endSession(res => {
         //console.log(res)
         if (res.status !== 200) //though error, keep ending....
           this.errorService.openSnackBar('ESP failed to finish','Error');

@@ -7,7 +7,7 @@ const WebSocket = require('ws')
 
 
    console.log('creating....')
-    const url = 'ws://192.168.1.40'
+    const url = 'ws://192.168.14.184'
     const ws = new WebSocket(url)
     ws.onopen = () => {
       console.log('webSocket connecting successfully!')

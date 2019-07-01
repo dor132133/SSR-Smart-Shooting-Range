@@ -8,7 +8,7 @@ import { Warrior } from 'src/classes/warrior';
 import { Map } from 'src/classes/map';
 import { JobType } from 'src/enums';
 import { WarriorsService } from '../warriors.service';
-import { SsrApiService } from '../ssr-api.service';
+import { WebSocketService } from '../websocket.service';
 import { interval } from 'rxjs';
 import { StopwatchService } from '../stopwatch.service';
 import { ErrorService } from '../error.service';
@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
   sessions: Object;
   webSocket: WebSocketSubject<Message>;
 
-  constructor(private mondoDB: MongoService, private apiService: SsrApiService,
+  constructor(private mondoDB: MongoService, private socketService: WebSocketService,
      private sessionsService: SessionsService, private warriorsService: WarriorsService,
      private stopWatch: StopwatchService, public errorService: ErrorService) 
      { 
@@ -40,17 +40,18 @@ export class HomeComponent implements OnInit {
 
   }
 
-      
-  connect2(){
-    this.webSocket = WebSocketSubject.create('ws://192.168.1.40');
-    this.apiService.createWebSocketConnection(webSocket)
+
+  connect3(){
+    this.socketService.serviceGateWay('connect',res=> {
+      console.log('res:', res)
+    })
   }
 
 
 
   connect1(){
     this.errorService.spinnerOn('Connecting to server and ESP...');
-    this.apiService.readySession(res => {
+    this.socketService.readySession(res => {
       if (res.status == 200) {
         var _this = this;
         setTimeout(function(){
@@ -63,7 +64,7 @@ export class HomeComponent implements OnInit {
   }
 
   openWebSocket(){
-    this.apiService.createWebSocketConnection();
+    
   }
 
   //sensitive method
@@ -131,30 +132,29 @@ export class HomeComponent implements OnInit {
   //   })
   // }
 
-  //Administrator users only
-  // addCollectionButton(name: string){
-  //    var schema = JSON.parse('{}');
-  //    this.mondoDB.addCollection(name, schema).subscribe(res =>{
-  //      console.log(res)
-  //    })
-  //  } 
+  // Administrator users only
+  addCollectionButton(name: string){
+     var schema = JSON.parse('{}');
+     this.mondoDB.addCollection(name, schema).subscribe(res =>{
+       console.log(res)
+     })
+   } 
 
-  // deleteCollectionButton(name: string){
-  //   this.mondoDB.deleteCollection(name).subscribe(res =>{
-  //     console.log(res)
-  //   });
-  // } 
+  deleteCollectionButton(name: string){
+    this.mondoDB.deleteCollection(name).subscribe(res =>{
+      console.log(res)
+    });
+  } 
 
-  // DeleteDocumentButton(){
-  //   var query = JSON.stringify({ collection : "teams",
-  //                      data: {
-  //                       name: "ABC"
-  //                       }
-  //               })
-  //   this.mondoDB.deleteDocument(JSON.parse(query)).subscribe(res =>{
-  //     console.log(res)
-  //   })   
-                         
+  DeleteDocumentButton(){
+    var query = JSON.stringify({ collection : "teams",
+                       data: {
+                        name: "ABC"
+                        }
+                })
+    this.mondoDB.deleteDocument(JSON.parse(query)).subscribe(res =>{
+      console.log(res)
+    })                         
   }
 
 
