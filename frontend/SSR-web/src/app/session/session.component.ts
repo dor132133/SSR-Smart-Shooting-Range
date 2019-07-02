@@ -97,7 +97,15 @@ export class SessionComponent implements OnInit {
     
   }
 
- 
+  //check if all targets are configured, if true -> connect()
+  preConnect(){
+    if(this.map.targets.some(target =>{
+      return target.actionTime == undefined || target.responseTime == undefined || target.sernsorTrigger == undefined 
+    }))
+      this.errorService.openSnackBar('Targets are not configure', 'Error');
+    else
+      this.connect();
+  }
  
   startPauseResumeButton() {
     if(!this.espConnectionFlag){

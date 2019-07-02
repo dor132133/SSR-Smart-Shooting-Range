@@ -44,7 +44,7 @@
     <mat-card-actions>
         
         <button mat-raised-button *ngIf="espConnectionFlag==true" color="accent" (click)="startPauseResumeButton()">{{stopWatch.startText}}</button>
-        <button mat-raised-button *ngIf="espConnectionFlag==false" color="accent" (click)="connect()">Connect</button>
+        <button mat-raised-button *ngIf="espConnectionFlag==false" color="accent" (click)="preConnect()">Connect</button>
         <div class="time">{{stopWatch.currentTimeString}}</div>
         <button mat-raised-button class="finishButton" *ngIf="startFlag==true" color="primary" (click)="finish()">Finish</button>
         <button mat-stroked-button (click)="exit()">Exit</button>
