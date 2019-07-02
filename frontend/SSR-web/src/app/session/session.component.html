@@ -43,16 +43,13 @@
 <mat-card class="example-card">
     <mat-card-actions>
         
-
-        <button mat-raised-button color="accent" (click)="startPauseResumeButton()">{{stopWatch.startText}}</button>
-        <button mat-raised-button color="accent" (click)="connect()">Connect</button>
+        <button mat-raised-button *ngIf="espConnectionFlag==true" color="accent" (click)="startPauseResumeButton()">{{stopWatch.startText}}</button>
+        <button mat-raised-button *ngIf="espConnectionFlag==false" color="accent" (click)="connect()">Connect</button>
         <div class="time">{{stopWatch.currentTimeString}}</div>
         <button mat-raised-button class="finishButton" *ngIf="startFlag==true" color="primary" (click)="finish()">Finish</button>
         <button mat-stroked-button (click)="exit()">Exit</button>
         <button mat-stroked-button *ngIf="startFlag==false" (click)="resetMap()">Reset Map</button>
         <button mat-stroked-button *ngIf="startFlag==true" (click)="stopWatch.clearTimer()">Clear</button>
         
-        
- 
     </mat-card-actions>
 </mat-card>

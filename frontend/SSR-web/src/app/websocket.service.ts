@@ -8,6 +8,7 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { map } from 'rxjs/operators';
 import { finished } from 'stream';
 import { SessionComponent } from './session/session.component';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class WebSocketService {
     deserializer: msg => msg
     });
 
-  constructor(private http: HttpClient, private errorService: ErrorService) { 
+  constructor(private http: HttpClient, private errorService: ErrorService, private dataService: DataService) { 
     // this.socketClient.subscribe();// Note that at least one consumer has to subscribe to the created subject - 
     // //otherwise "nexted" values will be just buffered and not sent, since no connection was established!  
   }
@@ -30,7 +31,7 @@ export class WebSocketService {
     this.socketClient.next(JSON.parse(JSON.stringify(msg)));
   }
 
-  // Closes the connection
+  // Closes the connection 
   close(){
     console.log('Close')
     this.socketClient.complete(); 
@@ -46,14 +47,16 @@ export class WebSocketService {
   createWebSocketConnection(callback: (data) => void){
     this.socketClient.subscribe(
       (message) => {// Called whenever there is a message from the server.
+        if(message.data.includes('hello'))
+          callback('hello')
+        // else if(message.data.includes('start'))
+        //   callback('start')
+        // else if(message.data.includes('finish'))
+        //   callback('finish')
+        // else 
+        //   callback(null)
         this.errorService.openSnackBar(message.data , 'Event')
         console.log(message.data) 
-        if(message.data.includes('Hello'))
-          callback(true)
-
-        // if(message.data.includes('Finish'))
-        //   this.finish()
-     
       },
       (err) => console.error(err),// Called if at any point WebSocket API signals some kind of error.
       () => console.warn('Connection closed!')// Called when connection is closed (for whatever reason).
@@ -64,6 +67,18 @@ export class WebSocketService {
   serviceGateWay(cmd, callback: (data) => void){
     switch(cmd){
       case 'connect':
+        this.createWebSocketConnection(status => {
+          callback(status)
+        })
+        break;
+      case 'start':
+        this.send('start')
+        this.createWebSocketConnection(status => {
+          callback(status)
+        })
+        break;
+      case 'finish':
+        this.send('finish')
         this.createWebSocketConnection(status => {
           callback(status)
         })

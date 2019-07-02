@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry, MatBottomSheet } from '@angular/material';
@@ -14,6 +14,7 @@ import { ErrorService } from '../error.service';
 import { TargetConfigureSheetComponent } from '../target-configure-sheet/target-configure-sheet.component';
 import { StopwatchService } from '../stopwatch.service';
 import { SessionsService } from '../sessions.service';
+import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
 @Component({
   selector: 'app-session',
@@ -41,11 +42,16 @@ export class SessionComponent implements OnInit {
   sensorsEventsFlow = []
   targetsEventsFlow = []
   sessionScore: number
+  socketClient = webSocket({
+    url: 'ws://192.168.14.184',
+    deserializer: msg => msg
+  });
+  socketListenerFlag: boolean = false;
 
   constructor(private router: Router, private dataService: DataService, private mapService: MapService,
     private sessionService: SessionsService,
     private errorService: ErrorService, private bottomSheet: MatBottomSheet, private stopWatch: StopwatchService,
-    private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, private webSocket: WebSocketService) {
+    private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, private webSocketService: WebSocketService) {
   }
 
   ngOnInit() {
@@ -54,7 +60,6 @@ export class SessionComponent implements OnInit {
     //this.screenShot = getScreenShot
     console.log(this.warrior)
     console.log(this.map)
-
 
     this.sensorsEventsFlow.push({eventGapTime:'2.54',sensorId: this.map.sensors[0].id,crossTime: '2:54'})
     this.sensorsEventsFlow.push({eventGapTime:'4.56',sensorId: this.map.sensors[1].id,crossTime: '7:10'})
@@ -95,60 +100,114 @@ export class SessionComponent implements OnInit {
 
   }
 
-  temp(){
-    console.log('Work') 
-  }
-
+ 
+ 
   startPauseResumeButton() {
     if(!this.espConnectionFlag){
       this.errorService.openSnackBar('Esp not connected', '')
       return
-    }
+    } 
     if (!this.startFlag) {
       this.startFlag = true;
+      this.socketListenerFlag = true;
       this.start()
       return
     }
-    if (this.stopWatch.startText == 'Stop')
+    if (this.stopWatch.startText == 'Stop'){
+      this.socketListenerFlag = false;
       this.pause();
-    else if (this.stopWatch.startText == 'Resume')
+    }
+    else if (this.stopWatch.startText == 'Resume'){
+      this.socketListenerFlag = true;
       this.resume();
+    }
+  }
+
+  connect(){
+    // let mySessionData: JSON = this.createSessionJsonData();
+    this.errorService.spinnerOn('Connecting to ESP...');
+    this.socketClient.subscribe(
+      (message) => {// Called whenever there is a message from the server.
+        if(message.data.includes('hello')){
+          this.espConnectionFlag=true;
+          console.log('connected')
+          this.errorService.openSnackBar(message.data , 'Event')
+          console.log(message.data) 
+        }
+        else if(this.socketListenerFlag == true && message.data.includes('target'))
+          this.targetHitted(message.data)
+        
+        else if(this.socketListenerFlag == true && message.data.includes('sensor'))
+          this.sernsorCrossed(message.data)
+
+        this.errorService.spinnerOff()
+      },
+      (err) => {// Called if at any point WebSocket API signals some kind of error.
+        console.error(err)
+        this.errorService.openSnackBar(err, 'Error')
+        this.errorService.spinnerOff()
+      },
+      () => {// Called when connection is closed (for whatever reason).
+        console.warn('Connection closed!')
+        this.errorService.openSnackBar('Connection closed!', 'Event')
+        this.errorService.spinnerOff()
+      }
+    );
+
+  }
+
+  sendMsgSocket(msg:string){
+    this.socketClient.next(JSON.parse(JSON.stringify(msg)));
+    this.socketClient.next(JSON.parse(JSON.stringify(msg)));
+  }
+
+  // Closes the connection 
+  closeSocket(){
+    console.log('Close')
+    this.socketClient.complete(); 
   }
 
   //Connecting and sending the session data to ESP...
-  connect(){
-    let mySessionData: JSON = this.createSessionJsonData();
-    this.errorService.spinnerOn('Connecting to server and ESP...');
-    this.webSocket.readySession(res => {
-      if (res.status == 200) {
-        var _this = this;
-        setTimeout(function(){
-          this.espConnectionFlag=true;
-          console.log('connected')
-          _this.errorService.spinnerOff()
-        }, 2000)
-      }
+  connectOld(){
+    // let mySessionData: JSON = this.createSessionJsonData();
+    this.errorService.spinnerOn('Connecting to ESP...');
+    this.webSocketService.serviceGateWay('connect',res=> {
+      var _this = this;
+      setTimeout(function(){
+        if(res=='hello'){
+        _this.espConnectionFlag=true;
+        console.log('connected')
+        }
+        else{
+          console.log('failed to connect')
+          _this.errorService.openSnackBar('Failed to connect, try again', 'Error')
+        }
+        _this.errorService.spinnerOff()
+      }, 1000)
     })
   }
 
-  start() {
+  start(){
     this.errorService.spinnerOn('Starting session...');
-    this.webSocket.startSession(res => {
-      //console.log(res)
-      if (res.status == 200) {
-        var _this = this;
-        setTimeout(function(){
-          _this.errorService.spinnerOff()
-          _this.stopWatch.startTimer();
-        }, 1000)
-        
-      }
-    })
+    // this.webSocketService.serviceGateWay('start',res=> {
+      var _this = this;
+      setTimeout(function(){
+      //  if(res=='start'){
+          console.log('start')
+          _this.stopWatch.startTimer(); 
+        // }
+        // else{
+        //   console.log('Failed to start')
+        //   _this.errorService.openSnackBar('Failed to start, try again', 'Error')
+        // }
+        _this.errorService.spinnerOff()
+      }, 1000)
+    // })
   }
 
   pause() {
     this.errorService.spinnerOn('Pausing session...');
-    this.webSocket.pauseSession(res => {
+    this.webSocketService.pauseSession(res => {
       //console.log(res)
       if (res.status == 200) {
         var _this = this;
@@ -162,7 +221,7 @@ export class SessionComponent implements OnInit {
 
   resume() {
     this.errorService.spinnerOn('Resuming session...');
-    this.webSocket.resumeSession(res => {
+    this.webSocketService.resumeSession(res => {
       //console.log(res)
       if (res.status == 200) {
         var _this = this;
@@ -177,46 +236,35 @@ export class SessionComponent implements OnInit {
   finish() {
     //if clock running => pause:
     if (this.stopWatch.startText == 'Stop')
-      this.webSocket.pauseSession(res => {
-        //console.log(res)
-        if (res.status == 200)
           this.stopWatch.startTimer()
-        else { }
-        //error!   
-      })
 
     //if clock already paused:
     this.errorService.openMessage('Finish Session', 'Are you sure?', (choice) => {
       if (choice == false) 
         return
-      
-      //choice == true => finish!
-      this.webSocket.endSession(res => {
-        //console.log(res)
-        if (res.status !== 200) //though error, keep ending....
-          this.errorService.openSnackBar('ESP failed to finish','Error');
-        
 
-        this.saveElementsPositions((res) => {
-          if (res == false) {
-            this.errorService.openSnackBar('Failed to save map positions','Error');
-            return
-          } 
-            
-          this.session = new Session(this.map._id, this.date, this.warrior._id, this.screenShot, this.stopWatch.currentTimeString,this.sessionScore)
-          this.session.sensorsEventsFlow = this.sensorsEventsFlow;
-          //console.log('tragetsFlow: ', this.targetsEventsFlow)
-          this.session.targetsEventsFlow = this.targetsEventsFlow;
-          //console.log(this.session)
-          this.sessionService.addSession(this.session, (res) => {
-            if (res.status == 200) {
-              //console.log(res.sessionId)
-              this.errorService.openSnackBar('New Session added!', 'Success')
-              this.exit()
-            }
-          })//addSession
-        })//saveElementsPositions
-      })//end-session
+      //choice == true => finish!
+      this.sendMsgSocket('finish')
+      console.log('finish')
+      this.saveElementsPositions((res) => {
+        if (res == false) {
+          this.errorService.openSnackBar('Failed to save map positions','Error');
+          return
+        } 
+          
+        this.session = new Session(this.map._id, this.date, this.warrior._id, this.screenShot, this.stopWatch.currentTimeString,this.sessionScore)
+        this.session.sensorsEventsFlow = this.sensorsEventsFlow;
+        //console.log('tragetsFlow: ', this.targetsEventsFlow)
+        this.session.targetsEventsFlow = this.targetsEventsFlow;
+        //console.log(this.session)
+        this.sessionService.addSession(this.session, (res) => {
+          if (res.status == 200) {
+            //console.log(res.sessionId)
+            this.errorService.openSnackBar('New Session added!', 'Success')
+            this.exit()
+          }
+        })//addSession
+      })//saveElementsPositions
     })//dialog
 
 
@@ -362,6 +410,17 @@ export class SessionComponent implements OnInit {
     return sessionData;
   }
   
+  targetHitted(message){
+    console.log(message)
+    this.errorService.openSnackBar(message , 'Event')
+  }
+
+  sernsorCrossed(message){
+    console.log(message)
+    this.errorService.openSnackBar(message , 'Event')
+  }
+
+
 
 }
 
