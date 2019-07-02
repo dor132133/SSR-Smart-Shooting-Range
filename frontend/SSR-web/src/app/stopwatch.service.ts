@@ -40,7 +40,6 @@ export class StopwatchService {
     clearInterval(this.timerRef);
   }
 
-
   ElapsedTimeString() {
     function pretty_time_string(num) {
       return (num < 10 ? "0" : "") + num;
@@ -63,5 +62,26 @@ export class StopwatchService {
 
   }
 
+  gapTime(lastTime, newTime){
+    var splittedTime = lastTime.split(':')
+    var time1 = parseFloat(splittedTime[0] + '.' + splittedTime[1]+splittedTime[2]);
+    var splittedTime = newTime.split(':')
+    var time2 = parseFloat(splittedTime[0] + '.' + splittedTime[1]+splittedTime[2]);
+
+    // console.log('time1', time1)
+    // console.log('time2', time2)
+
+    // 0.02293
+
+    var gapTime = (time2-time1).toString()
+    var splittedGapTime = gapTime.split('.')
+    var min = splittedGapTime[0];
+    var sec = splittedGapTime[1].slice(0,2);
+    var milli = splittedGapTime[1].slice(2,4);
+
+    // console.log('gapTime:' ,min + ':' + sec +':' + milli)
+    
+    return min + ':' + sec +':' + milli
+  }
 
 }

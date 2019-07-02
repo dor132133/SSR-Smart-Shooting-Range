@@ -41,32 +41,29 @@ export class HomeComponent implements OnInit {
   }
 
 
-  connect3(){
-    this.socketService.serviceGateWay('connect',res=> {
-      console.log('res:', res)
-    })
-  }
+  // connect3(){
+  //   this.socketService.serviceGateWay('connect',res=> {
+  //     console.log('res:', res)
+  //   })
+  // }
 
 
 
-  connect1(){
-    this.errorService.spinnerOn('Connecting to server and ESP...');
-    this.socketService.readySession(res => {
-      if (res.status == 200) {
-        var _this = this;
-        setTimeout(function(){
-          this.espConnectionFlag=true;
-          console.log('connected')
-          _this.errorService.spinnerOff()
-        }, 2000)
-      }
-    })
-  }
+  // connect1(){
+  //   this.errorService.spinnerOn('Connecting to server and ESP...');
+  //   this.socketService.readySession(res => {
+  //     if (res.status == 200) {
+  //       var _this = this;
+  //       setTimeout(function(){
+  //         this.espConnectionFlag=true;
+  //         console.log('connected')
+  //         _this.errorService.spinnerOff()
+  //       }, 2000)
+  //     }
+  //   })
+  // }
 
-  openWebSocket(){
-    
-  }
-
+ 
   //sensitive method
   recreateAllCollections(){
     this.deleteCollectionButton('warriors')
@@ -81,9 +78,9 @@ export class HomeComponent implements OnInit {
     //this.deleteCollectionButton('users')
   }
 
-  recreatSessionsCollectionButton(){
-    this.deleteCollectionButton('sessions')
-    this.addCollectionButton('sessions')
+  recreatCollectionButton(collection){
+    this.deleteCollectionButton(collection)
+    this.addCollectionButton(collection)
   }
 
   // startSession(){

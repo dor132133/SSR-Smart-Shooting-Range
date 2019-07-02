@@ -47,6 +47,8 @@ export class SessionComponent implements OnInit {
     deserializer: msg => msg
   });
   socketListenerFlag: boolean = false;
+  sensorLastTimestamp = '00:00:00'
+  targetLastTimestamp = '00:00:00'
 
   constructor(private router: Router, private dataService: DataService, private mapService: MapService,
     private sessionService: SessionsService,
@@ -61,43 +63,38 @@ export class SessionComponent implements OnInit {
     console.log(this.warrior)
     console.log(this.map)
 
-    this.sensorsEventsFlow.push({eventGapTime:'2.54',sensorId: this.map.sensors[0].id,crossTime: '2:54'})
-    this.sensorsEventsFlow.push({eventGapTime:'4.56',sensorId: this.map.sensors[1].id,crossTime: '7:10'})
-    this.sensorsEventsFlow.push({eventGapTime:'9.21',sensorId: this.map.sensors[2].id,crossTime: '6:32'})
-
-
     var score=Math.random() * (10 - 0) + 0
     score = parseFloat(score.toFixed(2));
     this.sessionScore = score
     
-    this.targetsEventsFlow.push({
-      eventGapTime:'3.21',
-      targetId: this.map.targets[0].id,
-      time: '3:21',
-      coords: JSON.stringify({radius: 5, degree: 40})
-    })
 
-    this.map.targets[0].shots.push({time :'3:21',coordinates: JSON.stringify({radius: 5, degree: 40})})
+    // this.sensorsEventsFlow.push({eventGapTime:'2.54',sensorId: this.map.sensors[0].id,crossTime: '2:54'})
+    // this.sensorsEventsFlow.push({eventGapTime:'4.56',sensorId: this.map.sensors[1].id,crossTime: '7:10'})
+    // this.sensorsEventsFlow.push({eventGapTime:'9.21',sensorId: this.map.sensors[2].id,crossTime: '6:32'})
+    // this.targetsEventsFlow.push({
+    //   eventGapTime:'3.21',
+    //   targetId: this.map.targets[0].id,
+    //   time: '3:21',
+    //   coords: JSON.stringify({radius: 5, degree: 40})
+    // })
+    // this.map.targets[0].shots.push({time :'3:21',coordinates: JSON.stringify({radius: 5, degree: 40})})
 
-    this.targetsEventsFlow.push({
-      eventGapTime:'5.21',
-      targetId: this.map.targets[1].id,
-      time: '8:42',
-      coords: JSON.stringify({radius: 5, degree: 40})
-    })
+    // this.targetsEventsFlow.push({
+    //   eventGapTime:'5.21',
+    //   targetId: this.map.targets[1].id,
+    //   time: '8:42',
+    //   coords: JSON.stringify({radius: 5, degree: 40})
+    // })
+    // this.map.targets[1].shots.push({time :'8:42',coordinates: JSON.stringify({radius: 2, degree: 170})})
 
-    this.map.targets[1].shots.push({time :'8:42',coordinates: JSON.stringify({radius: 2, degree: 170})})
-
-    this.targetsEventsFlow.push({
-      eventGapTime:'11.51',
-      targetId: this.map.targets[2].id,
-      time: '19:93',
-      coords: JSON.stringify({radius: 5, degree: 40})
-    })
-
-
-    this.map.targets[2].shots.push({time :'19:93',coordinates: JSON.stringify({radius: 1, degree: 270})})
-
+    // this.targetsEventsFlow.push({
+    //   eventGapTime:'11.51',
+    //   targetId: this.map.targets[2].id,
+    //   time: '19:93',
+    //   coords: JSON.stringify({radius: 5, degree: 40})
+    // })
+    // this.map.targets[2].shots.push({time :'19:93',coordinates: JSON.stringify({radius: 1, degree: 270})})
+    
   }
 
  
@@ -167,7 +164,7 @@ export class SessionComponent implements OnInit {
     this.socketClient.complete(); 
   }
 
-  //Connecting and sending the session data to ESP...
+  //Depricated
   connectOld(){
     // let mySessionData: JSON = this.createSessionJsonData();
     this.errorService.spinnerOn('Connecting to ESP...');
@@ -235,8 +232,10 @@ export class SessionComponent implements OnInit {
 
   finish() {
     //if clock running => pause:
-    if (this.stopWatch.startText == 'Stop')
+    if (this.stopWatch.startText == 'Stop'){
           this.stopWatch.startTimer()
+          this.socketListenerFlag = false;
+    }
 
     //if clock already paused:
     this.errorService.openMessage('Finish Session', 'Are you sure?', (choice) => {
@@ -411,13 +410,28 @@ export class SessionComponent implements OnInit {
   }
   
   targetHitted(message){
-    console.log(message)
-    this.errorService.openSnackBar(message , 'Event')
+    var timestamp = this.stopWatch.currentTimeString
+    var gapTime = this.stopWatch.gapTime(this.targetLastTimestamp,timestamp)
+    this.targetLastTimestamp = timestamp
+    console.log('target GapTime:',gapTime)
+    this.errorService.openSnackBar(message , '+'+gapTime) 
+  
+    this.targetsEventsFlow.push({
+      eventGapTime: gapTime,
+      targetId: this.map.targets[0].id,
+      time: timestamp,
+      coords: JSON.stringify({radius: 5, degree: 40})
+    })
+    this.map.targets[0].shots.push({time :timestamp,coordinates: JSON.stringify({radius: 5, degree: 40})})
   }
 
   sernsorCrossed(message){
-    console.log(message)
-    this.errorService.openSnackBar(message , 'Event')
+    var timestamp = this.stopWatch.currentTimeString
+    var gapTime = this.stopWatch.gapTime(this.sensorLastTimestamp,timestamp)
+    this.sensorLastTimestamp = timestamp
+    console.log('sensor GapTime:',gapTime)
+    this.errorService.openSnackBar(message , '+'+gapTime) 
+    this.sensorsEventsFlow.push({eventGapTime:gapTime,sensorId: this.map.sensors[0].id,crossTime: timestamp})
   }
 
 

@@ -35,17 +35,25 @@ export class SessionReportDialogComponent implements OnInit {
     console.log('session: ',this.session)
     console.log('map: ',this.map)
     console.log('warrior: ',this.warrior)
+    this.densityTargetsContent = []
     this.densityCalc()
   }
 
   //not ready yet! 
   densityCalc(){ 
+    //console.log(this.map.targets)
     this.map.targets.forEach(target => {
+      var shotsProcessed = 0;
+      var density = 0;
+      // console.log('target:',target.id);
       (target as Target).shots.forEach(shot => {
-          //calc density
-          //(target as Target).density = myDensity
-          this.densityTargetsContent.push({targetId: (target as Target).id, density: 5 })
+        // console.log('shot');
+        density = density + Math.random() * (10 - 0) + 0
+        density = parseFloat(density.toFixed(2));
+        shotsProcessed++
       })
+      if(shotsProcessed == (target as Target).shots.length)
+        this.densityTargetsContent.push({targetId: (target as Target).id, density: density })
     })
   }
 
