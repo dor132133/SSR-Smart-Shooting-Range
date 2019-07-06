@@ -47,7 +47,12 @@ export class ErrorService{
       disableClose: true,
       data: {message: message} 
     });
-    
+
+    var _this=this
+    setTimeout(function(){
+      _this.spinnerOff();
+    },3000)
+
     dialogRef.afterClosed().subscribe(result => { 
         console.log('Spinner closed');
       });

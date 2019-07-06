@@ -73,12 +73,16 @@ export class StopwatchService {
 
     // 0.02293
 
-    var gapTime = (time2-time1).toString()
-    var splittedGapTime = gapTime.split('.')
-    var min = splittedGapTime[0];
-    var sec = splittedGapTime[1].slice(0,2);
-    var milli = splittedGapTime[1].slice(2,4);
-
+    try{
+      var gapTime = (time2-time1).toString()
+      var splittedGapTime = gapTime.split('.')
+      var min = splittedGapTime[0];
+      var sec = splittedGapTime[1].slice(0,2);
+      var milli = splittedGapTime[1].slice(2,4);
+    }
+    catch(e){
+      return '00:00:00'
+    }
     // console.log('gapTime:' ,min + ':' + sec +':' + milli)
     
     return min + ':' + sec +':' + milli

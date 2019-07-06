@@ -43,7 +43,7 @@ export class SessionComponent implements OnInit {
   targetsEventsFlow = []
   sessionScore: number
   socketClient = webSocket({
-    url: 'ws://192.168.14.184',
+    url: 'ws://192.168.43.30',
     deserializer: msg => msg
   });
   socketListenerFlag: boolean = false;
