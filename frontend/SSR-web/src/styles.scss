@@ -7,7 +7,7 @@
 @include mat-core();
 
 
-$my-app-primary: mat-palette($mat-red, A700, 600, A100);
+$my-app-primary: mat-palette($mat-blue, 800, 600, A100);
 $my-app-accent:  mat-palette($mat-green, 600);
 $my-app-warn:    mat-palette($mat-grey,50, 50, 50);
 

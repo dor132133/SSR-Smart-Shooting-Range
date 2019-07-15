@@ -12,7 +12,7 @@
     <nav mat-tab-nav-bar color="primary">
         <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.link" routerLinkActive #rla="routerLinkActive"
           [active]="rla.isActive">
-          <h5 color="white">{{link.label}}</h5>
+          <h5 class='label'>{{link.label}}</h5>
         </a>
     </nav>
   </mat-toolbar-row>
